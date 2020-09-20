@@ -7,7 +7,7 @@ toc: false
 ---
 
 
-![HSFL Logo](/images/favicon.png)
+{% include image.html file="/resources/logos/hsfl.png" width="30%" %}
 
 ## Welcome!                                                             
 
