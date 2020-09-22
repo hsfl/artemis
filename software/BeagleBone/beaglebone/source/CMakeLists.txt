@@ -123,6 +123,6 @@ target_link_libraries(simpleagent_test ${COSMOS_LIBS} ${CUBESAT_LIBS})
 
 
 # ==================================== Simulations ====================================
-add_executable(agent_propagator simulation/agent_propagator.cpp)
-target_link_libraries(agent_propagator ${COSMOS_LIBS} ${CUBESAT_LIBS})
+add_executable(propagator simulation/propagator.cpp)
+target_link_libraries(propagator ${COSMOS_LIBS} ${CUBESAT_LIBS})
 
