@@ -211,6 +211,24 @@ entries:
 
 
 # =================================================================================
+
+  - title: PyCubed Software
+    output: web
+    folderitems:
+    - title: Overviews
+      url: /pages/documentation/pycubed/overview.html
+      output: web
+      subfolders:
+
+      - title: Modules
+        output: web
+        subfolderitems:
+        - title: BeagleBone Module
+          url: /pages/documentation/pycubed/beaglebone-module.html
+          output: web
+
+
+# =================================================================================
   - title: Development Environment
     output: web
     folderitems:
