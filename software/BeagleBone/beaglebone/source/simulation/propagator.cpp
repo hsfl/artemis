@@ -44,15 +44,34 @@ std::vector<shorteventstruc> eventdict;
 std::vector<shorteventstruc> events;
 std::string mainjstring;
 
+// Set initial state
+locstruc iloc;
+
 void endline(){
     std::cout << std::endl;
 }
+
+int32_t Request_Attitude(std::string &request, std::string &response, Agent *agent_) {
+    std::stringstream ss;
+
+    ss << "[";
+    ss << iloc.att.icrf.s.d.x << ",";
+    ss << iloc.att.icrf.s.d.y << ",";
+    ss << iloc.att.icrf.s.d.z << ",";
+    ss << iloc.att.icrf.s.w << ",";
+    ss << "]";
+
+    response = ss.str();
+
+    return 1;
+}
+
 
 int main(int argc, char* argv[])
 {
 	std::string node;
 	int32_t order = 6;
-    int32_t mode = 1; // attitude mode (0 - propagate?, 1-LVLH, ...)
+    int32_t mode = 0; // attitude mode (0 - propagate?, 1-LVLH, ...)
 	double mjdnow;
 	double mjdstart = -1.;
 	double dt = .1;
@@ -72,18 +91,27 @@ int main(int argc, char* argv[])
 		break;
 	}
 
-    if (!(agent = new Agent(node, "physics", .1, AGENTMAXBUFFER)))
+    if (!(agent = new Agent(node, "propagator", .1, AGENTMAXBUFFER)))
     {
         printf("Failed to setup server for node %s: %d\n", node.c_str(), AGENT_ERROR_JSON_CREATE);
         exit (AGENT_ERROR_JSON_CREATE);
     }
 
+    if (length_rv(agent->cinfo->node.moi) == 0.)
+    {
+        agent->cinfo->node.moi = agent->cinfo->physics.moi.to_rv();
+    }
+    else
+    {
+        agent->cinfo->physics.moi = agent->cinfo->node.moi;
+    }
+
+    agent->add_request("attitude", Request_Attitude, "Returns the attitude as a quaternion");
+
     agent->cinfo->physics.mode = mode;
 
     load_dictionary(eventdict, agent->cinfo, (char *)"events.dict");
 
-	// Set initial state
-	locstruc iloc;
 
 	pos_clear(iloc);
 
@@ -204,6 +232,7 @@ int main(int argc, char* argv[])
 	{
 		step = .1;
 	}
+
 
     //printf("Initialize forwards %f days, steps of %f\n", (mjdnow-iloc.utc), step);
     std::cout << "Initialize forwards " << (mjdnow-iloc.utc) << " days, steps of " << step << std::endl;
