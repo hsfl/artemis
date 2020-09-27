@@ -45,7 +45,7 @@ Now that we've gotten definitions out of the way, we can start by creating a Sim
 First, you'll need to include the header file with all of the SimpleAgent definitions:
 
 ```cpp
-#include "utility/SimpleAgent.h"
+#include "SimpleAgent/SimpleAgent.h"
 ```
 
 Next, you'll need to create a new `SimpleAgent` object in the main function (or elsewhere, as long as you create it before you use it):
@@ -167,6 +167,54 @@ This will add our request function with the aliases `alias_1`, `alias_2`, and `a
 {% include important.html content="The string returned from a request function should never be empty.
 An empty response string is interpreted as failure to call the request. If you don't care about the value returned,
 you can always just return a space character, or any other random non-empty string." %}
+
+### Device Requests
+
+You can also add requests to specific devices! For example, let's say we previously created a heater device named `heater`, and we want to add a request to it that either enables or disables the heater. The code for the request
+might look like this:
+
+```cpp
+void DRequest_EnableHeater(Heater *some_heater, bool enabled) {
+    if ( enabled ) {
+        // Enable the heater here...
+    }
+    else {
+        // Disable the heater here...
+    }
+}
+```
+
+Notice that device requests _must_ have the first argument as a pointer to the device they are acting on. This helps
+makes your code flexible, especially if you are adding the same device request to many different devices.
+
+To actually add the device request to the `heater` device, we can call the `heater` device's `AddRequest` function
+inside of the main function:
+
+```cpp
+
+int main() {
+
+    // ...
+
+    // Create the heater device
+    Heater *heater = agent->NewDevice<Heater>("my_heater");
+
+    // Add our device request to the heater using the name "set_state"
+    heater->AddRequest("set_state", DRequest_EnableHeater, "Sets the state of the heater");
+
+    // ...
+}
+```
+
+
+Now if we wanted to call this device request from a terminal (once the program is running), we could issue
+the following command to enable the heater:
+
+```bash
+agent cubesat my_agent my_heater:set_state true
+```
+
+Notice that the format for calling a device request is `device_name:request_name <arguments>`.
 
 
 ### Calling a Request From the Terminal
@@ -302,53 +350,88 @@ Here is a working example of an agent program:
 
 {% highlight cpp linenos %}
 
-#include "utility/SimpleAgent.h"
+#include "SimpleAgent/SimpleAgent.h"
 
 using namespace std;
 using namespace cubesat;
 
-// A simple request that gives a friendly greeting
-string SayHi() {
-    printf("Hey there! (inside agent)\n");
-    return "Hey there! (outside agent)";
-}
+//! An agent request which returns whatever argument the user gives it
+double Request_Double(double arg);
+
+//! An agent request which returns whatever we put in. The "CapturedInput"
+//! type allows the user to put in any string they wish (including spaces)
+std::string Request_Repeat(CapturedInput input);
+
+//! A device request attached to a temperature sensor. Returns
+//! the temperature plus a given number
+float Request_GetTemperature(TemperatureSensor *sensor, int x);
+
+
+
+//! Our SimpleAgent object
+SimpleAgent *agent;
+//! Our temperature sensor device
+TemperatureSensor *temp_sensor;
+
 
 int main() {
-    SimpleAgent *agent = new SimpleAgent("my_agent"); // Create the SimpleAgent
-    agent->SetLoopPeriod(2); // Set the agent to run at 2 second intervals
-    
-    // Create a temperature sensor
-    TemperatureSensor *my_sensor = agent->NewDevice<TemperatureSensor>("my_sensor");
-    my_sensor->Post(my_sensor->utc = Time::Now()); // Set and post the UTC timestamp property
-    my_sensor->Post(my_sensor->temperature = 0); // Set and post the temperature property
-    
-    // Add a request that can be called externally
-    agent->AddRequest("say_hi", SayHi, "Gives you a friendly greeting");
-    
-    // Finish setting up the SimpleAgent
-    agent->Finalize(); // Let the agent know we're done posting properties
-    agent->DebugPrint(); // Print out all of the properties and requests
-    
-    int counter = 0;
-    
-    // Here comes the main loop...
-    while ( agent->StartLoop() ) {
-        
-        // Update values in the sensor. Since these values were posted,
-        // the new values can be viewed externally
-        my_sensor->utc = Time::Now(); // Set the timestamp to the current time
-        my_sensor->temperature = counter; // Set the temperature to a counter value
-        
-        // Increment the counter (in place of actually
-        // doing stuff with hardware)
-        ++counter;
-    }
-    
-    // Free any memory associated with the SimpleAgent
-    delete agent;
-    
-    return 0;
+	
+	// Create the agent
+	agent = new SimpleAgent("my_agent");
+	
+	// Add the Request_Repeat request using the name "repeat"
+	agent->AddRequest("repeat", Request_Repeat);
+	
+	// Add the "Request_Double" request using aliases "double" and "twice"
+	agent->AddRequest({"double", "twice"}, Request_Double, "Doubles a number");
+	
+	
+	
+	// Add a temperature sensor device
+	temp_sensor = agent->NewDevice<TemperatureSensor>("temp_sensor");
+	
+	// Set the utc and temperature properties to zero and post them
+	temp_sensor->Post(temp_sensor->utc = 0);
+	temp_sensor->Post(temp_sensor->temperature = 0);
+	
+	// Add the Request_GetTemperature request to the temperature sensor with
+	// aliases "gettemp" and "temp"
+	temp_sensor->AddRequest({"gettemp", "temp"}, Request_GetTemperature);
+	
+	
+	
+	// Let the agent know all the devices have been set up
+	agent->Finalize();
+	
+	// Show all of the properties and requests added
+	agent->DebugPrint();
+	
+	// A counter which holds a dummy value for the temperature
+	int i = 0;
+	
+	// Start running the agent
+	while ( agent->StartLoop() ) {
+		
+		// Timestamp the device
+		temp_sensor->utc = currentmjd();
+		temp_sensor->temperature = i++;
+	}
+	
+	return 0;
 }
+
+
+
+double Request_Double(double x) {
+	return x * 2;
+}
+float Request_GetTemperature(TemperatureSensor *sensor, int x) {
+	return sensor->temperature + x;
+}
+std::string Request_Repeat(CapturedInput input) {
+	return input.input;
+}
+
 {% endhighlight %}
 
 <br>
@@ -356,21 +439,31 @@ int main() {
 Here is the initial output of the agent program above:
 
 ```
+------------------------------------------------------
+COSMOS AGENT 'my_agent' on node 'cubesat'
+Version 0.0 built on Sep 27 2020 20:58:16
+Agent started at 2020-09-27 21:26:18
+Debug level 1
+------------------------------------------------------
 Devices
-|       | Device 'my_sensor'
-|       |       | Posted Properties
-|       |       |       | Temperature (aka device_tsen_temp_005)
-|       |       |       | UTC (aka device_tsen_utc_005)
+|	| Device 'temp_sensor'
+|	|	| Posted Properties
+|	|	|	| Temperature (aka device_tsen_temp_000)
+|	|	|	| UTC (aka device_tsen_utc_000)
+|		| Requests
+	|	|	| temp: (int) -> float
+	|	|	| gettemp: (int) -> float
 Requests
-|       | Request 'getproperty'
-|       | Request 'print'
-|       | Request 'say_hi'
+|	| Request 'twice': (double) -> double
+|	| Request 'double': (double) -> double
+|	| Request 'print': () -> std::string
+|	| Request 'repeat': (CapturedInput) -> std::string
 Node Properties
-|       | Property 'UTC' (aka node_utc): 59053.871956
+
 ```
 
 
-This output is all due to calling the `DebugPrint` function. All of the available COSMOS names are listed next to the property names (for example, `device_tsen_temp_005`). The `say_hi` request is also listed in this tree.
+This output is all due to calling the `DebugPrint` function. All of the available COSMOS names are listed next to the property names (for example, `device_tsen_temp_000`). The `say_hi` request is also listed in this tree.
 
 {% include note.html content="There are a couple requests, `getproperty` and `print`, that are added by default." %}
 
