@@ -1,5 +1,10 @@
-
-add_executable(i2c_device i2c_device.cpp)
-
-
-target_link_libraries(i2c_device ${COSMOS_LIBS})
+set(CUBESAT_DEVICE_SRC	I2CDevice.cpp
+                        SPIDevice.cpp
+                        UARTDevice.cpp
+                        OPT3001.cpp
+                        ADT7311.cpp
+                        PyCubed.cpp
+                        switch.cpp
+                        GPIO.cpp)
+add_library(CubesatDevices STATIC ${CUBESAT_DEVICE_SRC})
+target_link_libraries(CubesatDevices ${COSMOS_LIBS})

@@ -1,5 +1,5 @@
 
-#include "utility/SimpleAgent.h"
+#include "SimpleAgent/SimpleAgent.h"
 #include "device/RaspberryPi.h"
 #include "device/switch.h"
 

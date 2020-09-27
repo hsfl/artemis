@@ -7,8 +7,8 @@
 #include <vector>
 #include <type_traits>
 
-#include "utility/StringTools.h"
-#include "utility/Exceptions.h"
+#include "StringTools.h"
+#include "Exceptions.h"
 
 namespace cubesat {
 	

@@ -3,7 +3,7 @@
 #define CUBESAT_CUBESAT
 
 #include "cubesat_defs.h"
-#include "utility/SimpleAgent.h"
+#include "SimpleAgent/SimpleAgent.h"
 
 /*! \mainpage Artemis CubeSat Kit - BeagleBone Source Code
  *

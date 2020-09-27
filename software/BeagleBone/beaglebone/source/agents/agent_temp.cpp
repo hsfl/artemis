@@ -1,6 +1,6 @@
 
 // Internal headers
-#include "utility/SimpleAgent.h"
+#include "SimpleAgent/SimpleAgent.h"
 #include "device/ADT7311.h"
 #include "device/temp_sensors.h"
 

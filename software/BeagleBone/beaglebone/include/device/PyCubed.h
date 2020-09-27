@@ -5,7 +5,7 @@
 #include "device/UARTDevice.h"
 #include "device/PyCubedMessage.h"
 #include "support/datalib.h"
-#include "utility/DeviceDetail.h"
+#include "SimpleAgent/DeviceDetail.h"
 #include <unordered_map>
 
 namespace cubesat {

@@ -1,6 +1,6 @@
 
 // Internal headers
-#include "utility/SimpleAgent.h"
+#include "SimpleAgent/SimpleAgent.h"
 #include "device/OPT3001.h"
 
 #include "rapidjson/document.h"

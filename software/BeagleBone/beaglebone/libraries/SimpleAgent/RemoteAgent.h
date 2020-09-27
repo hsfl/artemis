@@ -8,8 +8,8 @@
 #include "support/jsonlib.h"
 #include "support/jsonclass.h"
 
-#include "utility/DeviceDetail.h"
-#include "utility/StringTools.h"
+#include "DeviceDetail.h"
+#include "StringTools.h"
 
 #include <unordered_map>
 #include <sstream>
