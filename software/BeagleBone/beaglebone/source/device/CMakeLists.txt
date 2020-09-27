@@ -1,3 +1,4 @@
+
 set(CUBESAT_DEVICE_SRC	I2CDevice.cpp
                         SPIDevice.cpp
                         UARTDevice.cpp
@@ -6,5 +7,7 @@ set(CUBESAT_DEVICE_SRC	I2CDevice.cpp
                         PyCubed.cpp
                         switch.cpp
                         GPIO.cpp)
+
+
 add_library(CubesatDevices STATIC ${CUBESAT_DEVICE_SRC})
 target_link_libraries(CubesatDevices ${COSMOS_LIBS})
