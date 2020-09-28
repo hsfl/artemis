@@ -1,6 +1,6 @@
 ---
 title: PyCubed Communication Protocol
-permalink: /pages/documentation/other/pycubed-communication.html
+permalink: /pages/documentation/pycubed/communication-protocol.html
 layout: page
 
 keywords: software

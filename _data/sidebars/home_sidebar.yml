@@ -226,6 +226,9 @@ entries:
         - title: BeagleBone Module
           url: /pages/documentation/pycubed/beaglebone-module.html
           output: web
+        - title: PyCubed Communication
+          url: /pages/documentation/pycubed/communication-protocol.html
+          output: web
 
 
 # =================================================================================
@@ -237,14 +240,6 @@ entries:
       output: web
     - title: Utility Scripts
       url: /pages/documentation/other/scripts.html
-      output: web
-
-# =================================================================================
-  - title: Miscellaneous
-    output: web
-    folderitems:
-    - title: PyCubed Communication
-      url: /pages/documentation/other/pycubed-communication.html
       output: web
 
 # =================================================================================
