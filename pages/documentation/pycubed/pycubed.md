@@ -34,4 +34,4 @@ code which is immediately executed on the PyCubed processor.
 
 ## See Also
 * [PyCubed Website](http://pycubed.org/)
-* [PyCubed Communication Protocol]({{site.folder_docs_other}}/pycubed-communication.html)
+* [PyCubed Communication Protocol](communication-protocol.html)

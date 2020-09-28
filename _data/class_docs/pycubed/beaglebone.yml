@@ -1,0 +1,61 @@
+
+language: "python"
+
+# Quick Description table
+description:
+  class: "BeagleBone"
+  namespace: "artemis"
+  files:
+    - name: "beaglebone.py"
+      url: ""
+
+
+# Member Table
+functions:
+
+  - name: "Constructor"
+    declaration: "def __init__(self, tx_pin, rx_pin)"
+    description: >
+      Constructs a new BeagleBone object operating on the given TX and RX pins. Adds
+      default message parsers and handlers.
+
+  - name: "Wait for Startup"
+    declaration: "def wait_for_startup(self)"
+    description: Blocks execution until the BeagleBone sends the start up signal.
+
+  - name: "Add Message Handler"
+    declaration: "def add_message_handler(self, name, callback, num_args)"
+    description: >
+      Adds a new message handler with the given name, handler function, and number of
+      arguments required.
+
+  - name: "Add Message Parser"
+    declaration: "def add_message_parser(self, name, callback):"
+    description: Adds a new message parser with the given name and parser function.
+
+  - name: "Send Message"
+    declaration: "def send_message(self, message_type_str, arguments)"
+    description: >
+      Sends a message to the BeagleBone with the given message type and arguments.
+      The `arguments` parameter should be an array of strings.
+
+  - name: "Shutdown BeagleBone"
+    declaration: "def shutdown(self)"
+    description: Sends the shutdown signal to the BeagleBone.
+
+properties:
+  - name: "UART Object"
+    declaration: "uart"
+    description: A CircuitPython UART object used to communicate with the BeagleBone.
+
+  - name: "Startup Flag"
+    declaration: "startup_flag"
+    description: A boolean flag indicating whether the startup signal has been received.
+
+  - name: "Handoff Flag"
+    declaration: "handoff_flag"
+    description: A boolean flag indicating whether the handoff signal has been received.
+
+  - name: "Startup Flag"
+    declaration: "kill_radio_flag"
+    description: A boolean flag indicating whether the "kill radio" signal has been received.

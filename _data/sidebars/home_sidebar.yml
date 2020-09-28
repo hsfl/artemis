@@ -215,19 +215,25 @@ entries:
   - title: PyCubed Software
     output: web
     folderitems:
-    - title: Overviews
+    - title: Overview
       url: /pages/documentation/pycubed/overview.html
+      output: web
+    - title: Main Script
+      url: /pages/documentation/pycubed/main-script.html
+      output: web
+    - title: PyCubed Communication
+      url: /pages/documentation/pycubed/communication-protocol.html
       output: web
       subfolders:
 
-      - title: Modules
+      - title: Classes
         output: web
         subfolderitems:
-        - title: BeagleBone Module
-          url: /pages/documentation/pycubed/beaglebone-module.html
+        - title: BeagleBone Class
+          url: /pages/documentation/pycubed/beaglebone-class.html
           output: web
-        - title: PyCubed Communication
-          url: /pages/documentation/pycubed/communication-protocol.html
+        - title: Switch Class
+          url: /pages/documentation/pycubed/switch-class.html
           output: web
 
 

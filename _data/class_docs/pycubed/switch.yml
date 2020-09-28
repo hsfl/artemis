@@ -1,0 +1,27 @@
+
+language: "python"
+
+# Quick Description table
+description:
+  class: "Switch"
+  namespace: "artemis"
+  files:
+    - name: "switch.py"
+      url: ""
+
+
+# Member Table
+functions:
+
+  - name: "Constructor"
+    declaration: "def __init__(self, gpio_pin)"
+    description: >
+      Constructs a new switch with the given GPIO pin.
+
+  - name: "Enable Switch"
+    declaration: "def enable(self)"
+    description: Enables the switch by setting the GPIO pin to HIGH.
+
+  - name: "Disable Switch"
+    declaration: "def disable(self)"
+    description: Disables the switch by setting the GPIO pin to LOW.
