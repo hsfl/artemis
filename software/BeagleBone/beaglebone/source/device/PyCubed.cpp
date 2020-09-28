@@ -7,6 +7,9 @@
 using namespace std;
 using namespace cubesat;
 
+//! Computes the checksum of a string
+char GetChecksum(const std::string &str);
+
 PyCubed::PyCubed(uint8_t bus, unsigned int baud) : UARTDevice(bus, baud) {
 	
 	// Add default message parsers
@@ -31,9 +34,6 @@ bool PyCubed::SendMessage(const std::string &message_type_str, const std::vector
 	
 	stringstream message;
 	
-	// Write the syncword
-	message << '$';
-	
 	// Write the type string
 	message << message_type_str;
 	
@@ -41,18 +41,22 @@ bool PyCubed::SendMessage(const std::string &message_type_str, const std::vector
 	for (const string &arg : args)
 		message << ',' << arg;
 	
-	// Compute the checksum (TODO)
-	int checksum = 0;
+	// Compute the checksum
+	int checksum = GetChecksum(message.str());
 	
 	// Write the checksum
-	message << ',' << std::setfill('0') << std::setw(2) << checksum;
+	message << ',' << std::setfill('0') << std::setw(2) << std::hex << checksum;
 	
 	// Write the newline character
 	message << '\n';
 	
+	
+	std::string message_str = "$" + message.str();
+	
 	// Write the entire message
-	const char *message_cstr = message.str().c_str();
-	Write((uint8_t*)message_cstr, message.str().length());
+	printf("PyCubed: writing message '%s'\n", message_str.c_str());
+	const char *message_cstr = message_str.c_str();
+	Write((uint8_t*)message_cstr, message_str.length());
 	
 	// Indicate success
 	return true;
@@ -70,8 +74,9 @@ int PyCubed::ReceiveMessages() {
 	// Receive messages
 	
 	while ( InWaiting() != 0 ) {
-		ReceiveNextMessage();
-		++num_messages;
+		printf("Received message\n");
+		if ( ReceiveNextMessage() )
+			++num_messages;
 	}
 	
 	return num_messages;
@@ -120,7 +125,9 @@ bool PyCubed::ReceiveNextMessage() {
 	
 	// Read until the first '$' character is found
 	do {
-		Read(buff, 1);
+		if ( Read(buff, 1) == 0 ) {
+			return false;
+		}
 	} while ( (char)buff[0] != '$' );
 	
 		
@@ -140,10 +147,13 @@ bool PyCubed::ReceiveNextMessage() {
 		
 		// Read until a newline character is reached
 		uint8_t *p = buff;
-		int read_count;
+		int read_count = 0;
+		int read_status;
 		do {
-			read_count = Read(p++, 1);
-		} while ( (char)*(p - 1) != '\n' && read_count > 0 );
+			// Read a single byte
+			read_status = Read(p++, 1);
+			read_count += read_status;
+		} while ( (char)*(p - 1) != '\n' && read_status > 0 );
 		
 		// Replace the newline with a terminating character
 		*(p - 1) = (uint8_t)'\0';
@@ -160,16 +170,30 @@ bool PyCubed::ReceiveNextMessage() {
 		while(std::getline(ss, token, ','))
 			argument_strings.push_back(token);
 		
+		
+		printf("PyCubed: got message '$%s,%s'\n", message_type_str.c_str(), input.c_str());
+		
 		// Make sure the number of arguments is correct
 		if ( argument_strings.size() != handler.num_args + 1 ) {
-			printf("Number of arguments received for message type '%s' is incorrect (got %d, expected %d)\n",
+			printf("PyCubed: number of arguments received for message type '%s' is incorrect (got %d, expected %d)\n",
 				   message_type_str.c_str(), argument_strings.size() - 1, handler.num_args);
 			
 			return false;
 		}
 		
-		// Compute the checksum (TODO)
-		int checksum = 0;
+		
+		// Compute the checksum
+		input = input.substr(0, input.find_last_of(','));
+		char calculated_checksum = GetChecksum(message_type_str + "," + input);
+		char given_checksum = (int)strtol(argument_strings.back().c_str(), NULL, 16);
+		
+		// Make sure the checksum calculated from the message is the
+		// same as the one given in the message
+		if ( calculated_checksum != given_checksum ) {
+			printf("PyCubed: message of type '%s' received, but calculated checksum 0x%02x does not "
+				   "match the given one (0x%02x). Message will be discarded.\n",
+				   message_type_str.c_str(), calculated_checksum, given_checksum);
+		}
 		
 		// Remove the checksum from the argument list
 		argument_strings.pop_back();
@@ -309,4 +333,13 @@ bool PyCubed::Handler_PWR(std::vector<std::string> args, PyCubed &pycubed) {
 	return true;
 }
 
+char GetChecksum(const std::string &str) {
+	char checksum = 0;
+	
+	// Compute a simple checksum by XOR-ing all characters together
+	for (char c : str)
+		checksum ^= c;
+	
+	return checksum;
+}
 
