@@ -24,4 +24,26 @@ Below is a table showing the temperatures various events occur at.
 |     10           | Heater Enable  |
 |     20           | Heater Disable |
 
+## Configuration
 
+The JSON [configuration file](https://github.com/hsfl/artemis/blob/dev/software/BeagleBone/beaglebone/include/config/heaters.json) provides a method of altering the behavior of the agent. A list of sensors and their enable/disable
+temperatures can be used to determine when the heater is enabled or disabled.
+
+The default configuration using only the battery temperature sensor is shown below. Note that the `source` field
+corresponds to the COSMOS temperature property of the sensor in question.
+
+```json
+{
+	"name": "heater",
+	"switch": "sw1",
+	"pulse_time": 5,
+	"sensors": [
+		{
+			"name": "temp_batt",
+			"source": "device_tsen_temp_004",
+			"enable_temp": 10,
+			"disable_temp": 20
+		}
+	]
+}
+```

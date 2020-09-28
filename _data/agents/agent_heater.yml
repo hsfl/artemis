@@ -16,16 +16,23 @@ diagram:
 
 # Request table
 requests:
-  - name: "Heater Control"
-    usage: "state [on | off]"
-    aliases: ["state", "set", "get"]
-    brief: Enables, disables, or displays information for the heater device.
-    note: |
-      The argument is optional:
-      * If `on` is given, the agent will turn on the heater
-      * If `off` is given, the agent will turn off the heater.
+  - name: "Enable Heater"
+    usage: "on"
+    aliases: ["enable"]
+    brief: Enables the heater device.
+    note: ""
 
-      If this argument is not supplied, the status of the heater will be returned.
+  - name: "Disable Heater"
+    usage: "off"
+    aliases: ["disable"]
+    brief: Disables the heater device.
+    note: ""
+
+  - name: "Get Heater State"
+    usage: "get"
+    aliases:
+    brief: Returns the current state of the heater.
+    note: "Returns either `on` or `off`"
 
 
 
@@ -45,11 +52,6 @@ cosmos_devices:
         cosmos_name: "enabled"
         storage_type: "bool"
         description: "`true` if the device is enabled"
-        
-      - name: "Voltage (V)"
-        cosmos_name: "volt"
-        storage_type: "float"
-        description: "The voltage supplied"
 
 # Node Property table
 # cosmos_node:

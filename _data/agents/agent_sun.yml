@@ -16,17 +16,19 @@ diagram:
 
 # Request table
 requests:
-  - name: "Sensor Status"
-    usage: "sensor <name>"
-    brief: Returns the status of a given sensor.
+  - name: "Sensor Lux"
+    usage: "sensor_name:lux"
+    brief: Returns the lux of a given sensor.
     note: >
-      The argument `name` corresponds to the
+      The argument `sensor_name` corresponds to the
       [name of the sun sensor](#sensor-names).
 
-  - name: "List Sensors"
-    usage: "list"
-    brief: Lists all available sun sensors.
-    note: ""
+  - name: "Sensor Connection"
+    usage: "sensor_name:connected"
+    brief: Checks whether or not the given sensor is connected.
+    note: >
+      The argument `sensor_name` corresponds to the
+      [name of the sun sensor](#sensor-names).
 
 
 
@@ -43,15 +45,15 @@ cosmos_devices:
         storage_type: ["double", "Time"]
         description: "The UTC timestamp as a Modified Julian Day"
         
-      - name: "Illuinance (lux)"
+      - name: "Illuminance (lux)"
         cosmos_name: "temp"
         storage_type: "float"
         description: "The illuminance"
         
-      - name: "Voltage (V)"
-        cosmos_name: "volt"
-        storage_type: "float"
-        description: "The voltage supplied"
+      - name: "Enabled"
+        cosmos_name: "enabled"
+        storage_type: "bool"
+        description: "True if the sensor is enabled"
 
   # =================== -X ===================
   - name: "Sun Sensor (-X)"
@@ -63,15 +65,15 @@ cosmos_devices:
         storage_type: ["double", "Time"]
         description: "The UTC timestamp as a Modified Julian Day"
         
-      - name: "Illuinance (lux)"
+      - name: "Illuminance (lux)"
         cosmos_name: "temp"
         storage_type: "float"
         description: "The illuminance"
         
-      - name: "Voltage (V)"
-        cosmos_name: "volt"
-        storage_type: "float"
-        description: "The voltage supplied"
+      - name: "Enabled"
+        cosmos_name: "enabled"
+        storage_type: "bool"
+        description: "True if the sensor is enabled"
 
   # =================== +Y ===================
   - name: "Sun Sensor (+Y)"
@@ -83,15 +85,15 @@ cosmos_devices:
         storage_type: ["double", "Time"]
         description: "The UTC timestamp as a Modified Julian Day"
         
-      - name: "Illuinance (lux)"
+      - name: "Illuminance (lux)"
         cosmos_name: "temp"
         storage_type: "float"
         description: "The illuminance"
         
-      - name: "Voltage (V)"
-        cosmos_name: "volt"
-        storage_type: "float"
-        description: "The voltage supplied"
+      - name: "Enabled"
+        cosmos_name: "enabled"
+        storage_type: "bool"
+        description: "True if the sensor is enabled"
 
   # =================== -Y ===================
   - name: "Sun Sensor (-Y)"
@@ -103,15 +105,15 @@ cosmos_devices:
         storage_type: ["double", "Time"]
         description: "The UTC timestamp as a Modified Julian Day"
         
-      - name: "Illuinance (lux)"
+      - name: "Illuminance (lux)"
         cosmos_name: "temp"
         storage_type: "float"
         description: "The illuminance"
         
-      - name: "Voltage (V)"
-        cosmos_name: "volt"
-        storage_type: "float"
-        description: "The voltage supplied"
+      - name: "Enabled"
+        cosmos_name: "enabled"
+        storage_type: "bool"
+        description: "True if the sensor is enabled"
 
   # =================== +Z ===================
   - name: "Sun Sensor (+Z)"
@@ -123,15 +125,15 @@ cosmos_devices:
         storage_type: ["double", "Time"]
         description: "The UTC timestamp as a Modified Julian Day"
         
-      - name: "Illuinance (lux)"
+      - name: "Illuminance (lux)"
         cosmos_name: "temp"
         storage_type: "float"
         description: "The illuminance"
         
-      - name: "Voltage (V)"
-        cosmos_name: "volt"
-        storage_type: "float"
-        description: "The voltage supplied"
+      - name: "Enabled"
+        cosmos_name: "enabled"
+        storage_type: "bool"
+        description: "True if the sensor is enabled"
 
   # =================== -Z ===================
   - name: "Sun Sensor (-Z)"
@@ -143,15 +145,15 @@ cosmos_devices:
         storage_type: ["double", "Time"]
         description: "The UTC timestamp as a Modified Julian Day"
         
-      - name: "Illuinance (lux)"
+      - name: "Illuminance (lux)"
         cosmos_name: "temp"
         storage_type: "float"
         description: "The illuminance"
         
-      - name: "Voltage (V)"
-        cosmos_name: "volt"
-        storage_type: "float"
-        description: "The voltage supplied"
+      - name: "Enabled"
+        cosmos_name: "enabled"
+        storage_type: "bool"
+        description: "True if the sensor is enabled"
 
 # Node Property table
 # cosmos_node:

@@ -26,3 +26,50 @@ Below is a table showing which sensor names correspond to which physical devices
 | `ss_minusy`    |     3     | -Y Sun Sensor   |       TODO       |
 | `ss_plusz`     |     4     | +Z Sun Sensor   |       TODO       |
 | `ss_minusz`    |     5     | -Z Sun Sensor   |       TODO       |
+
+## Configuration
+
+The JSON [configuration file](https://github.com/hsfl/artemis/blob/dev/software/BeagleBone/beaglebone/include/config/sun_sensors.json) provides a method of altering the behavior of the agent. This configuration file contains a list
+of all sun sensors to be used and their properties, such as their names, I2C bus, device address, and physical
+orientation. The default configuration is shown below:
+
+```json
+[
+	{
+		"name": "plus_x",
+		"bus": 0,
+		"address": 80,
+		"orientation": [1,0,0]
+	},
+	{
+		"name": "minus_x",
+		"bus": 0,
+		"address": 81,
+		"orientation": [-1,0,0]
+	},
+	{
+		"name": "plus_y",
+		"bus": 0,
+		"address": 82,
+		"orientation": [0,1,0]
+	},
+	{
+		"name": "minus_y",
+		"bus": 0,
+		"address": 83,
+		"orientation": [0,-1,0]
+	},
+	{
+		"name": "plus_z",
+		"bus": 0,
+		"address": 84,
+		"orientation": [0,0,1]
+	},
+	{
+		"name": "minus_z",
+		"bus": 0,
+		"address": 85,
+		"orientation": [0,0,-1]
+	}
+]
+```
