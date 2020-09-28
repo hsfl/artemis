@@ -87,6 +87,11 @@ namespace cubesat {
 			return utc_mjd <= other.utc_mjd;
 		}
 		
+		
+		inline static void Sleep(double seconds) {
+			COSMOS_SLEEP(seconds);
+		}
+		
 	private:
 		double utc_mjd;
 	};

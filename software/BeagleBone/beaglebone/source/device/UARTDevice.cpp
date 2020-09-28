@@ -31,7 +31,7 @@ UARTDevice::UARTDevice(unsigned int device, unsigned int baud_rate) : device(dev
 }
 
 
-int UARTDevice::Open(){
+int UARTDevice::Open() {
 	
 	FILE *uart;
 	char buf[11] = "/dev/tty";
@@ -39,21 +39,24 @@ int UARTDevice::Open(){
 
 	// Open the slot for UART
 	// Try for bone_capemgr.9 first
-	uart = fopen(BONEPATH_9, "w");
-	if(uart == NULL){
-		//printf("bone_capemgr.9 doesn't exist. Trying bone_capemgr.8");
-		uart = fopen(BONEPATH_8, "w");
-		if(uart == NULL){
-			//printf("slots didn't open\n");
-			return -1;
-		}
-	}
-	fseek(uart,0,SEEK_SET);
+//	uart = fopen(BONEPATH_9, "w");
+//	if ( uart == NULL ) {
+//		printf("bone_capemgr.9 doesn't exist. Trying bone_capemgr.8");
+		
+//		uart = fopen(BONEPATH_8, "w");
+//		if ( uart == NULL ) {
+//			printf("Slots didn't open\n");
+//			return -1;
+//		}
+//	}
+//	fseek(uart,0,SEEK_SET);
 	
-	fprintf(uart, "BB-UART1");
-	strcat(buf, "O0");
-	fflush(uart);
-	fclose(uart);
+	
+	
+//	fprintf(uart, "BB-UART1");
+	strcat(buf, "O1");
+//	fflush(uart);
+//	fclose(uart);
 
 	//  Open uart port for UART tx/rx
 	file = open(buf, O_RDWR | O_NOCTTY);
