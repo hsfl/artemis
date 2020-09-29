@@ -1,5 +1,6 @@
 
 #include "CubeSat.h"
+#include "SimpleAgent/SimpleAgent.h"
 #include "device/PyCubed.h"
 
 #include <iostream>

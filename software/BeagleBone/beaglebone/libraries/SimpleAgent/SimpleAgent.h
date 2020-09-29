@@ -28,13 +28,13 @@
 #include "support/jsonclass.h"
 
 #include "cubesat_defs.h"
-#include "utility/Exceptions.h"
-#include "utility/RemoteAgent.h"
-#include "utility/Device.h"
-#include "utility/StringTools.h"
-#include "utility/TimeTools.h"
-#include "utility/AgentRequest.h"
-#include "utility/DeviceRequest.h"
+#include "Exceptions.h"
+#include "RemoteAgent.h"
+#include "Device.h"
+#include "StringTools.h"
+#include "TimeTools.h"
+#include "AgentRequest.h"
+#include "DeviceRequest.h"
 
 #include <functional>
 #include <unordered_map>

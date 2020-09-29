@@ -1,19 +1,27 @@
 
+#include "SimpleAgent/SimpleAgent.h"
+#include "device/PyCubed.h"
+
 #include <iostream>
 #include <fstream>
 #include  <iomanip>
-#include "device/temp_sensors.h"
-#include "support/configCosmos.h"
-#include "device/PyCubed.h"
+
+
+
  
  
 using namespace std;
 using namespace cubesat;
 
+SimpleAgent *agent;
+
 PyCubed *pycubed;
 bool shutdown_received = false;
 
 void Shutdown();
+
+// Request to send a message to the PyCubed
+bool SendMessage(CapturedInput input);
 
 
 int main(int argc, char ** argv) {
@@ -27,41 +35,56 @@ int main(int argc, char ** argv) {
 			break;
 		default:
 			printf("Usage: pycubed_test uart_num baud_rate\n");
-			printf("Ex: pycubed_test 4 9600\n");
-			return 1;
+			printf("Defaulting to uart=1 and baud_rate=9600");
+			uart_device = 1;
+			baud_rate = 9600;
 	}
 	
+	// Set up the agent
+	agent = new SimpleAgent("pycubed");
+	agent->SetLoopPeriod(0.5);
+	agent->AddRequest("send", SendMessage, "Send a message to the PyCubed", "Usage: send <message type> <arg1> <arg2...>");
+	agent->Finalize();
 	
-	
+	// Connect to the PyCubed
 	pycubed = new PyCubed(uart_device, baud_rate);
 	pycubed->SetShutdownCallback(Shutdown);
 	
 	printf("Attempting to connect to PyCubed on UART%d with baud %d\n", uart_device, baud_rate);
 	
-	const int kConnectAttempts = 5;
+	
 	
 	// Attempt to connect to the PyCubed
+	const int kConnectAttempts = 5;
 	for (int i = 0; i < kConnectAttempts; ++i) {
+		
+		// Check if the device can be opened
 		if ( pycubed->Open() < 0 ) {
 			printf("Failed to connect to PyCubed. Trying again...\n");
 			pycubed->Close();
-			continue;
+			Time::Sleep(1);
 		}
 		else {
-			printf("Connected to PyCubed\n");
+			printf("Successfully connected to PyCubed\n");
 			break;
 		}
-		
-		COSMOS_SLEEP(1);
 	}
+	
 	
 	// Exit if the PyCubed is not open
 	if ( !pycubed->IsOpen() ) {
+		
 		// Exit upon failure to connect
 		printf("Fatal: could not connect to PyCubed\n");
 		delete pycubed;
+		agent->Shutdown();
+		delete agent;
 		exit(1);
 	}
+	
+	
+	
+	
 	
 	
 	
@@ -73,14 +96,18 @@ int main(int argc, char ** argv) {
 	
 	printf("======================================\n");
 	
-	const int kPollCount = 5;
 	
-	// Test polling messages
-	for (int i = 0; i < kPollCount; ++i) {
-		printf("Polling messages from PyCubed (%d/%d)\n", i, kPollCount);
+	while ( agent->StartLoop() ) {
+		printf("Polling messages from PyCubed\n");
 		
-		for (; pycubed->ReceiveNextMessage();) {
-			
+		// Receive messages from the PyCubed
+		int messages_received = 0;
+		while ( pycubed->ReceiveMessages() ) {
+			++messages_received;
+		}
+		
+		if ( messages_received == 0 ) {
+			continue;
 		}
 		
 		// Retrieve device info
@@ -124,20 +151,20 @@ int main(int argc, char ** argv) {
 		printf("\tSystem Current: %.2f mA\n", power.sys_current);
 		printf("======================================\n");
 		
-		COSMOS_SLEEP(1);
+		Time::Sleep(2);
 	}
 	
 	// Test startup confirmation signal
 	printf("Sending startup confirmation signal\n\n");
 	pycubed->StartupConfirmation();
 	
-	COSMOS_SLEEP(2);
+	Time::Sleep(1);
 	
 	// Test kill radio signal
 	printf("Sending 'kill radio' signal\n\n");
 	pycubed->KillRadio();
 	
-	COSMOS_SLEEP(2);
+	Time::Sleep(1);
 	
 	// Test shutdown signal
 	printf("Waiting for shutdown signal...\n");
@@ -151,7 +178,7 @@ int main(int argc, char ** argv) {
 		if ( !shutdown_received )
 			printf("No shutdown signal received\n");
 		
-		COSMOS_SLEEP(1);
+		Time::Sleep(1);
 	}
 	
 	if ( !shutdown_received ) {
@@ -161,6 +188,7 @@ int main(int argc, char ** argv) {
 	
 	printf("Test complete. Exiting now.\n");
 	delete pycubed;
+	delete agent;
 	
 	
 	return 0;
@@ -176,5 +204,19 @@ void Shutdown() {
 	pycubed->Handoff();
 	
 	COSMOS_SLEEP(2);
+}
+
+bool SendMessage(CapturedInput input) {
+	std::vector<std::string> arguments;
+	istringstream iss(input.input);
+	string arg;
+	
+	while ( getline(iss, arg, ' ') )
+		arguments.push_back(arg);
+	
+	string message_type = arguments[0];
+	arguments.erase(arguments.begin());
+	
+	return pycubed->SendMessage(message_type, arguments);
 }
 

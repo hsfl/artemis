@@ -1,6 +1,6 @@
 
 // Internal headers
-#include "utility/SimpleAgent.h"
+#include "SimpleAgent/SimpleAgent.h"
 
 #include <iostream>
 #include <fstream>

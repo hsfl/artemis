@@ -6,9 +6,9 @@
 #include <cmath>
 #include <vector>
 
-#include "utility/RequestHelper.h"
-#include "utility/Exceptions.h"
-#include "utility/StringTools.h"
+#include "RequestHelper.h"
+#include "Exceptions.h"
+#include "StringTools.h"
 
 namespace cubesat {
 	

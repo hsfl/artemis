@@ -6,9 +6,9 @@
 #include "agent/agentclass.h"
 #include "support/jsonlib.h"
 #include "support/jsonclass.h"
-#include "utility/Types.h"
+#include "Types.h"
 
-#include "utility/StringTools.h"
+#include "StringTools.h"
 
 
 //! Use this to add support for a new property

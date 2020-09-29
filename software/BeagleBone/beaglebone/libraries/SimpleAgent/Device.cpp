@@ -1,7 +1,7 @@
 
-#include "utility/Device.h"
+#include "Device.h"
 
-#include "utility/SimpleAgent.h"
+#include "SimpleAgent.h"
 
 using namespace std;
 using namespace cubesat;

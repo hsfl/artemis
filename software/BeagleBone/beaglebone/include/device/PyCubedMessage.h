@@ -7,7 +7,7 @@
 #include <string>
 #include <cstring>
 #include "support/datalib.h"
-#include "utility/Types.h"
+#include "SimpleAgent/Types.h"
 
 #define PYCUBED_BEAGLEBONE_STATUS_MSGTYPE "BST"
 #define PYCUBED_PYCUBED_STATUS_MSGTYPE "PST"

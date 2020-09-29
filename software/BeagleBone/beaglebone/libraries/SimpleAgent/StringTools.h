@@ -4,7 +4,7 @@
 
 #include <string>
 #include "math/vector.h"
-#include "utility/Types.h"
+#include "Types.h"
 
 
 namespace cubesat {

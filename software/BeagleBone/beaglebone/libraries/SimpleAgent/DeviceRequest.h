@@ -5,8 +5,8 @@
 #include <functional>
 #include <vector>
 
-#include "utility/RequestHelper.h"
-#include "utility/Exceptions.h"
+#include "RequestHelper.h"
+#include "Exceptions.h"
 
 namespace cubesat {
 	

@@ -9,10 +9,10 @@
 #include "support/jsonclass.h"
 
 #include "cubesat_defs.h"
-#include "utility/Exceptions.h"
-#include "utility/DeviceDetail.h"
-#include "utility/StringTools.h"
-#include "utility/DeviceRequest.h"
+#include "Exceptions.h"
+#include "DeviceDetail.h"
+#include "StringTools.h"
+#include "DeviceRequest.h"
 
 #include <unordered_map>
 
