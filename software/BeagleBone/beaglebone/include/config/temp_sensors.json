@@ -1,21 +1,22 @@
+R"=====(
 [
 	{
 		"name": "eps",
 		"type": "sensor",
 		"bus": 0,
-		"address": "0x51",
+		"cs": 81,
 	},
 	{
 		"name": "obc",
 		"type": "sensor",
 		"bus": 0,
-		"address": "0x51",
+		"cs": 81,
 	},
 	{
 		"name": "raspi",
 		"type": "sensor",
 		"bus": 0,
-		"address": "0x51",
+		"cs": 81,
 	},
 	{
 		"name": "battery",
@@ -28,3 +29,4 @@
 		"key": "device_imu_temp_000"
 	}
 ]
+)====="

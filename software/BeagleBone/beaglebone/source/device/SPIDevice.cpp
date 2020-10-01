@@ -66,21 +66,20 @@ SPIDevice::SPIDevice(unsigned int bus, unsigned int device) : file(-1), bus(bus)
  * This method opens the file connection to the SPI device.
  * @return 0 on a successful open of the file
  */
-int SPIDevice::Open(){
+bool SPIDevice::Open(){
 	
 	if ( (this->file = ::open(filename.c_str(), O_RDWR)) < 0 ) {
 		perror("Failed to open SPI device");
-		return -1;
+		return false;
 	}
 	
 	
 	if ( SetMode(this->mode) < 0 || SetSpeed(this->speed) < 0 || SetBitsPerWord(this->bits) < 0 ) {
 		close(file);
-		return -1;
+		return false;
 	}
 	
-	is_open = true;
-	return 0;
+	return (is_open = true);
 }
 
 /**

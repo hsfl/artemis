@@ -49,7 +49,7 @@ namespace cubesat {
 		SPIDevice(unsigned int bus, unsigned int device);
 		virtual ~SPIDevice();
 		
-		virtual int Open();
+		virtual bool Open();
 		virtual void Close();
 		
 		inline bool IsOpen() const {

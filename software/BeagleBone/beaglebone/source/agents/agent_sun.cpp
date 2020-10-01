@@ -194,7 +194,9 @@ void UpdateSensor(const std::string &name) {
 	}
 }
 
-
+// |----------------------------------------------|
+// |                    Requests                  |
+// |----------------------------------------------|
 
 float Request_Sensor_Lux(SunSensor *sensor) {
 	return sensor->temperature;

@@ -108,7 +108,7 @@ namespace cubesat {
 		virtual ~ADT7311();
 		
 		
-		virtual int Open() override;
+		virtual bool Open() override;
 		
 		/**
 		 * @brief Reads and stores information from the device.

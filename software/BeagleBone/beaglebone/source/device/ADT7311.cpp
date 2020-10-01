@@ -20,19 +20,19 @@ ADT7311::~ADT7311() {
 	
 }
 
-int ADT7311::Open() {
+bool ADT7311::Open() {
 	
-	int status = SPIDevice::Open();
-	
-	if ( IsOpen() ) {
+	if ( SPIDevice::Open() ) {
 		// Set the IO mode
 		SetMode(SPIMODE::MODE2); // Need to verify the mode
 		
 		// Set the maximum data transfer speed
 		SetSpeed(MAX_SPEED);
+		
+		return true;
 	}
 	
-	return status;
+	return false;
 }
 
 
