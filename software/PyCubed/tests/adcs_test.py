@@ -83,7 +83,7 @@ print('Accelerometer power mode: ' + str(cubesat.IMU.accel_powermode))
 print('=' * 40)
 
 
-for i in range(10):
+while True:
 	
 	# Get readings
 	temp = imu.GetTemp()
