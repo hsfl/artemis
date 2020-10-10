@@ -91,23 +91,16 @@ You can now delete the `artemis.box` file you downloaded if you wish.
 
 ### 2.2 Create the Virtual Machine
 
+Once the install is finished, you can move on to the next step
 
-
-{% include note.html content="The previous command will create a new disk image, located in a different folder. Use the filepath and the contents in the folder below as a guide (your files may be in a folder called `.vagrant.d`). For the next command to work, you must be in the correct folder in your Command window. " %} {% include image.html file="/resources/tutorials/setup/part2/folder_location.png" width="100%" %}
-
-
-
-Enter the following commands, replacing `PATH/TO/VM` with the correct folder.
+Enter the following command:
 
 ```bash
-$ cd PATH/TO/VM
 $ vagrant init artemis
 ```
 
-Download the `Vagrantfile` file from
-[here](https://drive.google.com/file/d/101mCavBwqa-DI9gCteU7ywSimwF4yU0Z/view?usp=sharing)
-and copy it to the folder you previously chose,
-overwriting the existing `Vagrantfile` file.
+Download the "Vagrantfile" file from [here](https://drive.google.com/file/d/101mCavBwqa-DI9gCteU7ywSimwF4yU0Z/view?usp=sharing). You will have to find the folder where the files have been installed and copy the "Vagrantfile" to the folder you previously chose, overwriting the existing "Vagrantfile" file. It will likely be the same folder your Command prompt was in at the time of the `vagrant init artemis` command.
+
 The new Vagrantfile will set up the virtual machine with necessary virtualization settings.
 
 ### 2.3 Start the Virtual Machine
@@ -126,8 +119,6 @@ After a minute or so should see the virtual machine boot. Login with the passwor
 
 
 {% include image.html file="/resources/tutorials/setup/part2/vagrant_login.png" width="100%" %}
-
-
 
 Open a terminal inside the virtual machine (<kbd>Control</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd> or the
 black box icon on the left-hand dock) and enter the following command:
