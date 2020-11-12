@@ -158,10 +158,6 @@ int main() {
 
 void UpdateSensor(const std::string &name) {
 	
-	cout << "A" << endl;
-	cout << name << endl;
-	
-	
 	// Fetch some information
 	TemperatureSensor *sensor = sensors[name];
 	bool is_physical = sensor->GetCustomProperty<bool>("physical");;
@@ -169,12 +165,9 @@ void UpdateSensor(const std::string &name) {
 	// Update the timestamp
 	sensor->utc = Time::Now();
 	
-	cout << "B" << endl;
-	
 	// Check whether the device is physical
 	if ( is_physical ) {
 		
-		cout << "C" << endl;
 		ADT7311 *handler = sensor->GetCustomProperty<ADT7311*>("handler");
 		
 		// We compare against the manufacturer ID to see if the sensors are connected
