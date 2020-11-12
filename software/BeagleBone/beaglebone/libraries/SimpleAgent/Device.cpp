@@ -10,6 +10,11 @@ using namespace cubesat;
 
 int32_t cubesat::DeviceRequestProxy(string &request_str, string &response, Agent *agent_) {
 	
+	// The request string is messed up for some reason, so we need to fix it:
+	request_str.assign(request_str.c_str(), strlen(request_str.c_str()));
+	
+	cout << request_str << endl;
+	
 	// Split the request string into arguments
 	std::vector<std::string> arguments;
 	istringstream iss(request_str);

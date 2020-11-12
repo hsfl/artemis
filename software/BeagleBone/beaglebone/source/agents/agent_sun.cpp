@@ -1,6 +1,7 @@
 
 // Internal headers
 #include "SimpleAgent/SimpleAgent.h"
+#include "SimpleAgent/DeviceJSON.h"
 #include "device/OPT3001.h"
 
 #include "rapidjson/document.h"
@@ -114,6 +115,8 @@ int main() {
 		sensor->AddRequest("connected", Request_Sensor_Connected, "Returns true if the sun sensor is connected");
 		sensor->AddRequest("lux", Request_Sensor_Lux, "Returns the lux of the sun sensor");
 		
+		// Store sensor
+		sensors[name] = sensor;
 	}
 	
 	agent->Finalize();
@@ -203,6 +206,7 @@ float Request_Sensor_Lux(SunSensor *sensor) {
 	return sensor->temperature;
 }
 bool Request_Sensor_Connected(SunSensor *sensor) {
+	cout << "Hi" << endl;
 	OPT3001 *handler = sensor->GetCustomProperty<OPT3001*>("handler");
 	return handler != nullptr && handler->IsOpen();
 }
@@ -224,6 +228,8 @@ string Request_Sensor(string sensor_name) {
 
 string Request_List() {
 	
+	DeviceSerializer serializer;
+	
 	SunSensor *sensor;
 	
 	stringstream ss;
@@ -231,6 +237,8 @@ string Request_List() {
 	
 	for (auto pair : sensors) {
 		sensor = pair.second;
+		
+		cout << pair.first << endl;
 		
 		ss << "\t{" << std::endl;
 		ss << "\t\t\"name\": \"" << pair.first << "\", " << std::endl;
