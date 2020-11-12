@@ -251,6 +251,15 @@ void InitPyCubed() {
 	pycubed->SetCustomProperty<bool>("sent_startup_confirmation", false);
 	pycubed->SetCustomProperty<PyCubed*>("handler", handler);
 	
+	agent->GetLog().RegisterDevice("cpu", pycubed)
+			.RegisterProperty("utc", pycubed->utc)
+			.RegisterProperty("memory_use", pycubed->memory_usage)
+			.RegisterProperty("voltage", pycubed->voltage)
+			.RegisterProperty("current", pycubed->current)
+			.RegisterProperty("power", pycubed->power)
+			.RegisterProperty("up_time", pycubed->up_time)
+			.RegisterProperty("temperature", pycubed->temperature);
+	
 	// Add the battery pack
 	battery = agent->NewDevice<Battery>("battery");
 	battery->Post(battery->utc = Time::Now());
@@ -263,6 +272,16 @@ void InitPyCubed() {
 	battery->Post(battery->current = 0);
 	battery->AddRequest("charge", +[](Battery *battery) -> float { return battery->charge; }, "Returns the battery charge");
 	
+	agent->GetLog().RegisterDevice("battery", battery)
+			.RegisterProperty("utc", battery->utc)
+			.RegisterProperty("voltage", battery->voltage)
+			.RegisterProperty("current", battery->current)
+			.RegisterProperty("power", battery->power)
+			.RegisterProperty("temperature", battery->temperature)
+			.RegisterProperty("charge", battery->charge)
+			.RegisterProperty("percentage", battery->percentage)
+			.RegisterProperty("capacity", battery->capacity);
+	
 	
 	// Add the IMU
 	imu = agent->NewDevice<IMU>("imu");
@@ -271,6 +290,15 @@ void InitPyCubed() {
 	imu->Post(imu->acceleration = Vec3());
 	imu->Post(imu->magnetic_field = Vec3());
 	imu->Post(imu->angular_velocity	= Vec3());
+	agent->GetLog().RegisterDevice("imu", imu)
+			.RegisterProperty("utc", imu->utc)
+			.RegisterProperty("voltage", imu->voltage)
+			.RegisterProperty("current", imu->current)
+			.RegisterProperty("power", imu->power)
+			.RegisterProperty("temperature", imu->temperature)
+			.RegisterProperty("acceleration", imu->acceleration)
+			.RegisterProperty("magnetic_field", imu->magnetic_field)
+			.RegisterProperty("angular_velocity", imu->angular_velocity);
 	
 	// Add the GPS
 	gps = agent->NewDevice<GPS>("gps");
@@ -278,6 +306,14 @@ void InitPyCubed() {
 	gps->Post(gps->location = Location());
 	gps->Post(gps->velocity = Vec3());
 	gps->Post(gps->satellites_used = 0);
+	agent->GetLog().RegisterDevice("gps", gps)
+			.RegisterProperty("utc", gps->utc)
+			.RegisterProperty("voltage", gps->voltage)
+			.RegisterProperty("current", gps->current)
+			.RegisterProperty("power", gps->power)
+			.RegisterProperty("location", gps->location)
+			.RegisterProperty("velocity", gps->velocity)
+			.RegisterProperty("satellites_used", gps->satellites_used);
 }
 
 bool ConnectPyCubed() {

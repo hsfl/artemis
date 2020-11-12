@@ -35,6 +35,7 @@
 #include "TimeTools.h"
 #include "AgentRequest.h"
 #include "DeviceRequest.h"
+#include "Telemetry.h"
 
 #include <functional>
 #include <unordered_map>
@@ -229,6 +230,23 @@ namespace cubesat {
 		 */
 		inline RemoteAgent FindAgent(const std::string &name, float wait_sec = 2.0f, bool crash_if_failed = false) {
 			return FindAgent(name, this->nodeName, wait_sec, crash_if_failed);
+		}
+		
+		
+		/**
+		 * @brief Returns the telemetry log for this agent
+		 * @return The telemetry log
+		 */
+		inline TelemetryLog& GetLog() {
+			return telem_log;
+		}
+		
+		/**
+		 * @brief Returns the telemetry log for this agent
+		 * @return The telemetry log
+		 */
+		inline const TelemetryLog& GetLog() const {
+			return telem_log;
 		}
 		
 		//===============================================================
@@ -506,8 +524,11 @@ namespace cubesat {
 		//! Indicates whether the first iteration of the main loop has occurred
 		bool loop_started;
 		
-		
+		//! The last error raised by a request
 		std::string last_request_error;
+		
+		//! The telemetry log for this agent
+		TelemetryLog telem_log;
 		
 		//! The singleton instance of the SimpleAgent class
 		static SimpleAgent *instance;

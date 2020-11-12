@@ -7,7 +7,7 @@ using namespace cubesat;
 SimpleAgent* SimpleAgent::instance = nullptr;
 
 SimpleAgent::SimpleAgent(const std::string &name, std::string node,
-			bool crash_if_not_open) : Agent(node, name) {
+			bool crash_if_not_open) : Agent(node, name), telem_log(name, node) {
 	
 	// Throw an exception if another SimpleAgent already is running
 	if ( SimpleAgent::instance != nullptr ) {
@@ -27,6 +27,11 @@ SimpleAgent::SimpleAgent(const std::string &name, std::string node,
 		AddRequest("print", _Request_DebugPrint, "Prints all added devices and requests");
 	}
 	
+	// Reset the telemetry log
+	telem_log.Purge();
+	
+	
+	// Set some initial loop properties
 	this->loop_started = false;
 	SetLoopPeriod(1);
 }
@@ -93,6 +98,9 @@ bool SimpleAgent::StartLoop() {
 	
 	// Update the node timestamp
 	this->cinfo->node.utc = currentmjd();
+	
+	// Flush the telemetry log
+	telem_log.WriteEntries();
 	
 	// Start the active loop
 	this->start_active_loop();

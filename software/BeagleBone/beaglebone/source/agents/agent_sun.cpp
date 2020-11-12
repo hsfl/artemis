@@ -39,8 +39,9 @@ void UpdateSensor(const std::string &name);
 void SetSensorPower(bool enabled);
 
 
-// Request callbacks
-
+// |----------------------------------------------|
+// |                   Requests                   |
+// |----------------------------------------------|
 //! Returns the lux read by a sensor
 float Request_Sensor_Lux(SunSensor *sensor);
 //! Returns whether or not a sensor can be reached
@@ -121,6 +122,16 @@ int main() {
 		
 		// Store sensor
 		sensors[name] = sensor;
+		
+		
+		// Add the sun sensor to the telemetry log
+		agent->GetLog().RegisterDevice(name, sensor)
+				.RegisterProperty("utc", sensor->utc)
+				.RegisterProperty("lux", sensor->temperature)
+				.RegisterProperty("enabled", sensor->enabled)
+				.RegisterProperty("voltage", sensor->voltage)
+				.RegisterProperty("current", sensor->current)
+				.RegisterProperty("power", sensor->power);
 	}
 	
 	agent->Finalize();

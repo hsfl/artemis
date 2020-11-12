@@ -4,7 +4,8 @@
 set(SIMPLEAGENT_SRC
     Device.cpp
     SimpleAgent.cpp
-	RemoteAgent.cpp)
+	RemoteAgent.cpp
+	Telemetry.cpp)
 
 set(SIMPLEAGENT_HEADERS
     AgentRequest.h

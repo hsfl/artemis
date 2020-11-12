@@ -75,7 +75,21 @@ int main(int argc, char** argv) {
 	pycubed = agent->NewDevice<CustomDevice>("agent_pycubed");
 	switches = agent->NewDevice<CustomDevice>("agent_switch");
 	
+	
+	// Initialize the telemetry log
+	agent->GetLog().RegisterDevice("raspi", raspi)
+			.RegisterProperty("utc", raspi->utc)
+			.RegisterProperty("load", raspi->load)
+			.RegisterProperty("memory_use", raspi->memory_usage)
+			.RegisterProperty("boot_count", raspi->boot_count)
+			.RegisterProperty("up_time", raspi->up_time)
+			.RegisterProperty("enabled", raspi->enabled)
+			.RegisterProperty("voltage", raspi->voltage)
+			.RegisterProperty("current", raspi->current)
+			.RegisterProperty("enabled", raspi->enabled);
+	
 	agent->Finalize();
+	
 	
 	// Add requests
 	agent->AddRequest({"get_data", "agent_data"}, Request_GetData, "Prints data collected from other agents");
@@ -83,7 +97,6 @@ int main(int argc, char** argv) {
 	agent->AddRequest({"ping", "is_up"}, Request_Ping, "Checks if the Raspberry Pi is up");
 	agent->AddRequest({"shutdown_raspi", "end"}, Request_Shutdown, "Attempts to shut down the Raspberry Pi");
 	agent->AddRequest("set_soh", Request_SetSOH, "Sets the state of health for a payload script");
-	
 	agent->DebugPrint();
 	
 	

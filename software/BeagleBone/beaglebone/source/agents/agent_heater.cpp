@@ -114,6 +114,7 @@ int main(int argc, char** argv) {
 	agent->AddRequest("get", Request_Get, "Returns the state of the heater");
 	agent->AddRequest("config", Request_Config, "Returns the heater configuration");
 	
+	
 	// Parse the configuration
 	heater_config.Parse(heater_config_json);
 	heater_switch = heater_config["switch"].GetString();
@@ -140,6 +141,14 @@ int main(int argc, char** argv) {
 		// Store the dependency key
 		agent_temp_keys.push_back(dependency.source);
 	}
+	
+	// Initialize the telemetry log
+	agent->GetLog().RegisterDevice("heater", heater)
+			.RegisterProperty("utc", heater->utc)
+			.RegisterProperty("enabled", heater->enabled)
+			.RegisterProperty("voltage", heater->voltage)
+			.RegisterProperty("current", heater->current)
+			.RegisterProperty("power", heater->power);
 	
 	// Let the agent know all the devices have been set up
 	agent->Finalize();

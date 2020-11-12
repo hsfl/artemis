@@ -122,6 +122,15 @@ int main(int argc, char** argv) {
 		
 		// Store the switch device by name
 		switches[switch_name] = sw;
+		
+		
+		// Add the switch to the telemetry log
+		agent->GetLog().RegisterDevice(switch_name, sw)
+				.RegisterProperty("utc", sw->utc)
+				.RegisterProperty("enabled", sw->enabled)
+				.RegisterProperty("voltage", sw->voltage)
+				.RegisterProperty("current", sw->current)
+				.RegisterProperty("power", sw->power);
 	}
 	
 	

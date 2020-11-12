@@ -114,6 +114,15 @@ int main() {
 		sensor->Post(sensor->utc = Time::Now());
 		sensor->Post(sensor->enabled = false);
 		sensor->Post(sensor->temperature = 0);
+		
+		// Add the temperature sensor to the telemetry log
+		agent->GetLog().RegisterDevice(name, sensor)
+				.RegisterProperty("utc", sensor->utc)
+				.RegisterProperty("enabled", sensor->enabled)
+				.RegisterProperty("temperature", sensor->temperature)
+				.RegisterProperty("voltage", sensor->voltage)
+				.RegisterProperty("current", sensor->current)
+				.RegisterProperty("power", sensor->power);
 	}
 	
 	// Finish up
