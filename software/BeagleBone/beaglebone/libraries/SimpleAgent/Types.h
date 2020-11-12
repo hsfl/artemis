@@ -42,6 +42,11 @@ namespace cubesat {
 			return sqrt(x * x + y * y + z * z);
 		}
 		
+		//! Conversion to string
+		inline std::string ToString() const {
+			return "[" + std::to_string(x) + "," + std::to_string(y) + "," + std::to_string(z) + "]";
+		}
+		
 		//! Conversion operator for rvector
 		inline operator rvector() const {
 			rvector value;
@@ -49,6 +54,11 @@ namespace cubesat {
 			value.col[1] = y;
 			value.col[2] = z;
 			return value;
+		}
+		
+		//! Conversion operator to string
+		inline operator std::string() const {
+			return ToString();
 		}
 		
 		//! Vector addition operator
@@ -117,7 +127,6 @@ namespace cubesat {
 			return x == other.x && y == other.y && z == other.z;
 		}
 		inline bool operator !=(const Vec3 &other) const {
-			// Thanks De Morgan!
 			return x != other.x || y != other.y || z != other.z;
 		}
 		inline double operator [](size_t index) const {
@@ -150,6 +159,15 @@ namespace cubesat {
 			value.lon = longitude;
 			value.h = altitude;
 			return value;
+		}
+		
+		//! Conversion to string
+		inline std::string ToString() const {
+			return "[" + std::to_string(latitude) + "," + std::to_string(longitude) + "," + std::to_string(altitude) + "]";
+		}
+		
+		inline operator std::string() const {
+			return ToString();
 		}
 	};
 	

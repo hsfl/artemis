@@ -82,6 +82,11 @@ namespace cubesat {
 			return (ValueType)*member_value;
 		}
 		
+		//! Retrives the value as a TEMPORARY(!!!) object
+		inline ValueType GetValue() {
+			return (ValueType)*this;
+		}
+		
 	private:
 		//! The agent used to access the COSMOS namespace
 		Agent *agent;

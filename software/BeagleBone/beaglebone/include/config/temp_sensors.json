@@ -1,22 +1,21 @@
-R"=====(
-[
+R"=====([
 	{
 		"name": "eps",
 		"type": "sensor",
 		"bus": 0,
-		"cs": 81,
+		"cs": 81
 	},
 	{
 		"name": "obc",
 		"type": "sensor",
 		"bus": 0,
-		"cs": 81,
+		"cs": 81
 	},
 	{
 		"name": "raspi",
 		"type": "sensor",
 		"bus": 0,
-		"cs": 81,
+		"cs": 81
 	},
 	{
 		"name": "battery",

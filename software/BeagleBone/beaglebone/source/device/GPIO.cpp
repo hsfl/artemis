@@ -139,7 +139,7 @@ GPIOMode GPIO::SetMode(GPIOMode mode) {
 	// Attempt to open the GPIO control file
 	std::ofstream stream(path);
 	if ( !stream ) {
-		fprintf(stderr, "Unable to set direction GPIO no. %u key: %s", pin, GetKeyByPin(pin));
+		fprintf(stderr, "Unable to set direction GPIO no. %u key: %s\n", pin, GetKeyByPin(pin));
 		return GPIOMode::Invalid;
 	}
 	
@@ -166,7 +166,7 @@ GPIOMode GPIO::GetMode() {
 	// Attempt to open the GPIO control file
 	std::ifstream stream(path);
 	if ( !stream ) {
-		fprintf(stderr, "Unable to get direction GPIO no. %u key: %s", pin, GetKeyByPin(pin));
+		fprintf(stderr, "Unable to get direction GPIO no. %u key: %s\n", pin, GetKeyByPin(pin));
 		return GPIOMode::Invalid;
 	}
 	
@@ -190,7 +190,7 @@ GPIOValue GPIO::DigitalWrite(GPIOValue value) {
 	// Attempt to open the GPIO value file
 	std::ofstream stream(path);
 	if ( !stream ) {
-		fprintf(stderr, "Unable to set value GPIO no. %u key: %s", pin, GetKeyByPin(pin));
+		fprintf(stderr, "Unable to set value GPIO no. %u key: %s\n", pin, GetKeyByPin(pin));
 		return GPIOValue::Invalid;
 	}
 	
@@ -213,7 +213,7 @@ GPIOValue GPIO::DigitalRead() {
 	// Attempt to open the GPIO value file
 	std::ifstream stream(path);
 	if ( !stream ) {
-		fprintf(stderr, "Unable to get value GPIO no. %u key: %s", pin, GetKeyByPin(pin));
+		fprintf(stderr, "Unable to get value GPIO no. %u key: %s\n", pin, GetKeyByPin(pin));
 		return GPIOValue::Invalid;
 	}
 	

@@ -44,6 +44,7 @@ namespace cubesat {
 			std::string readable_name;
 			std::string cosmos_name;
 		};
+		
 		//! Represents a custom property
 		struct CustomProperty {
 			void *value;
@@ -54,7 +55,8 @@ namespace cubesat {
 			}
 			CustomProperty(const CustomProperty &other) = delete;
 			~CustomProperty() {
-				free(value);
+				if ( value != 0 )
+					free(value);
 			}
 			
 			template <typename T>
@@ -63,9 +65,10 @@ namespace cubesat {
 			}
 			
 			template <typename T>
-			void Load(T value_) {
-				value = malloc(sizeof(T));
-				*(T*)value = value_;
+			void Load(const T &value_) {
+				T *mem = new T();
+				*mem = value_;
+				value = mem;
 				value_type = GetPropertyID<T>();
 			}
 			
@@ -334,6 +337,7 @@ namespace cubesat {
 		std::string GetCOSMOSPropertyName(const std::string & cosmos_property_name) {
 			std::stringstream ss;
 			ss << "device_" << cosmos_device_name << "_" << cosmos_property_name << "_" << std::setw(3) << std::setfill('0') << dindex;
+			
 			return ss.str();
 		}
 	};

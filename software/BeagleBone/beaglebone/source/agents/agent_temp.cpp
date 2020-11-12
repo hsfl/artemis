@@ -87,7 +87,6 @@ int main() {
 	string name, type;
 	int bus, cs;
 	TemperatureSensor *sensor;
-	
 	// Initialize the temperature sensor devices using the JSON
 	for (auto &sensor_obj : sensor_config.GetArray()) {
 		
@@ -96,10 +95,6 @@ int main() {
 		
 		// Create a new temperature sensor device
 		sensor = agent->NewDevice<TemperatureSensor>(name);
-		sensor->Post(sensor->utc = Time::Now());
-		sensor->Post(sensor->enabled = false);
-		sensor->Post(sensor->temperature = 0);
-		
 		
 		
 		// Initialize the device as a sensor
@@ -113,16 +108,17 @@ int main() {
 		}
 		// Initialize the device as remote
 		else {
-			sensor->SetCustomProperty<std::string>("source", sensor_obj["source"].GetString());
+			//sensor->SetCustomProperty<std::string>("source", sensor_obj["key"].GetString());
 			sensor->SetCustomProperty<bool>("physical", false);
 		}
+		sensor->Post(sensor->utc = Time::Now());
+		sensor->Post(sensor->enabled = false);
+		sensor->Post(sensor->temperature = 0);
 	}
 	
 	// Finish up
 	agent->Finalize();
 	agent->DebugPrint();
-	
-	
 	
 	// Start executing the agent
 	while ( agent->StartLoop() ) {
@@ -153,6 +149,10 @@ int main() {
 
 void UpdateSensor(const std::string &name) {
 	
+	cout << "A" << endl;
+	cout << name << endl;
+	
+	
 	// Fetch some information
 	TemperatureSensor *sensor = sensors[name];
 	bool is_physical = sensor->GetCustomProperty<bool>("physical");;
@@ -160,8 +160,12 @@ void UpdateSensor(const std::string &name) {
 	// Update the timestamp
 	sensor->utc = Time::Now();
 	
+	cout << "B" << endl;
+	
 	// Check whether the device is physical
 	if ( is_physical ) {
+		
+		cout << "C" << endl;
 		ADT7311 *handler = sensor->GetCustomProperty<ADT7311*>("handler");
 		
 		// We compare against the manufacturer ID to see if the sensors are connected

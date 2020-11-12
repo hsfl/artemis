@@ -46,14 +46,15 @@ void SimpleAgent::CrashIfNotOpen() {
 }
 
 void SimpleAgent::Finalize() {
-	
+		
 	// Add the posted properties from each device
 	std::vector<std::string> keys;
+	
 	for (auto device_pair : devices) {
 		device_pair.second->StorePostedProperties(keys);
 	}
 	
-	
+
 	// Format the state of health string using a stringstream
 	std::stringstream ss;
 	
@@ -67,6 +68,7 @@ void SimpleAgent::Finalize() {
 			ss << "\"" << node_property_pair.second.cosmos_name << "\", ";
 	}
 	ss << "}";
+	
 	
 	// Set the state of health string
 	this->set_sohstring(ss.str());

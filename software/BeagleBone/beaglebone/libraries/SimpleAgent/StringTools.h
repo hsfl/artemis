@@ -58,6 +58,26 @@ namespace cubesat {
 				conversion_flag = true;
 				return value;
 			}
+			inline static std::string ToJSONString(const std::string &value, bool &conversion_flag) {
+				conversion_flag = true;
+				std::stringstream ss;
+				ss << '"';
+				for (char c : value) {
+					if ( c == '"' )
+						ss << "\\\"";
+					else if ( c == '\n' )
+						ss << "\\n";
+					else if ( c == '\\' )
+						ss << "\\\\";
+					else if ( c == '\t' )
+						ss << "\\t";
+					else
+						ss << c;
+				}
+				ss << '"';
+				
+				return ss.str();
+			}
 			inline static std::string FromString(const std::string &str, bool &conversion_flag) {
 				conversion_flag = true;
 				return str;
@@ -73,6 +93,29 @@ namespace cubesat {
 				conversion_flag = true;
 				return value;
 			}
+			inline static std::string ToJSONString(const char *value, bool &conversion_flag) {
+				conversion_flag = true;
+				
+				char c;
+				std::stringstream ss;
+				ss << '"';
+				while ( (c = *(value++)) != 0 ) {
+					if ( c == '"' )
+						ss << "\\\"";
+					else if ( c == '\n' )
+						ss << "\\n";
+					else if ( c == '\\' )
+						ss << "\\\\";
+					else if ( c == '\t' )
+						ss << "\\t";
+					else
+						ss << c;
+				}
+				ss << '"';
+				
+				return ss.str();
+			}
+
 			inline static const char* FromString(const std::string &str, bool &conversion_flag) {
 				return str.c_str(); // Hmm...
 			}
@@ -84,6 +127,10 @@ namespace cubesat {
 		template <>
 		struct StringConverter<bool> {
 			inline static std::string ToString(bool value, bool &conversion_flag) {
+				conversion_flag = true;
+				return value ? "true" : "false";
+			}
+			inline static std::string ToJSONString(bool value, bool &conversion_flag) {
 				conversion_flag = true;
 				return value ? "true" : "false";
 			}
@@ -111,6 +158,19 @@ namespace cubesat {
 				conversion_flag = true;
 				return std::string(1, value);
 			}
+			inline static std::string ToJSONString(char value, bool &conversion_flag) {
+				conversion_flag = true;
+				if ( value == '"' )
+					return "\"\\\"\"";
+				else if ( value == '\n' )
+					return "\"\\n\"";
+				else if ( value == '\\' )
+					return "\"\\\\\"";
+				else if ( value == '\t' )
+					return "\"\\t\"";
+				else
+					return '"' + std::string(1, value) + '"';
+			}
 			inline static char FromString(const std::string &str, bool &conversion_flag) {
 				if ( str.length() == 1) {
 					conversion_flag = true;
@@ -127,8 +187,54 @@ namespace cubesat {
 		};
 		
 		template <>
+		struct StringConverter<short> {
+			inline static std::string ToString(short value, bool &conversion_flag) {
+				conversion_flag = true;
+				return std::to_string(value);
+			}
+			inline static std::string ToJSONString(short value, bool &conversion_flag) {
+				conversion_flag = true;
+				return std::to_string(value);
+			}
+			inline static short FromString(const std::string &str, bool &conversion_flag) {
+				char *p;
+				long value = strtol(str.c_str(), &p, 10);
+				conversion_flag = (p != NULL);
+				return (short) value;
+			}
+			inline static std::string TypeName() {
+				return "short";
+			}
+		};
+		
+		template <>
+		struct StringConverter<unsigned short> {
+			inline static std::string ToString(unsigned short value, bool &conversion_flag) {
+				conversion_flag = true;
+				return std::to_string(value);
+			}
+			inline static std::string ToJSONString(unsigned short value, bool &conversion_flag) {
+				conversion_flag = true;
+				return std::to_string(value);
+			}
+			inline static unsigned short FromString(const std::string &str, bool &conversion_flag) {
+				char *p;
+				long value = strtol(str.c_str(), &p, 10);
+				conversion_flag = (p != NULL);
+				return (unsigned short) value;
+			}
+			inline static std::string TypeName() {
+				return "unsigned short";
+			}
+		};
+		
+		template <>
 		struct StringConverter<int> {
 			inline static std::string ToString(int value, bool &conversion_flag) {
+				conversion_flag = true;
+				return std::to_string(value);
+			}
+			inline static std::string ToJSONString(int value, bool &conversion_flag) {
 				conversion_flag = true;
 				return std::to_string(value);
 			}
@@ -149,6 +255,10 @@ namespace cubesat {
 				conversion_flag = true;
 				return std::to_string(value);
 			}
+			inline static std::string ToJSONString(unsigned int value, bool &conversion_flag) {
+				conversion_flag = true;
+				return std::to_string(value);
+			}
 			inline static unsigned int FromString(const std::string &str, bool &conversion_flag) {
 				char *p;
 				long value = strtol(str.c_str(), &p, 10);
@@ -163,6 +273,10 @@ namespace cubesat {
 		template <>
 		struct StringConverter<long> {
 			inline static std::string ToString(long value, bool &conversion_flag) {
+				conversion_flag = true;
+				return std::to_string(value);
+			}
+			inline static std::string ToJSONString(long value, bool &conversion_flag) {
 				conversion_flag = true;
 				return std::to_string(value);
 			}
@@ -183,6 +297,10 @@ namespace cubesat {
 				conversion_flag = true;
 				return std::to_string(value);
 			}
+			inline static std::string ToJSONString(unsigned long value, bool &conversion_flag) {
+				conversion_flag = true;
+				return std::to_string(value);
+			}
 			inline static unsigned long FromString(const std::string &str, bool &conversion_flag) {
 				char *p;
 				long value = strtol(str.c_str(), &p, 10);
@@ -197,6 +315,10 @@ namespace cubesat {
 		template <>
 		struct StringConverter<float> {
 			inline static std::string ToString(float value, bool &conversion_flag) {
+				conversion_flag = true;
+				return std::to_string(value);
+			}
+			inline static std::string ToJSONString(float value, bool &conversion_flag) {
 				conversion_flag = true;
 				return std::to_string(value);
 			}
@@ -218,6 +340,10 @@ namespace cubesat {
 				conversion_flag = true;
 				return std::to_string(value);
 			}
+			inline static std::string ToJSONString(double value, bool &conversion_flag) {
+				conversion_flag = true;
+				return std::to_string(value);
+			}
 			inline static double FromString(const std::string &str, bool &conversion_flag) {
 				char *p;
 				double value = strtod(str.c_str(), &p);
@@ -233,6 +359,12 @@ namespace cubesat {
 		template <>
 		struct StringConverter<rvector> {
 			inline static std::string ToString(rvector value, bool &conversion_flag) {
+				conversion_flag = true;
+				return "[" + std::to_string(value.col[0]) + ","
+						+ std::to_string(value.col[1]) + ","
+						+ std::to_string(value.col[2]) + "]";
+			}
+			inline static std::string ToJSONString(rvector value, bool &conversion_flag) {
 				conversion_flag = true;
 				return "[" + std::to_string(value.col[0]) + ","
 						+ std::to_string(value.col[1]) + ","
@@ -258,6 +390,12 @@ namespace cubesat {
 						+ std::to_string(value.y) + ","
 						+ std::to_string(value.z) + "]";
 			}
+			inline static std::string ToJSONString(Vec3 value, bool &conversion_flag) {
+				conversion_flag = true;
+				return "[" + std::to_string(value.x) + ","
+						+ std::to_string(value.y) + ","
+						+ std::to_string(value.z) + "]";
+			}
 			inline static Vec3 FromString(const std::string &str, bool &conversion_flag) {
 				Vec3 vec;
 				int s = sscanf(str.c_str(), "[%lf,%lf,%lf]", &vec.x, &vec.y, &vec.z);
@@ -272,6 +410,12 @@ namespace cubesat {
 		template <>
 		struct StringConverter<gvector> {
 			inline static std::string ToString(gvector value, bool &conversion_flag) {
+				conversion_flag = true;
+				return "[" + std::to_string(value.lat) + ","
+						+ std::to_string(value.lon) + ","
+						+ std::to_string(value.h) + "]";
+			}
+			inline static std::string ToJSONString(gvector value, bool &conversion_flag) {
 				conversion_flag = true;
 				return "[" + std::to_string(value.lat) + ","
 						+ std::to_string(value.lon) + ","
@@ -296,6 +440,12 @@ namespace cubesat {
 						+ std::to_string(value.longitude) + ","
 						+ std::to_string(value.altitude) + "]";
 			}
+			inline static std::string ToJSONString(Location value, bool &conversion_flag) {
+				conversion_flag = true;
+				return "[" + std::to_string(value.latitude) + ","
+						+ std::to_string(value.longitude) + ","
+						+ std::to_string(value.altitude) + "]";
+			}
 			inline static Location FromString(const std::string &str, bool &conversion_flag) {
 				Location vec;
 				int s = sscanf(str.c_str(), "[%lf,%lf,%lf]",
@@ -313,6 +463,9 @@ namespace cubesat {
 			inline static std::string ToString(const CapturedInput &value, bool &conversion_flag) {
 				conversion_flag = true;
 				return value.input;
+			}
+			inline static std::string ToJSONString(const CapturedInput &value, bool &conversion_flag) {
+				return StringConverter<std::string>::ToJSONString(value.input, conversion_flag);
 			}
 			inline static CapturedInput FromString(const std::string &str, bool &conversion_flag) {
 				conversion_flag = true;
@@ -355,6 +508,23 @@ namespace cubesat {
 				"String conversion to this type is not supported");
 		
 		return detail::StringConverter<T>::ToString(value, conversion_flag);
+	}
+	
+	template <typename T>
+	inline std::string ToJSONString(T value) {
+		static_assert(detail::StringConversionSupported<T>::value,
+				"String conversion to this type is not supported");
+		
+		bool conversion_flag;
+		return detail::StringConverter<T>::ToJSONString(value, conversion_flag);
+	}
+	
+	template <typename T>
+	inline std::string ToJSONString(T value, bool &conversion_flag) {
+		static_assert(detail::StringConversionSupported<T>::value,
+				"String conversion to this type is not supported");
+		
+		return detail::StringConverter<T>::ToJSONString(value, conversion_flag);
 	}
 	
 	template <typename T>

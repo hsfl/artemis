@@ -117,6 +117,7 @@ int main() {
 	}
 	
 	agent->Finalize();
+	agent->DebugPrint();
 	
 	// Run the main loop for this agent
 	while ( agent->StartLoop() ) {

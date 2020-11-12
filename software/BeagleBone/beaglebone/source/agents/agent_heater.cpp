@@ -47,24 +47,31 @@ bool GetTemperatures();
 /**
  * @brief Switchs a heater on or off via agent_switch
  * @param enabled Set to true to enable a heater, or false to disable a heater
+ * @return True if successful, false if not
  */
-void SetHeaterState(bool enabled);
+bool SetHeaterState(bool enabled);
 
 /**
  * @brief Enables the heater
  */
-void Request_Enable();
+bool Request_Enable();
 
 /**
  * @brief Disables the heater
  */
-void Request_Disable();
+bool Request_Disable();
 
 /**
  * @brief Gets the state of the heater
  * @return "on" if it's on, "off" if it's off
  */
 string Request_Get();
+
+/**
+ * @brief Returns the heater configuration JSON
+ * @return The configuration JSON string
+ */
+string Request_Config();
 
 // |----------------------------------------------|
 // |                   Variables                  |
@@ -105,6 +112,7 @@ int main(int argc, char** argv) {
 	agent->AddRequest({"on", "enable"}, Request_Enable, "Enables the heater");
 	agent->AddRequest({"off", "disable"}, Request_Disable, "Disables the heater");
 	agent->AddRequest("get", Request_Get, "Returns the state of the heater");
+	agent->AddRequest("config", Request_Config, "Returns the heater configuration");
 	
 	// Parse the configuration
 	heater_config.Parse(heater_config_json);
@@ -117,14 +125,19 @@ int main(int argc, char** argv) {
 
 	// Load all temperature dependencies
 	for (auto &sensor_obj : heater_config["sensors"].GetArray()) {
+		
+		// Load the temperature dependecy
 		TemperatureDependency dependency;
 		dependency.name = sensor_obj["name"].GetString();
 		dependency.source = sensor_obj["source"].GetString();
 		dependency.enable_temp = sensor_obj["enable_temp"].GetFloat();
 		dependency.disable_temp = sensor_obj["disable_temp"].GetFloat();
 		dependency.current_temp = 1e6; // A temporary value
+		
+		// Store the dependency
 		temperature_dependencies.push_back(dependency);
 		
+		// Store the dependency key
 		agent_temp_keys.push_back(dependency.source);
 	}
 	
@@ -204,16 +217,17 @@ bool GetTemperatures() {
 }
 
 
-void SetHeaterState(bool enabled) {
+bool SetHeaterState(bool enabled) {
 	static RemoteAgent agent_switch = agent->FindAgent(CUBESAT_AGENT_SWITCH_NAME);
+	
+	cout << "Attempting to " << (enabled ? "enable" : "disable") << " heater" << endl;
 	
 	// Check if agent_switch has been connected to yet
 	if ( !agent_switch.Connect() ) {
-		return;
+		return false;
 	}
 	
 	
-	cout << "Attempting to " << (enabled ? "enable" : "disable") << "heater" << endl;
 	
 	
 	// Send a request to enable or disable the heater
@@ -222,22 +236,28 @@ void SetHeaterState(bool enabled) {
 	// Check if an error occurred
 	if ( response.empty() ) {
 		printf("Failed to send enable/disable request to agent_switch\n");
-		return;
+		return false;
 	}
 	
 	// Set the heater properties
 	heater->utc = Time::Now();
 	heater->enabled = enabled;
+	
+	// Indicate success
+	return true;
 }
 
 
-void Request_Enable() {
-	SetHeaterState(true);
+bool Request_Enable() {
+	return SetHeaterState(true);
 }
-void Request_Disable() {
-	SetHeaterState(false);
+bool Request_Disable() {
+	return SetHeaterState(false);
 }
 string Request_Get() {
 	return heater->enabled ? "on" : "off";
+}
+string Request_Config() {
+	return heater_config_json;
 }
 

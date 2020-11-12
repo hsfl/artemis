@@ -1,6 +1,7 @@
 
 #include "CubeSat.h"
 #include "SimpleAgent/SimpleAgent.h"
+#include "SimpleAgent/DeviceJSON.h"
 #include "device/PyCubed.h"
 
 #include <iostream>
@@ -21,32 +22,38 @@
 using namespace std;
 using namespace cubesat;
 
+// |----------------------------------------------|
+// |                   Variables                  |
+// |----------------------------------------------|
 
-// The agent object which allows for communication with COSMOS
+//! The agent object which allows for communication with COSMOS
 SimpleAgent *agent;
-CPU *pycubed;
-IMU *imu;
-GPS *gps;
-Battery *battery;
-RadioTransceiver *radio;
-Timer connection_timer;
-
+//! The handler object used to communicate with the PyCubed
 PyCubed *handler = nullptr;
 
-// Tunnel stuff
-static queue<vector<uint8_t> > tun_fifo;
-static queue<vector<uint8_t> > tcv_fifo;
+//! The CPU device representing the PyCubed
+CPU *pycubed;
+//! The IMU device located on the PyCubed
+IMU *imu;
+//! The GPS device located on the PyCubed
+GPS *gps;
+//! The radio device located on the PyCubed
+RadioTransceiver *radio;
+//! The battery device located on the battery board
+Battery *battery;
 
-static condition_variable tcv_fifo_check;
-static condition_variable tun_fifo_check;
+//! A timer
+Timer connection_timer;
 
-static int tun_fd;
+//! Timer used for radio kill requests
+Timer kill_timer;
+bool first_kill_received = false;
 
-static string rxr_devname;
-static string txr_devname;
-static uint16_t tunnel_mtu = 512;
 
-int tun_out, tun_in, gl_in, gl_out = 0;
+
+// |----------------------------------------------|
+// |                  Prototypes                  |
+// |----------------------------------------------|
 
 
 //! Sets up the PyCubed
@@ -61,16 +68,79 @@ void UpdatePyCubed();
  */
 void Shutdown();
 
-string Request_IsUp();
-string Request_SendMessage(string message);
+// |----------------------------------------------|
+// |                    Requests                  |
+// |----------------------------------------------|
+
+/**
+ * @brief Checks if the PyCubed can be reached
+ * @return True if the PyCubed is connected
+ */
+bool Request_IsUp();
+
+/**
+ * @brief Sends a message to the PyCubed
+ * @param message_type The message type
+ * @param message_args A comma-separated list of arguments, not including the checksum
+ * @return True if the message was sent successfullly
+ */
+bool Request_SendMessage(string message_type, string message_args);
+
+/**
+ * @brief Returns the latest CPU data received
+ * @return The CPU data as a JSON string
+ */
+string Request_GetCPUData();
+
+/**
+ * @brief Returns the latest IMU data received
+ * @return The IMU data as a JSON string
+ */
 string Request_GetIMUData();
+
+/**
+ * @brief Returns the latest GPS data received
+ * @return The GPS data as a JSON string
+ */
 string Request_GetGPSData();
+
+/**
+ * @brief Returns the latest power use data received
+ * @return The power data as a JSON string
+ */
 string Request_GetPowerData();
+
+/**
+ * @brief Returns the latest temperature data received
+ * @return The temperature data as a JSON string
+ */
 string Request_GetTemperatureData();
-string Request_KillRadio();
+
+/**
+ * @brief Sends a message to the PyCubed to kill the radio
+ * @return True if the message was sent successfully
+ */
+bool Request_KillRadio();
 
 
-// Tunnel stuff
+// |----------------------------------------------|
+// |                   Tunneling                  |
+// |----------------------------------------------|
+
+static queue<vector<uint8_t> > tun_fifo;
+static queue<vector<uint8_t> > tcv_fifo;
+
+static condition_variable tcv_fifo_check;
+static condition_variable tun_fifo_check;
+
+static int tun_fd;
+
+static string rxr_devname;
+static string txr_devname;
+static uint16_t tunnel_mtu = 512;
+
+int tun_out, tun_in, gl_in, gl_out = 0;
+
 void StartTunnel(const std::string &tunnel_ip);
 void tcv_read_loop();
 void tcv_write_loop();
@@ -87,7 +157,9 @@ int32_t request_serial_queue_size(char *request, char *response, Agent *);
 
 
 
-
+// |----------------------------------------------|
+// |                 Main Function                |
+// |----------------------------------------------|
 
 int main(int argc, char** argv) {
 	std::string tunnel_ip;
@@ -113,6 +185,15 @@ int main(int argc, char** argv) {
 	agent->AddNodeProperty<Node::PowerGeneration>(0);
 	agent->AddNodeProperty<Node::BatteryCapacity>(3.5f * 4);
 	agent->AddNodeProperty<Node::BatteryCharge>(0);
+	
+	agent->AddRequest("is_up", Request_IsUp, "Checks if the PyCubed is reachable");
+	agent->AddRequest("send", Request_SendMessage, "Sends a message to the PyCubed", "Usage: send msgtype arg1 arg2 ...");
+	agent->AddRequest("cpu", Request_GetCPUData, "Returns the latest CPU data received");
+	agent->AddRequest("imu", Request_GetIMUData, "Returns the latest IMU data received");
+	agent->AddRequest("gps", Request_GetGPSData, "Returns the latest GPS data received");
+	agent->AddRequest("temperature", Request_GetTemperatureData, "Returns the latest temperature data received");
+	agent->AddRequest("power", Request_GetPowerData, "Returns the latest power data received");
+	agent->AddRequest("kill_radio", Request_KillRadio, "Sends a message to the PyCubed to kill the radio");
 	
 	// Initialize the PyCubed
 	InitPyCubed();
@@ -310,6 +391,115 @@ void Shutdown() {
 	system("shutdown -h now");
 	
 	exit(0);
+}
+
+//===============================================================
+//========================== REQUESTS ===========================
+//===============================================================
+
+bool Request_IsUp() {
+	return handler->IsOpen();
+}
+
+bool Request_SendMessage(string message_type, string message_args) {
+	
+	// Make sure the PyCubed is connected first
+	if ( !handler->IsOpen() )
+		return false;
+	
+	// Parse the string into a vector of arguments
+	vector<string> args;
+	stringstream ss(message_args);
+	string arg;
+	
+	while ( ss.good() ) {
+		getline(ss, arg, ',');
+		args.push_back(arg);
+	}
+	
+	// Send the message
+	return handler->SendMessage(message_type, args);
+}
+
+
+string Request_GetCPUData() {
+	
+	DeviceSerializer serializer;
+	serializer.AddProperty("utc", pycubed->utc);
+	serializer.AddProperty("memory_usage", pycubed->memory_usage);
+	serializer.AddProperty("max_memory", pycubed->max_memory);
+	serializer.AddProperty("voltage", pycubed->voltage);
+	serializer.AddProperty("current", pycubed->current);
+	serializer.AddProperty("up_time", pycubed->up_time);
+	serializer.AddProperty("temperature", pycubed->temperature);
+	
+	return serializer.GetJSON();
+}
+
+string Request_GetIMUData() {
+	
+	DeviceSerializer serializer;
+	serializer.AddProperty("utc", imu->utc);
+	serializer.AddProperty("temperature", imu->temperature);
+	serializer.AddProperty("magentic_field", imu->magnetic_field);
+	serializer.AddProperty("acceleration", imu->acceleration);
+	serializer.AddProperty("angular_velocity", imu->angular_velocity);
+	
+	return serializer.GetJSON();
+}
+
+string Request_GetGPSData() {
+	
+	DeviceSerializer serializer;
+	serializer.AddProperty("utc", gps->utc);
+	serializer.AddProperty("location", gps->location);
+	serializer.AddProperty("satellites_used", gps->satellites_used);
+	
+	return serializer.GetJSON();
+}
+
+string Request_GetPowerData() {
+	
+	DeviceSerializer serializer;
+	serializer.AddProperty("utc", battery->utc);
+	serializer.AddProperty("temperature", battery->temperature);
+	serializer.AddProperty("capacity", battery->capacity);
+	serializer.AddProperty("charge", battery->charge);
+	serializer.AddProperty("efficiency", battery->efficiency);
+	serializer.AddProperty("percentage", battery->percentage);
+	serializer.AddProperty("voltage", battery->voltage);
+	serializer.AddProperty("current", battery->current);
+	
+	return serializer.GetJSON();
+}
+string Request_GetTemperatureData() {
+	DeviceSerializer serializer;
+	serializer.AddProperty("utc", pycubed->utc);
+	serializer.AddProperty("cpu_temperature", pycubed->temperature);
+	serializer.AddProperty("battery_temperature", battery->temperature);
+	
+	return serializer.GetJSON();
+}
+bool Request_KillRadio() {
+	if ( !handler->IsOpen() ) {
+		cout << "[Error] Attempted to kill the radio, but no PyCubed is connected." << endl;
+		return false;
+	}
+	
+	if ( first_kill_received ) {
+		first_kill_received = false;
+		
+		if ( kill_timer.Seconds() < 5 ) {
+			cout << "Second kill request received. Killing the radio..." << endl;
+			return handler->KillRadio();
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		first_kill_received = true;
+	}
 }
 
 //===============================================================
