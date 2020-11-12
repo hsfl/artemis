@@ -61,74 +61,14 @@ namespace cubesat {
 		 * @param crash_if_failed If true, the program will crash if the agent is not found
 		 * @return True if the agent connected successfully
 		 */
-		bool Connect(float wait_sec = 2.0f, bool crash_if_failed = false) {
-			
-			// Indicate success if the agent is already open
-			if ( IsOpen() )
-				return true;
-			
-			// Find the agent
-			beat = agent->find_agent(node_name, agent_name, wait_sec);
-			
-			// Check if an error occurred
-			if ( !IsOpen() ) {
-				printf("Could not find agent '%s' running on node '%s'\n", agent_name.c_str(), node_name.c_str());
-				
-				if ( crash_if_failed )
-					exit(1);
-			}
-			
-			return IsOpen();
-		}
+		bool Connect(float wait_sec = 2.0f, bool crash_if_failed = false);
 		
 		/**
 		 * @brief Gets a list of state of health values from a remote agent
 		 * @param keys A vector of COSMOS namespace names to retrieve
 		 * @return A table of values, indexed by the given keys
 		 */
-		std::unordered_map<std::string, Json::Value> GetCOSMOSValues(std::vector<std::string> keys) {
-			std::unordered_map<std::string, Json::Value> values;
-			
-			// Return default values if the agent isn't connected
-			if ( !IsOpen() ) {
-				return values;
-			}
-			
-			
-			// Generate the request string
-			std::stringstream request;
-			request << "getvalue {";
-			for (const std::string &key : keys)
-				request << "\"" << key << "\", ";
-			request << "}";
-			
-			// Call the request
-			std::string output;
-			int status = agent->send_request(beat, request.str(), output, wait_time);
-			
-			// Check if an error occurred
-			if ( status < 0 ) {
-				beat.utc = 0.;
-				beat.exists = false;
-				printf("Error sending request to [%s:%s]: %s\n", node_name.c_str(), agent_name.c_str(), cosmos_error_string(status).c_str());
-				return values;
-			}
-			
-			printf("%s\n", output.c_str());
-			
-			// Parse the output
-			Json jresult;
-			status = jresult.extract_object(output);
-			
-			if ( status >= 0 ) {
-				for (Json::Member member : jresult.Members) {
-					std::cout << member.value.name << std::endl;
-					values[member.value.name] = member.value;
-				}
-			}
-			
-			return values;
-		}
+		std::unordered_map<std::string, Json::Value> GetCOSMOSValues(std::vector<std::string> keys);
 		
 		template <typename... Properties, typename... Args>
 		std::unordered_map<std::string, std::string> GetProperties(Args... device_names_) {

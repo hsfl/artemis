@@ -3,7 +3,8 @@
 
 set(SIMPLEAGENT_SRC
     Device.cpp
-    SimpleAgent.cpp)
+    SimpleAgent.cpp
+	RemoteAgent.cpp)
 
 set(SIMPLEAGENT_HEADERS
     AgentRequest.h
@@ -15,6 +16,7 @@ set(SIMPLEAGENT_HEADERS
     RequestHelper.h
     SimpleAgent.h
     StringTools.h
+	Telemetry.h
     TimeTools.h
     Types.h
     )
