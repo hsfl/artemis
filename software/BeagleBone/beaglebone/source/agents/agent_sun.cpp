@@ -41,9 +41,13 @@ void SetSensorPower(bool enabled);
 
 // Request callbacks
 
+//! Returns the lux read by a sensor
 float Request_Sensor_Lux(SunSensor *sensor);
+//! Returns whether or not a sensor can be reached
 bool Request_Sensor_Connected(SunSensor *sensor);
+//! Returns the latest telemetry for a sensor
 string Request_Sensor(string sensor_name);
+//! Returns a list of sensors
 string Request_List();
 
 
@@ -206,7 +210,6 @@ float Request_Sensor_Lux(SunSensor *sensor) {
 	return sensor->temperature;
 }
 bool Request_Sensor_Connected(SunSensor *sensor) {
-	cout << "Hi" << endl;
 	OPT3001 *handler = sensor->GetCustomProperty<OPT3001*>("handler");
 	return handler != nullptr && handler->IsOpen();
 }
@@ -227,8 +230,6 @@ string Request_Sensor(string sensor_name) {
 }
 
 string Request_List() {
-	
-	DeviceSerializer serializer;
 	
 	SunSensor *sensor;
 	
