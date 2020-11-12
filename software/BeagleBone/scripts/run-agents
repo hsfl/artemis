@@ -24,12 +24,12 @@ echo "Starting agents..."
 
 cd ~/agents
 
-./agent_switch &
-./agent_temp &
-./agent_sun &
-./agent_heater &
-./agent_raspi &
-./agent_pycubed &
+agent_switch &
+agent_temp &
+agent_sun &
+agent_heater &
+agent_raspi &
+agent_pycubed &
 
 
 # ================================================================
