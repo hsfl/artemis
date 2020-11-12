@@ -70,13 +70,13 @@ int I2CDevice::Open() {
 	file = open(name.c_str(), O_RDWR);
 	
 	if ( file < 0 ) {
-		perror("Failed to open I2C bus\n");
+		perror("Failed to open I2C bus");
 		file = -1;
 		return -1;
 	}
 	
 	if ( ioctl(file, I2C_SLAVE, device) != 0 ) {
-		perror("Failed to connect to I2C device\n");
+		perror("Failed to connect to I2C device");
 		close(file);
 		return -1;
 	}
@@ -113,7 +113,7 @@ int I2CDevice::WriteRegister(uint8_t registerAddress, uint16_t value){
 	buffer[2] = value & 0x00FF;
    
 	if ( write(file, buffer, 3) != 3 ) {
-	  perror("Failed write to the I2C device\n");
+	  perror("Failed write to the I2C device");
 	  return -1;
 	}
 	
@@ -133,7 +133,7 @@ int I2CDevice::Write(uint8_t value){
 	unsigned char buffer[1] = {value};
 	
 	if ( write(file, buffer, 1) != 1 ) {
-		perror("Failed write to the I2C device\n");
+		perror("Failed write to the I2C device");
 		return -1;
 	}
 	
@@ -154,7 +154,7 @@ uint16_t I2CDevice::ReadRegister(uint8_t registerAddress) {
 	uint8_t buffer[2];
 	
 	if ( read(this->file, buffer, 2) != 2 ) {
-		perror("Failed to read from I2C device\n");
+		perror("Failed to read from I2C device");
 		return -1;
 	}
 	
@@ -178,7 +178,7 @@ int I2CDevice::ReadRegisters(uint8_t *out, uint8_t first_addr, uint8_t len) {
 	int bytes_read;
 	
     if ( (bytes_read = read(this->file, out, len)) != (int)len ) {
-       perror("Failed to read in full buffer from I2C device\n");
+       perror("Failed to read in full buffer from I2C device");
 	   return 0;
     }
 	
