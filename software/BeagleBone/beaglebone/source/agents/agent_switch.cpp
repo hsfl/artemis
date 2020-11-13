@@ -10,7 +10,7 @@
 #include <sstream>
 
 // The interval between iterations in the run_agent() function
-#define SLEEP_TIME 1
+#define SLEEP_TIME 5
 
 using namespace std;
 using namespace cubesat;

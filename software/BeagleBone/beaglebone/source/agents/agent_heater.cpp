@@ -8,7 +8,7 @@
 
 #include "rapidjson/document.h"
 
-#define SLEEP_TIME 5
+#define SLEEP_TIME 10
 
 using namespace std;
 using namespace cubesat;
