@@ -9,6 +9,9 @@ if [ ! -d "${RASPI_PROJECT_FOLDER}" ]; then
   exit 1
 fi
 
+# Remove the Raspberry Pi project folder
+ssh debian@beaglebone.local ssh pi@raspberrypi.local rm -rf /home/pi/python
+
 # Copy the Raspberry Pi project folder to a temporary folder on the BeagleBone
 ssh debian@beaglebone.local mkdir /home/debian/cache
 rsync -auv "${RASPI_PROJECT_FOLDER}/" debian@beaglebone.local:/home/debian/cache/raspi
@@ -30,3 +33,6 @@ if [ $? -eq 0 ]; then
 else
     echo "Failed to transfer files. Is the Raspberry Pi connected?"
 fi
+
+# Remove the BeagleBone-side cached copy
+ssh debian@beaglebone.local rm -rf /home/debian/cache/raspi
