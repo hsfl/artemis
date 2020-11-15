@@ -10,7 +10,7 @@ LOCAL_REPO=~/artemis
 # =========================== COSMOS ===========================
 
 # COSMOS project folder
-COSMOS_PROJECT_FOLDER=~/cosmos/source/projects
+COSMOS_PROJECT_FOLDER=~/artemis/software/BeagleBone/beaglebone
 
 # =========================== COSMOS Web ===========================
 
@@ -23,7 +23,7 @@ AGENT_MONGO_FOLDER=~/cosmos/tools
 # =========================== Flight Software ===========================
 
 # BeagleBone project folder
-BEAGLEBONE_PROJECT_FOLDER="${COSMOS_PROJECT_FOLDER}/beaglebone"
+BEAGLEBONE_PROJECT_FOLDER=~/artemis/software/BeagleBone/beaglebone
 
 
 # Raspberry Pi software folder

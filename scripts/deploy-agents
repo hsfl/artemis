@@ -2,8 +2,8 @@
 
 source config
 
-SOURCE_DIR="${BEAGLEBONE_PROJECT_FOLDER}/build/bin/"
-DEST_DIR="debian@192.168.6.2:/home/debian/agents"
+SOURCE_DIR="${BEAGLEBONE_PROJECT_FOLDER}/build-arm32/bin/"
+DEST_DIR="debian@beaglebone.local:/home/debian/agents"
 
 # Make sure the source directory exists
 if [ ! -d "$SOURCE_DIR" ]; then
