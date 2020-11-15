@@ -221,6 +221,7 @@ int32_t cubesat::RequestProxy(std::string &request_str, std::string &response, A
 	
 	// Make sure the request exists
 	if ( request == nullptr ) {
+		printf("[SimpleAgent] No matching request named '%s'\n", request_name.c_str());
 		return -1;
 	}
 	
