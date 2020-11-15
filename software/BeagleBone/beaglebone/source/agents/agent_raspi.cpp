@@ -35,6 +35,8 @@ void UpdateRaspi();
 void GrabSOHData();
 //! Calls a system command on the Raspberry Pi
 void SystemCall(const std::string &command, std::string &output);
+//! Sets default values for agent SOH data
+void SetDefaultSOHData();
 
 string Request_GetData();
 string Request_SSH(CapturedInput command);
@@ -70,10 +72,13 @@ int main(int argc, char** argv) {
 	
 	// Add custom devices to hold SOH data
 	tempsensors = agent->NewDevice<CustomDevice>("agent_temp");
-	sunsensors = agent->NewDevice<CustomDevice>("agent_sunsensor");
+	sunsensors = agent->NewDevice<CustomDevice>("agent_sun");
 	heater = agent->NewDevice<CustomDevice>("agent_heater");
 	pycubed = agent->NewDevice<CustomDevice>("agent_pycubed");
 	switches = agent->NewDevice<CustomDevice>("agent_switch");
+	
+	// Set defaults for the SOH data
+	SetDefaultSOHData();
 	
 	
 	// Initialize the telemetry log
@@ -113,6 +118,7 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
+
 void ConnectRaspi() {
 	
 	const char *ping_cmd = "ping -c1 -W1 " RASPI_HOST " > nul  && echo 'UP' || echo 'DOWN'";
@@ -150,6 +156,7 @@ void ConnectRaspi() {
 	printf("Failed to connect to Raspberry Pi. Will attempt on next cycle.\n");
 }
 
+
 void UpdateRaspi() {
 	if ( !raspi->GetCustomProperty<bool>("connected") ) {
 		
@@ -177,6 +184,86 @@ void UpdateRaspi() {
 	}
 }
 
+
+void SetDefaultSOHData() {
+	
+	// agent_temp defaults
+	tempsensors->SetCustomProperty<bool>("active", false);
+	
+	tempsensors->SetCustomProperty<float>("temp_eps", 0);
+	tempsensors->SetCustomProperty<float>("temp_obc", 0);
+	tempsensors->SetCustomProperty<float>("temp_raspi", 0);
+	tempsensors->SetCustomProperty<float>("temp_battery", 0);
+	tempsensors->SetCustomProperty<float>("temp_pycubed", 0);
+	tempsensors->SetCustomProperty<double>("utc_eps", 0);
+	tempsensors->SetCustomProperty<double>("utc_obc", 0);
+	tempsensors->SetCustomProperty<double>("utc_raspi", 0);
+	tempsensors->SetCustomProperty<double>("utc_battery", 0);
+	tempsensors->SetCustomProperty<double>("utc_pycubed", 0);
+	
+	
+	// agent_sun defaults
+	sunsensors->SetCustomProperty<bool>("active", false);
+
+	sunsensors->SetCustomProperty<float>("lux_plusx", 0);
+	sunsensors->SetCustomProperty<float>("lux_minusx", 0);
+	sunsensors->SetCustomProperty<float>("lux_plusy", 0);
+	sunsensors->SetCustomProperty<float>("lux_minusy", 0);
+	sunsensors->SetCustomProperty<float>("lux_plusz", 0);
+	sunsensors->SetCustomProperty<float>("lux_minusz", 0);
+	sunsensors->SetCustomProperty<double>("utc_plusx", 0);
+	sunsensors->SetCustomProperty<double>("utc_minusx", 0);
+	sunsensors->SetCustomProperty<double>("utc_plusy", 0);
+	sunsensors->SetCustomProperty<double>("utc_minusy", 0);
+	sunsensors->SetCustomProperty<double>("utc_plusz", 0);
+	sunsensors->SetCustomProperty<double>("utc_minusz", 0);
+	
+	// agent_heater defaults
+	heater->SetCustomProperty<bool>("active", false);
+	
+	heater->SetCustomProperty<bool>("enabled", false);
+	heater->SetCustomProperty<double>("utc", 0);
+	
+	// agent_switch defaults
+	switches->SetCustomProperty<bool>("active", false);
+	
+	switches->SetCustomProperty<bool>("sw_temp", false);
+	switches->SetCustomProperty<bool>("sw_sunsensor", false);
+	switches->SetCustomProperty<bool>("sw_heater", false);
+	switches->SetCustomProperty<double>("utc_temp", 0);
+	switches->SetCustomProperty<double>("utc_sunsensor", 0);
+	switches->SetCustomProperty<double>("utc_heater", 0);
+	
+	
+	// agent_pycubed defaults
+	pycubed->SetCustomProperty<bool>("active", false);
+	
+	pycubed->SetCustomProperty<double>("imu_utc", 0);
+	pycubed->SetCustomProperty<float>("imu_mag_x", 0);
+	pycubed->SetCustomProperty<float>("imu_mag_y", 0);
+	pycubed->SetCustomProperty<float>("imu_mag_z", 0);
+	pycubed->SetCustomProperty<float>("imu_accel_x", 0);
+	pycubed->SetCustomProperty<float>("imu_accel_y", 0);
+	pycubed->SetCustomProperty<float>("imu_accel_z", 0);
+	pycubed->SetCustomProperty<float>("imu_gyro_x", 0);
+	pycubed->SetCustomProperty<float>("imu_gyro_y", 0);
+	pycubed->SetCustomProperty<float>("imu_gyro_z", 0);
+	
+	pycubed->SetCustomProperty<float>("power_utc", 0);
+	pycubed->SetCustomProperty<float>("sys_voltage", 0);
+	pycubed->SetCustomProperty<float>("sys_current", 0);
+	pycubed->SetCustomProperty<float>("batt_voltage", 0);
+	pycubed->SetCustomProperty<float>("batt_current", 0);
+	
+	pycubed->SetCustomProperty<float>("gps_utc", 0);
+	pycubed->SetCustomProperty<float>("gps_latitude", 0);
+	pycubed->SetCustomProperty<float>("gps_longitude", 0);
+	pycubed->SetCustomProperty<float>("gps_altitude", 0);
+	pycubed->SetCustomProperty<float>("gps_velocity_x", 0);
+	pycubed->SetCustomProperty<float>("gps_velocity_y", 0);
+	pycubed->SetCustomProperty<float>("gps_velocity_z", 0);
+	pycubed->SetCustomProperty<int>("gps_satellites", 0);
+}
 
 void GrabSOHData() {
 	static RemoteAgent agent_temp = agent->FindAgent(CUBESAT_AGENT_TEMP_NAME);
@@ -230,8 +317,8 @@ void GrabSOHData() {
 			sunsensors->SetCustomProperty<float>("lux_minusx", values["device_ssen_temp_001"].nvalue);
 			sunsensors->SetCustomProperty<float>("lux_plusy", values["device_ssen_temp_002"].nvalue);
 			sunsensors->SetCustomProperty<float>("lux_minusy", values["device_ssen_temp_003"].nvalue);
-			sunsensors->SetCustomProperty<float>("lux_plusy", values["device_ssen_temp_004"].nvalue);
-			sunsensors->SetCustomProperty<float>("lux_minusy", values["device_ssen_temp_005"].nvalue);
+			sunsensors->SetCustomProperty<float>("lux_plusz", values["device_ssen_temp_004"].nvalue);
+			sunsensors->SetCustomProperty<float>("lux_minusz", values["device_ssen_temp_005"].nvalue);
 			
 			sunsensors->SetCustomProperty<double>("utc_plusx", values["device_ssen_utc_000"].nvalue);
 			sunsensors->SetCustomProperty<double>("utc_minusx", values["device_ssen_utc_001"].nvalue);
@@ -359,12 +446,12 @@ string Request_GetData() {
 	
 	ss <<	"\"agent_sun\": {";
 	ss <<		"\"active\": " << (sunsensors->GetCustomProperty<bool>("active") ? "true" : "false") << ", ";
-	ss <<		"\"ss_plusx\": " << tempsensors->GetCustomProperty<float>("lux_plusx") << ", ";
-	ss <<		"\"ss_minusx\": " << tempsensors->GetCustomProperty<float>("lux_minusx") << ", ";
-	ss <<		"\"ss_plusy\": " << tempsensors->GetCustomProperty<float>("lux_plusy") << ", ";
-	ss <<		"\"ss_minusy\": " << tempsensors->GetCustomProperty<float>("lux_minusy") << ", ";
-	ss <<		"\"ss_plusz\": " << tempsensors->GetCustomProperty<float>("lux_plusz") << ", ";
-	ss <<		"\"ss_minusz\": " << tempsensors->GetCustomProperty<float>("lux_minusz");
+	ss <<		"\"ss_plusx\": " << sunsensors->GetCustomProperty<float>("lux_plusx") << ", ";
+	ss <<		"\"ss_minusx\": " << sunsensors->GetCustomProperty<float>("lux_minusx") << ", ";
+	ss <<		"\"ss_plusy\": " << sunsensors->GetCustomProperty<float>("lux_plusy") << ", ";
+	ss <<		"\"ss_minusy\": " << sunsensors->GetCustomProperty<float>("lux_minusy") << ", ";
+	ss <<		"\"ss_plusz\": " << sunsensors->GetCustomProperty<float>("lux_plusz") << ", ";
+	ss <<		"\"ss_minusz\": " << sunsensors->GetCustomProperty<float>("lux_minusz");
 	ss <<	"}, ";
 	
 	ss <<	"\"agent_pycubed\": {";
