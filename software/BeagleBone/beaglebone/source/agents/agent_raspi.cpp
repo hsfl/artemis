@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
 	
 	agent->Finalize();
 	
-	
+		
 	// Add requests
 	agent->AddRequest("agent_data", Request_GetData, "Prints data collected from other agents");
 	agent->AddRequest("command", Request_SSH, "Runs a command on the Raspberry Pi");
