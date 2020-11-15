@@ -22,7 +22,7 @@ else
 fi
 
 # Copy the Raspberry Pi project folder from the temporary folder to the Raspberry Pi
-ssh debian@beaglebone.local rsync -auv /home/debian/cache/raspi/ pi@raspberrypi.local:/home/pi/raspberry-pi
+ssh debian@beaglebone.local rsync -auv /home/debian/cache/raspi/ pi@raspberrypi.local:/home/pi/python
 
 # Check if successful
 if [ $? -eq 0 ]; then
