@@ -10,7 +10,8 @@ if [ ! -d "${RASPI_PROJECT_FOLDER}" ]; then
 fi
 
 # Copy the Raspberry Pi project folder to a temporary folder on the BeagleBone
-rsync -auv "${RASPI_PROJECT_FOLDER}/" debian@192.168.6.2:/home/debian/cache/raspi
+ssh debian@beaglebone.local mkdir /home/debian/cache
+rsync -auv "${RASPI_PROJECT_FOLDER}/" debian@beaglebone.local:/home/debian/cache/raspi
 
 # Check if successful
 if [ $? -eq 0 ]; then
@@ -21,7 +22,7 @@ else
 fi
 
 # Copy the Raspberry Pi project folder from the temporary folder to the Raspberry Pi
-ssh debian@192.168.6.2 rsync -auv /home/debian/cache/raspi/ pi@raspberrypi.local:/home/pi/raspberry-pi
+ssh debian@beaglebone.local rsync -auv /home/debian/cache/raspi/ pi@raspberrypi.local:/home/pi/raspberry-pi
 
 # Check if successful
 if [ $? -eq 0 ]; then
