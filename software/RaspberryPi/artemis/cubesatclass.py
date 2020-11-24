@@ -12,7 +12,7 @@ from .tempsensor import TempSensor
 from .log import log_file
 
 # COSMOS Constants
-COSMOS_NODE_NAME = 'artemis'
+COSMOS_NODE_NAME = 'cubesat'
 COSMOS_AGENT_TEMPSENSOR_NAME = 'temp'
 COSMOS_AGENT_SUNSENSOR_NAME = 'sunsensor'
 COSMOS_AGENT_HEATER_NAME = 'heater'
@@ -99,7 +99,7 @@ class CubeSat:
         
         # Get a JSON string from agent_raspi holding agent SOH info
         log_file.message('CubeSat', 'Fetching data from agent_raspi')
-        data_str = self.agent_raspi.request('dumpdata')
+        data_str = self.agent_raspi.request('agent_data')
         
         # Convert the JSON string into a dictionary
         data_json = {}

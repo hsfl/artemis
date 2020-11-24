@@ -127,7 +127,8 @@ while True:
     cubesat.update()
 
     # Capture an image
-    image_file = SingleCapture()
+    #image_file = SingleCapture()
+    image_file = OUTPUT_DIRECTORY + '/image_%d.jpeg' % image_count
 
     # Transmit the file to the BeagleBone
     if debug_mode:

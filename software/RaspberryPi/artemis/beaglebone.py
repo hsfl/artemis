@@ -6,7 +6,7 @@ BEAGLEBONE_OUTGOING_FOLDER = '/home/debian/raspi/outgoing/'
 BEAGLEBONE_INCOMING_FOLDER = '/home/debian/raspi/incoming/'
 BEAGLEBONE_RADIO_OUTGOING_FOLDER = '/home/debian/cosmos/nodes/artemis/outgoing/' # For agent_file
 BEAGLEBONE_RADIO_INCOMING_FOLDER = '/home/debian/cosmos/nodes/artemis/incoming/' # For agent_file
-BEAGLEBONE_HOST_NAME = 'debian@beaglebone.local'
+BEAGLEBONE_HOST_NAME = 'debian@192.168.7.2'
 
 
 class BeagleBone:
@@ -31,10 +31,13 @@ class BeagleBone:
             file_name = os.path.basename(source_file)
             destination_file = BEAGLEBONE_INCOMING_FOLDER + file_name
         
-        log_file.message('BeagleBone', 'Copying file from ' + source_file + ' to ' + destination_file)
+        log_file.message('BeagleBone', 'Copying file from ' + source_file + ' to ' + (BEAGLEBONE_HOST_NAME + ':' + destination_file))
         
         # Call 'rsync' to copy the file to the BeagleBone
-        return subprocess.call(["rsync", "-auv", source_file, BEAGLEBONE_HOST_NAME + ':' + destination_file])
+        return os.system('rsync -auz --timeout=10 %s %s' % (source_file, BEAGLEBONE_HOST_NAME + ':' + destination_file))
+
+
+
 
     @staticmethod
     def copy_from(source_file, destination_file):
@@ -43,7 +46,7 @@ class BeagleBone:
         log_file.message('BeagleBone', 'Copying file from ' + source_file + ' to ' + destination_file)
         
         # Call 'rsync' to copy the file from the BeagleBone
-        return subprocess.call(["rsync", "-auv", BEAGLEBONE_HOST_NAME + ':' + destination_file, source_file])
+        return subprocess.call(["rsync", "-v", BEAGLEBONE_HOST_NAME + ':' + destination_file, source_file])
     
     @staticmethod
     def transmit_file(source_file, outgoing_file_name = None):
@@ -56,7 +59,7 @@ class BeagleBone:
             
         log_file.message('BeagleBone', 'Transmitting file ' + source_file + ' with name ' + outgoing_file_name)
         
-        return subprocess.call(["rsync", "-auv", source_file, BEAGLEBONE_HOST_NAME + ':' + BEAGLEBONE_RADIO_OUTGOING_FOLDER + outgoing_file_name])
+        return subprocess.call(["rsync", "-v", source_file, BEAGLEBONE_HOST_NAME + ':' + BEAGLEBONE_RADIO_OUTGOING_FOLDER + outgoing_file_name])
         
     @staticmethod
     def system(sys_call):
