@@ -15,17 +15,23 @@
 using namespace std;
 using namespace cubesat;
 
-// The agent object which allows for communication with COSMOS
+//! The agent object which allows for communication with COSMOS
 SimpleAgent *agent;
+//! The device representing the Raspberry Pi
 CPU *raspi;
+//! The device representing the camera
 Camera *camera;
+//! A few custom devices for holding info from other agents
 CustomDevice *pycubed, *tempsensors, *sunsensors, *switches, *heater;
+//! The shutdown flag
 bool perform_shutdown = false;
-std::string hostname;
-std::string username;
-
-
+//! Indicates how long we've been connected to the Raspberry Pi
 Timer up_time_timer;
+
+//! The hostname of the Raspberry Pi (e.g. raspberrypi.local)
+std::string hostname;
+//! The username used (e.g. pi)
+std::string username;
 
 // =========== Function Prototypes ===========
 //! Attempts to connect to the Raspberry Pi by pinging it
@@ -39,41 +45,54 @@ void SystemCall(const std::string &command, std::string &output);
 //! Sets default values for agent SOH data
 void SetDefaultSOHData();
 
+//! Request to return JSON-formatted agent data
 string Request_GetData();
+//! Request to run a shell command on the Raspberry Pi over SSH
 string Request_SSH(CapturedInput command);
+//! Pings the Raspberry Pi
 string Request_Ping();
+//! Shuts down the Raspberry Pi if it is connected
 string Request_Shutdown();
+//! Sets the current SOH string for the payload script
 string Request_SetSOH(std::string soh);
 // ===========================================
 
 
 int main(int argc, char** argv) {
 	
+	// Set the username and hostname
 	switch ( argc ) {
+		// Set defaults for username and hostname
 		case 1:
 			hostname = "raspberrypi.local";
 			username = "pi";
 			break;
+		// Set a default for the username
 		case 2:
 			username = "pi";
 			hostname = argv[1];
 			break;
+		// Use the given username and hostname
 		case 3:
 			username = argv[1];
 			hostname = argv[2];
 			break;
+		// Incorrect usage
 		default:
 			printf("usage: agent_raspi [[username] hostname]\n");
 			printf("Default arguments are 'pi' and 'raspberrypi.local'\n");
 			exit(1);
 			break;
 	}
+	printf("Using username='%s' and hostname='%s'\n", username.c_str(), hostname.c_str());
+	
+	
 	
 	// Create the agent
 	agent = new SimpleAgent(CUBESAT_AGENT_RASPI_NAME);
 	agent->SetLoopPeriod(SLEEP_TIME);
 	
-	// Add the camera
+	// Add the camera device
 	camera = agent->NewDevice<Camera>("camera");
 	camera->Post(camera->utc = 0);
 	camera->Post(camera->enabled = false);
@@ -128,7 +147,10 @@ int main(int argc, char** argv) {
 	
 	// Run the main loop for this agent
 	while ( agent->StartLoop() ) {
+		// Check if the Raspberry Pi is up
 		ConnectRaspi();
+		
+		// Perform necessary I/O with the Raspberry Pi
 		UpdateRaspi();
 		GrabSOHData();
 	}
@@ -194,7 +216,7 @@ void UpdateRaspi() {
 		printf("Attempting to shut down Raspberry Pi\n");
 		
 		// Create the command string
-		string command = "ssh pi@raspberrypi.local sudo shutdown now";
+		string command = "ssh " + username + "@" + hostname + " sudo shutdown now";
 		
 		
 		// Call the command
