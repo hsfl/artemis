@@ -10,7 +10,7 @@ from picamera import PiCamera
 from artemis import cubesat
 
 # ====================== SETTINGS ======================
-OUTPUT_DIRECTORY = '/home/pi/payload_files'  # Where to save the images before sending them to the BeagleBone
+OUTPUT_DIRECTORY = '/home/pi/payload'  # Where to save the images before sending them to the BeagleBone
 
 camera = None
 image_count = 0  # The number of images that have been written since the script starteds
@@ -127,8 +127,7 @@ while True:
     cubesat.update()
 
     # Capture an image
-    #image_file = SingleCapture()
-    image_file = OUTPUT_DIRECTORY + '/image_%d.jpeg' % image_count
+    image_file = SingleCapture()
 
     # Transmit the file to the BeagleBone
     if debug_mode:

@@ -21,7 +21,8 @@ CPU *raspi;
 Camera *camera;
 CustomDevice *pycubed, *tempsensors, *sunsensors, *switches, *heater;
 bool perform_shutdown = false;
-std::string host_name;
+std::string hostname;
+std::string username;
 
 
 Timer up_time_timer;
@@ -50,13 +51,20 @@ int main(int argc, char** argv) {
 	
 	switch ( argc ) {
 		case 1:
-			host_name = "raspberrypi.local";
+			hostname = "raspberrypi.local";
+			username = "pi";
 			break;
 		case 2:
-			host_name = argv[1];
+			username = "pi";
+			hostname = argv[1];
+			break;
+		case 3:
+			username = argv[1];
+			hostname = argv[2];
 			break;
 		default:
-			printf("usage: agent_raspi [hostname]\n");
+			printf("usage: agent_raspi [[username] hostname]\n");
+			printf("Default arguments are 'pi' and 'raspberrypi.local'\n");
 			exit(1);
 			break;
 	}
@@ -134,7 +142,7 @@ int main(int argc, char** argv) {
 
 void ConnectRaspi() {
 	
-	const char *ping_cmd = "ping -c1 -W1 " RASPI_HOST " > nul  && echo 'UP' || echo 'DOWN'";
+	std::string ping_cmd = "ping -c1 -W1 " + hostname + " > nul  && echo 'UP' || echo 'DOWN'";
 	std::string response;
 	const int kNumAttempts = 3;
 	
@@ -538,7 +546,7 @@ string Request_SSH(CapturedInput input) {
 		return "Usage: ssh command";
 	
 	// Create the command string
-	string command = "ssh pi@raspberrypi.local " + input.input;
+	string command = "ssh " + username + "@" + hostname + " " + input.input;
 	
 	
 	// Call the command
@@ -552,7 +560,7 @@ string Request_SSH(CapturedInput input) {
 }
 
 string Request_Ping() {
-	const char *ping_cmd = "ping -c1 -W1 " RASPI_HOST " > nul  && echo 'UP' || echo 'DOWN'";
+	std::string ping_cmd = "ping -c1 -W1 " + hostname + " > nul  && echo 'UP' || echo 'DOWN'";
 	std::string response;
 	const int kNumAttempts = 3;
 	

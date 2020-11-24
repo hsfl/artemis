@@ -2,7 +2,7 @@ import subprocess
 import json
 from .log import log_file
 
-BEAGLEBONE_HOST_NAME = 'debian@192.168.7.2'
+BEAGLEBONE_HOST_NAME = 'debian@192.168.6.2'
 
 
 def _byteify(dictionary):

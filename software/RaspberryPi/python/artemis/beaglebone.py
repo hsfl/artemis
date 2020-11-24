@@ -6,7 +6,7 @@ BEAGLEBONE_OUTGOING_FOLDER = '/home/debian/raspi/outgoing/'
 BEAGLEBONE_INCOMING_FOLDER = '/home/debian/raspi/incoming/'
 BEAGLEBONE_RADIO_OUTGOING_FOLDER = '/home/debian/cosmos/nodes/artemis/outgoing/' # For agent_file
 BEAGLEBONE_RADIO_INCOMING_FOLDER = '/home/debian/cosmos/nodes/artemis/incoming/' # For agent_file
-BEAGLEBONE_HOST_NAME = 'debian@192.168.7.2'
+BEAGLEBONE_HOST_NAME = 'debian@192.168.6.2'
 
 
 class BeagleBone:
@@ -34,7 +34,7 @@ class BeagleBone:
         log_file.message('BeagleBone', 'Copying file from ' + source_file + ' to ' + (BEAGLEBONE_HOST_NAME + ':' + destination_file))
         
         # Call 'rsync' to copy the file to the BeagleBone
-        return os.system('rsync -auz --timeout=10 %s %s' % (source_file, BEAGLEBONE_HOST_NAME + ':' + destination_file))
+        return subprocess.check_output("rsync -au %s %s" % (source_file, BEAGLEBONE_HOST_NAME + ':' + destination_file), shell=True)
 
 
 
