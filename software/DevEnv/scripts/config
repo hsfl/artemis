@@ -27,7 +27,7 @@ BEAGLEBONE_PROJECT_FOLDER=~/artemis/software/BeagleBone/beaglebone
 
 
 # Raspberry Pi software folder
-RASPI_PROJECT_FOLDER=~/artemis/software/RaspberryPi
+RASPI_PROJECT_FOLDER=~/artemis/software/RaspberryPi/python
 
 # PyCubed software folder
 PYCUBED_PROJECT_FOLDER=~/artemis/software/PyCubed

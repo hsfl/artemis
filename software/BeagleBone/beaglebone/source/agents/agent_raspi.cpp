@@ -11,7 +11,6 @@
 
 // The interval between iterations in the run_agent() function
 #define SLEEP_TIME 1
-#define RASPI_HOST "raspberrypi.local"
 
 using namespace std;
 using namespace cubesat;
@@ -22,6 +21,7 @@ CPU *raspi;
 Camera *camera;
 CustomDevice *pycubed, *tempsensors, *sunsensors, *switches, *heater;
 bool perform_shutdown = false;
+std::string host_name;
 
 
 Timer up_time_timer;
@@ -47,6 +47,19 @@ string Request_SetSOH(std::string soh);
 
 
 int main(int argc, char** argv) {
+	
+	switch ( argc ) {
+		case 1:
+			host_name = "raspberrypi.local";
+			break;
+		case 2:
+			host_name = argv[1];
+			break;
+		default:
+			printf("usage: agent_raspi [hostname]\n");
+			exit(1);
+			break;
+	}
 	
 	// Create the agent
 	agent = new SimpleAgent(CUBESAT_AGENT_RASPI_NAME);
