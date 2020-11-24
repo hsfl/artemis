@@ -11,6 +11,22 @@ keywords: python, library
 ## Description
 The Raspberry Pi Library is a Python package which provides access to the cubesat from the Raspberry Pi Zero onboard computer.
 
+
+## Directory Structure
+
+The Artemis library for the Raspberry Pi expects a particular directory structure, shown below. Note that the tilde (`~`)
+character denotes the user's home folder.
+
+```
+~
+├── logs
+├── payload
+├── python
+│   └── ...
+└── scripts
+    └── ...
+```
+
 ## Usage
 To use the package, you only need one import line:
 
