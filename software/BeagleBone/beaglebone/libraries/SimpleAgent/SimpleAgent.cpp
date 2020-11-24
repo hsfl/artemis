@@ -198,7 +198,9 @@ std::string SimpleAgent::GetDebugString(bool print_all) const {
 //=========================== SUPPORT ===========================
 //===============================================================
 
-int32_t cubesat::RequestProxy(std::string &request_str, std::string &response, Agent *agent_) {
+int32_t cubesat::RequestProxy(std::string &request_str_, std::string &response, Agent *agent_) {
+	
+	std::string request_str = request_str_;
 	
 	// The request string is messed up for some reason, so we need to fix it:
 	request_str.assign(request_str.c_str(), strlen(request_str.c_str()));
