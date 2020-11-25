@@ -71,8 +71,6 @@ namespace cubesat {
 				// Invoke the callback function
 				R(*typed_callback)(CapturedInput) = (R(*)(CapturedInput))callback;
 				
-				std::cout << args.size() << std::endl;
-				
 				response = ToString<R>(typed_callback(CapturedInput(args)));
 				return true;
 			};
