@@ -75,48 +75,30 @@ namespace cubesat {
 		 * @param callback The function to call when this message type is received
 		 * @param num_args The number of arguments expected
 		 */
-		void AddMessageHandler(const std::string &message_type_str, PyCubedMessageHandlerCallback callback, int num_args) {
-			MessageHandler handler;
-			handler.callback = callback;
-			handler.num_args = num_args;
-			handlers[message_type_str] = handler;
-		}
+		void AddMessageHandler(const std::string &message_type_str, PyCubedMessageHandlerCallback callback, int num_args);
 		/**
 		 * @brief Adds a message parser
 		 * @param message_type_str The message type string to add support for
 		 * @param callback The function to call when this message type is received
 		 */
-		void AddMessageParser(const std::string &message_type_str, PyCubedMessageParserCallback callback) {
-			MessageParser parser;
-			parser.callback = callback;
-			parsers[message_type_str] = parser;
-		}
+		void AddMessageParser(const std::string &message_type_str, PyCubedMessageParserCallback callback);
 		
 		/**
 		 * @brief Sends a message that startup was successful
 		 * @return The status of the operation
 		 */
-		inline bool StartupConfirmation() {
-			return SendMessage(PYCUBED_BEAGLEBONE_STATUS_MSGTYPE,
-			{"y", "n", "n"});
-		}
+		bool StartupConfirmation();
 		
 		/**
 		 * @brief Sends a handoff confirmation message
 		 * @return The status of the operation
 		 */
-		inline bool Handoff() {
-			return SendMessage(PYCUBED_BEAGLEBONE_STATUS_MSGTYPE,
-			{"n", "y", "n"});
-		}
+		bool Handoff();
 		/**
 		 * @brief Sends a message to kill the radio
 		 * @return The status of the operation
 		 */
-		inline bool KillRadio() {
-			return SendMessage(PYCUBED_BEAGLEBONE_STATUS_MSGTYPE,
-			{"n", "n", "y"});
-		}
+		bool KillRadio();
 		
 		/**
 		 * @brief Sets the callback function for when shutdown is requested

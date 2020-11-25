@@ -27,6 +27,33 @@ PyCubed::~PyCubed() {
 }
 
 
+void PyCubed::AddMessageHandler(const std::string &message_type_str, PyCubedMessageHandlerCallback callback, int num_args) {
+	MessageHandler handler;
+	handler.callback = callback;
+	handler.num_args = num_args;
+	handlers[message_type_str] = handler;
+}
+
+void PyCubed::AddMessageParser(const std::string &message_type_str, PyCubedMessageParserCallback callback) {
+	MessageParser parser;
+	parser.callback = callback;
+	parsers[message_type_str] = parser;
+}
+
+bool PyCubed::StartupConfirmation() {
+	return SendMessage(PYCUBED_BEAGLEBONE_STATUS_MSGTYPE,
+	{"y", "n", "n"});
+}
+bool PyCubed::Handoff() {
+	return SendMessage(PYCUBED_BEAGLEBONE_STATUS_MSGTYPE,
+	{"n", "y", "n"});
+}
+bool PyCubed::KillRadio() {
+	return SendMessage(PYCUBED_BEAGLEBONE_STATUS_MSGTYPE,
+	{"n", "n", "y"});
+}
+
+
 bool PyCubed::SendMessage(const std::string &message_type_str, const std::vector<std::string> &args) {
 	if ( !IsOpen() )
 		return false;
