@@ -175,15 +175,16 @@ int main(int argc, char** argv) {
 	
 	switch ( argc ) {
 		case 4: {
-			tunnel_ip = argv[1];
+			tunnel_ip = argv[3];
 			do_tunnel = true;
 		}
-		case 3: {
-			uart = atoi(argv[1]);
+		case 3:
 			baud = atoi(argv[2]);
-		} break;
+		case 2:
+			uart = atoi(argv[1]);
+			break;
 		default:
-			printf("usage: agent_pycubed [uart baud [ip address]]\n");
+			printf("usage: agent_pycubed [uart [baud [ip address]]]\n");
 			exit(1);
 	}
 	printf("Using PyCubed on UART%d at %d baud\n", uart, baud);
