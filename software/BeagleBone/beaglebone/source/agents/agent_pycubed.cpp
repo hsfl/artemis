@@ -30,6 +30,7 @@ using namespace cubesat;
 SimpleAgent *agent;
 //! The handler object used to communicate with the PyCubed
 PyCubed *handler = nullptr;
+unsigned int uart, baud;
 
 //! The CPU device representing the PyCubed
 CPU *pycubed;
@@ -67,6 +68,9 @@ void UpdatePyCubed();
  * @brief Shutdown callback function
  */
 void Shutdown();
+
+//! Command callback function
+void RunCommand(const std::string &cmd);
 
 // |----------------------------------------------|
 // |                    Requests                  |
@@ -165,18 +169,25 @@ int32_t request_serial_queue_size(char *request, char *response, Agent *);
 int main(int argc, char** argv) {
 	std::string tunnel_ip;
 	vector<uint8_t> buffer;
-	bool do_tunnel = true;
+	bool do_tunnel = false;
+	uart = PYCUBED_UART;
+	baud = PYCUBED_BAUD;
 	
 	switch ( argc ) {
-		case 2: {
-			// Get address for tunnel
+		case 4: {
 			tunnel_ip = argv[1];
+			do_tunnel = true;
+		}
+		case 3: {
+			uart = atoi(argv[1]);
+			baud = atoi(argv[2]);
 		} break;
 		default:
-			printf("To establish tunnel: agent_pycubed ip_address\n");
-			do_tunnel = false;
-			break;
+			printf("usage: agent_pycubed [uart baud [ip address]]\n");
+			exit(1);
 	}
+	printf("Using PyCubed on UART%d at %d baud\n", uart, baud);
+	printf("Establish tunnel: %s\n", do_tunnel ? "yes" : "no");
 	
 	// Initialize the Agent
 	agent = new SimpleAgent(CUBESAT_AGENT_PYCUBED_NAME);
@@ -237,8 +248,9 @@ int main(int argc, char** argv) {
 void InitPyCubed() {
 	
 	// Create a new PyCubed device
-	handler = new PyCubed(PYCUBED_UART, PYCUBED_BAUD);
+	handler = new PyCubed(uart, baud);
 	handler->SetShutdownCallback(Shutdown);
+	handler->SetCommandCallback(RunCommand);
 	
 	// Add the PyCubed CPU device
 	pycubed = agent->NewDevice<CPU>("pycubed");
@@ -430,6 +442,11 @@ void Shutdown() {
 	exit(0);
 }
 
+void RunCommand(const std::string &cmd) {
+	printf("$%s\n", cmd.c_str());
+	system(cmd.c_str());
+}
+
 //===============================================================
 //========================== REQUESTS ===========================
 //===============================================================
@@ -538,6 +555,8 @@ bool Request_KillRadio() {
 		first_kill_received = true;
 	}
 }
+
+
 
 
 
