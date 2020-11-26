@@ -12,19 +12,26 @@ namespace cubesat {
 	
 	class PyCubed;
 	
-	typedef void (*PyCubedShutdownCallback)();
-	typedef void (*PyCubedReceiveFileCallback)(const std::string &file_name);
+	//! Callback function for when the shutdown message is received from
+	//! the PyCubed board
+	using PyCubedShutdownCallback = void (*)();
+	//! Callback function for when a file is received from the
+	//! PyCubed board
+	using PyCubedReceiveFileCallback = void (*)(const std::string &file_name);
+	//! Callback function for when a command is received
+	using CommandCallback = void (*)(const std::string &cmd);
 	
 	//! Callback function for handling non-binary messages. Message arguments are supplied
 	//! in the argument vector, and do not include the message type or checksum
-	typedef bool (*PyCubedMessageHandlerCallback)(std::vector<std::string> args, PyCubed &pycubed);
+	using PyCubedMessageHandlerCallback = bool (*)(std::vector<std::string> args, PyCubed &pycubed);
 	//! Callback function for parsing (potentially) binary messages. At the point
 	//! this function is called, the message type and first comma have been read in
 	//! from the UART device. Checksum handling is your responsibility!
-	typedef bool (*PyCubedMessageParserCallback)(UARTDevice &uart, PyCubed &pycubed);
+	using PyCubedMessageParserCallback = bool (*)(UARTDevice &uart, PyCubed &pycubed);
+	
+	using PyCubedMessageSender = std::vector<std::string> (*)(std::vector<std::string> arg_strs);
 	
 	
-	typedef std::vector<std::string> (*PyCubedMessageSender)(std::vector<std::string> arg_strs);
 	
 	/**
 	 * @brief Provides access to the PyCubed mainboard
@@ -68,6 +75,13 @@ namespace cubesat {
 		 */
 		bool SendMessage(const std::string &message_type_str, const std::vector<std::string> &args);
 		
+		/**
+		 * @brief Sends a Python string to be run on the PyCubed board
+		 * @param script The script string to run
+		 * @return True upon success
+		 */
+		bool SendScript(const std::string &script);
+		
 		
 		/**
 		 * @brief Adds a message handler
@@ -106,6 +120,14 @@ namespace cubesat {
 		 */
 		inline void SetShutdownCallback(PyCubedShutdownCallback callback) {
 			this->shutdown_callback = callback;
+		}
+		
+		/**
+		 * @brief Sets the callback function for when a shell command is received
+		 * @param callback The function to call
+		 */
+		inline void SetCommandCallback(CommandCallback callback) {
+			this->command_callback = callback;
 		}
 		
 		/**
@@ -168,11 +190,14 @@ namespace cubesat {
 		 */
 		bool ReceiveNextMessage();
 		
+		
 	private:
 		//! The shutdown callback function
 		PyCubedShutdownCallback shutdown_callback;
 		//! The file receive callback
 		PyCubedReceiveFileCallback receive_file_callback;
+		//! Command callback
+		CommandCallback command_callback;
 		
 		//! Holds the last received IMU information
 		PyCubedIMUInfo imu_info;
@@ -197,6 +222,8 @@ namespace cubesat {
 		
 		//! Radio packet parser
 		static bool Parser_PKT(UARTDevice &uart, PyCubed &pycubed);
+		//! Command parser
+		static bool Parser_CMD(UARTDevice &uart, PyCubed &pycubed);
 		
 		//! PyCubed status handler
 		static bool Handler_PST(std::vector<std::string> args, PyCubed &pycubed);
@@ -208,7 +235,6 @@ namespace cubesat {
 		static bool Handler_TMP(std::vector<std::string> args, PyCubed &pycubed);
 		//! Power handler
 		static bool Handler_PWR(std::vector<std::string> args, PyCubed &pycubed);
-		
 	};
 	
 }

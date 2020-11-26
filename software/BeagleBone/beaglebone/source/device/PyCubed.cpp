@@ -14,6 +14,7 @@ PyCubed::PyCubed(uint8_t bus, unsigned int baud) : UARTDevice(bus, baud) {
 	
 	// Add default message parsers
 	AddMessageParser(PYCUBED_PACKET_MSGTYPE, Parser_PKT);
+	//AddMessageParser(PYCUBED_FILE_TRANSFER_MSGTYPE, Parser_FTR);
 	
 	// Add default message handlers
 	AddMessageHandler(PYCUBED_PYCUBED_STATUS_MSGTYPE, Handler_PST, 1);
@@ -86,6 +87,30 @@ bool PyCubed::SendMessage(const std::string &message_type_str, const std::vector
 	Write((uint8_t*)message_cstr, message_str.length());
 	
 	// Indicate success
+	return true;
+}
+
+bool PyCubed::SendScript(const std::string &script) {
+	if ( !IsOpen() )
+		return false;
+	
+	// Create the b
+	stringstream message;
+	message << PYCUBED_COMMAND_MSGTYPE << ',';
+	message << script.length() << ',';
+	message << script;
+	
+	// Compute and add the checksum
+	int checksum = GetChecksum(message.str());
+	message << ',' << std::setfill('0') << std::setw(2) << std::hex << checksum;
+	
+	
+	// Finish up the message
+	std::string message_str = "$" + message.str();
+	
+	// Write the message
+	Write((uint8_t*)message_str.c_str(), message_str.length());
+	
 	return true;
 }
 
@@ -239,6 +264,7 @@ bool PyCubed::ReceiveNextMessage() {
 	}
 }
 
+
 bool PyCubed::Parser_PKT(UARTDevice &uart, PyCubed &pycubed) {
 	uint8_t buff[256];
 	
@@ -276,6 +302,51 @@ bool PyCubed::Parser_PKT(UARTDevice &uart, PyCubed &pycubed) {
 	
 	return true;
 }
+bool PyCubed::Parser_CMD(UARTDevice &uart, PyCubed &pycubed) {
+	// CMD,cmd_length,cmd,CS
+	
+	// Read the length of the command
+	uint8_t length_buff[5];
+	uint8_t *p = length_buff;
+	
+	do {
+		uart.Read(p++, 1);
+	} while ( (char)*(p - 1) != ',' && (p - length_buff) < 4 );
+	
+	length_buff[4] = '\0';
+	int cmd_len = atoi((char*)length_buff);
+	
+	// Print a debug string
+	printf("Received command of length %d\n", cmd_len);
+	
+	
+	// Read the command string
+	uint8_t buff[128];
+	uart.Read(buff, cmd_len);
+	string cmd = (char*)buff;
+	
+	// Read the following comma
+	uart.Read(buff, 1);
+	
+	// Read the checksum
+	uart.Read(buff, 2);
+	buff[3] = '\0';
+	
+	char given_checksum = (int)strtol((char*)buff, NULL, 16);
+	char calculated_checksum = GetChecksum((char*)buff);
+	
+	if ( given_checksum != calculated_checksum ) {
+		printf("PyCubed: command '%s' was received, but message was corrupted.\n", cmd.c_str());
+		return false;
+	}
+	
+	// Invoke the command callback
+	if ( pycubed.command_callback != NULL )
+		pycubed.command_callback(cmd);
+	
+	return true;
+}
+
 bool PyCubed::Handler_PST(std::vector<std::string> args, PyCubed &pycubed) {
 	
 	// Store timestamp (TODO)
