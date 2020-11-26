@@ -165,6 +165,10 @@ class CubeSat:
         self.heater.load_json(data_json)
 
         log_file.message('CubeSat', 'Finished updating CubeSat')
+
+
+        # Transmit files in the outgoing folder
+        
         
     def transmit_file(self, source_file, outgoing_file_name = None):
         """Uses rsync to copy the given file to the BeagleBone, marking it for radio transmission.
