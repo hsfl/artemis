@@ -13,7 +13,7 @@
 // The interval between iterations in the run_agent() function
 #define SLEEP_TIME 1
 
-#define PYCUBED_UART 0
+#define PYCUBED_UART 1
 #define PYCUBED_BAUD 9600
 
 #define MAXBUFFERSIZE 2560 // comm buffer for agents
