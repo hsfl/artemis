@@ -8,7 +8,7 @@
 #include "RequestHelper.h"
 #include "Exceptions.h"
 
-namespace cubesat {
+namespace artemis {
 	
 	
 	

@@ -10,7 +10,7 @@
 #include "StringTools.h"
 #include "Exceptions.h"
 
-namespace cubesat {
+namespace artemis {
 	
 	namespace detail {
 		

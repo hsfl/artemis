@@ -9,7 +9,7 @@
 
 
 
-namespace cubesat {
+namespace artemis {
 	
 	//! Thrown if the user attempts to create a device with
 	//! a name that is already taken

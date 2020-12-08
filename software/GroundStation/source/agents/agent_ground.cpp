@@ -6,7 +6,7 @@
 #include <fstream>
 #include <unordered_map>
 
-using namespace cubesat;
+using namespace artemis;
 using namespace std;
 
 

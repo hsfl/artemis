@@ -4,11 +4,11 @@
 #include "SimpleAgent.h"
 
 using namespace std;
-using namespace cubesat;
+using namespace artemis;
 
 
 
-int32_t cubesat::DeviceRequestProxy(string &request_str, string &response, Agent *agent_) {
+int32_t artemis::DeviceRequestProxy(string &request_str, string &response, Agent *agent_) {
 	
 	// The request string is messed up for some reason, so we need to fix it:
 	request_str.assign(request_str.c_str(), strlen(request_str.c_str()));
@@ -79,7 +79,7 @@ int32_t cubesat::DeviceRequestProxy(string &request_str, string &response, Agent
 //===============================================================
 //============================ OTHER ============================
 //===============================================================
-const char* cubesat::GetDeviceTypeString(DeviceType type) {
+const char* artemis::GetDeviceTypeString(DeviceType type) {
 	switch ( type ) {
 		case DeviceType::PLOAD: return "payload";
 		case DeviceType::SSEN: return "sun sensor";

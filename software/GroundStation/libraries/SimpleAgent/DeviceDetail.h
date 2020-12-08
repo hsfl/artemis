@@ -36,7 +36,7 @@
 	Property<__DeviceStruc, offsetof(__DeviceStruc, member)> name
 
 
-namespace cubesat {
+namespace artemis {
 	
 	/**
 	 * @brief Holds information about a COSMOS property

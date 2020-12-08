@@ -11,7 +11,7 @@
 #include <unordered_map>
 #include <cmath>
 
-namespace cubesat {
+namespace artemis {
 	
 	
 	

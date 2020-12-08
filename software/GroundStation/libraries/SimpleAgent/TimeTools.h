@@ -6,7 +6,7 @@
 #include "support/timelib.h"
 
 
-namespace cubesat {
+namespace artemis {
 	
 	class Time {
 	public:

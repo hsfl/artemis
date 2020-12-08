@@ -5,7 +5,7 @@
 #include "Device.h"
 #include "support/timelib.h"
 
-namespace cubesat {
+namespace artemis {
 	
 	
 	

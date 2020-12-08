@@ -2,7 +2,7 @@
 #include "RemoteAgent.h"
 
 using namespace std;
-using namespace cubesat;
+using namespace artemis;
 
 
 bool RemoteAgent::Connect(float wait_sec, bool crash_if_failed) {
