@@ -50,7 +50,7 @@ include_directories("./libraries")
 
 # Add the SimpleAgent dependency subdirectory
 add_subdirectory(libraries/SimpleAgent)
-set(CUBESAT_LIBS SimpleAgent)
+set(CUBESAT_LIBS Utilities SimpleAgent)
 
 # Add the source subdirectory
 add_subdirectory(source)
