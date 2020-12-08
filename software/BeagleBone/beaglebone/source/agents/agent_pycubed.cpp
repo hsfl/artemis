@@ -16,9 +16,6 @@
 #define PYCUBED_UART 1
 #define PYCUBED_BAUD 9600
 
-#define MAXBUFFERSIZE 2560 // comm buffer for agents
-#define TUN_BUF_SIZE 2000
-
 using namespace std;
 using namespace cubesat;
 
@@ -127,38 +124,6 @@ string Request_GetTemperatureData();
 bool Request_KillRadio();
 
 
-// |----------------------------------------------|
-// |                   Tunneling                  |
-// |----------------------------------------------|
-
-static queue<vector<uint8_t> > tun_fifo;
-static queue<vector<uint8_t> > tcv_fifo;
-
-static condition_variable tcv_fifo_check;
-static condition_variable tun_fifo_check;
-
-static int tun_fd;
-
-static string rxr_devname;
-static string txr_devname;
-static uint16_t tunnel_mtu = 512;
-
-int tun_out, tun_in, gl_in, gl_out = 0;
-
-void StartTunnel(const std::string &tunnel_ip);
-void tcv_read_loop();
-void tcv_write_loop();
-void tun_read_loop();
-void tun_write_loop();
-
-int32_t request_tunnel_queue_size(char *request, char *response, Agent *);
-int32_t request_serial_queue_size(char *request, char *response, Agent *);
-
-// agent cubesat pycubed ...
-// ===========================================
-
-
-
 
 
 
@@ -167,28 +132,20 @@ int32_t request_serial_queue_size(char *request, char *response, Agent *);
 // |----------------------------------------------|
 
 int main(int argc, char** argv) {
-	std::string tunnel_ip;
-	vector<uint8_t> buffer;
-	bool do_tunnel = false;
 	uart = PYCUBED_UART;
 	baud = PYCUBED_BAUD;
 	
 	switch ( argc ) {
-		case 4: {
-			tunnel_ip = argv[3];
-			do_tunnel = true;
-		}
 		case 3:
 			baud = atoi(argv[2]);
 		case 2:
 			uart = atoi(argv[1]);
 			break;
 		default:
-			printf("usage: agent_pycubed [uart [baud [ip address]]]\n");
+			printf("usage: agent_pycubed [uart [baud]]\n");
 			exit(1);
 	}
 	printf("Using PyCubed on UART%d at %d baud\n", uart, baud);
-	printf("Establish tunnel: %s\n", do_tunnel ? "yes" : "no");
 	
 	// Initialize the Agent
 	agent = new SimpleAgent(CUBESAT_AGENT_PYCUBED_NAME);
@@ -217,15 +174,6 @@ int main(int argc, char** argv) {
 	// Debug print
 	agent->DebugPrint(true);
 	
-	// Initialize the network tunnel
-	if ( do_tunnel ) {
-		StartTunnel(tunnel_ip);
-		
-		// Start tunnel threads
-		thread tun_read_thread(tun_read_loop);
-		thread tun_write_thread(tun_write_loop);
-	}
-	
 	
 	// Run the main loop for this agent
 	while ( agent->StartLoop() ) {
@@ -238,6 +186,8 @@ int main(int argc, char** argv) {
 	}
 	
 	// Tidy up
+	handler->Close();
+	
 	delete handler;
 	delete agent;
 	
@@ -560,206 +510,4 @@ bool Request_KillRadio() {
 
 
 
-
-//===============================================================
-//=========================== TUNNEL ============================
-//===============================================================
-
-
-void StartTunnel(const std::string &tunnel_ip) {
-	// Initialize Gamalink
-	//	gamalink = new GamaLink();
-	//	gamalink->set_debug_level(GamaLink::debugLevel::OFF);
-	//	iretn = gamalink->init(dev);
-	//	if(iretn < 0 ){
-	//		printf("Could not intialize \n");
-	//		exit(-1);
-	//	}
-	
-	// Start serial threads
-	thread tcv_read_thread(tcv_read_loop);
-	thread tcv_write_thread(tcv_write_loop);
-	
-	// Open tunnel device
-	int tunnel_sock;
-	struct ifreq ifr1, ifr2;
-	struct sockaddr_in *addr = (struct sockaddr_in *)&ifr2.ifr_addr;
-	
-	if ((tun_fd=open("/dev/net/tun", O_RDWR)) < 0)
-	{
-		perror("Error opening tunnel device");
-		exit (-1);
-	}
-	
-	memset(&ifr1, 0, sizeof(ifr1));
-	ifr1.ifr_flags = IFF_TUN | IFF_NO_PI;
-	strncpy(ifr1.ifr_name, agent->GetComplexAgent()->cinfo->agent[0].beat.proc, IFNAMSIZ);
-	if (ioctl(tun_fd, TUNSETIFF, static_cast<void *>(&ifr1)) < 0)
-	{
-		perror("Error setting tunnel interface");
-		exit (-1);
-	}
-	
-	if((tunnel_sock=socket(AF_INET, SOCK_DGRAM, IPPROTO_IP)) < 0)
-	{
-		perror("Error opening tunnel socket");
-		exit (-1);
-	}
-	
-	// Get ready to set things
-	strncpy(ifr2.ifr_name, agent->GetComplexAgent()->cinfo->agent[0].beat.proc, IFNAMSIZ);
-	ifr2.ifr_addr.sa_family = AF_INET;
-	
-	// Set interface address
-	
-	inet_pton(AF_INET, tunnel_ip.c_str(), &addr->sin_addr);
-	if (ioctl(tunnel_sock, SIOCSIFADDR, &ifr2) < 0 )
-	{
-		perror("Error setting tunnel address");
-		exit (-1);
-	}
-	
-	// Set interface netmask
-	inet_pton(AF_INET, static_cast<const char *>("255.255.255.0"), &addr->sin_addr);
-	if (ioctl(tunnel_sock, SIOCSIFNETMASK, &ifr2) < 0 )
-	{
-		perror("Error setting tunnel netmask");
-		exit (-1);
-	}
-	
-	if (ioctl(tunnel_sock, SIOCGIFFLAGS, &ifr2) < 0 )
-	{
-		perror("Error getting tunnel interface flags");
-		exit (-1);
-	}
-	
-	// Bring interface up
-	ifr2.ifr_flags |= (IFF_UP | IFF_RUNNING);
-	if (ioctl(tunnel_sock, SIOCSIFFLAGS, &ifr2) < 0 )
-	{
-		perror("Error setting tunnel interfa ce flags");
-		exit (-1);
-	}
-	
-	// Set interface MTU
-	ifr2.ifr_mtu = tunnel_mtu;
-	if (ioctl(tunnel_sock, SIOCSIFMTU, &ifr2) < 0 )
-	{
-		perror("Error setting tunnel interface MTU");
-		exit (-1);
-	}
-	
-	
-	close(tunnel_sock);
-}
-
-void tun_read_loop() {
-	vector<uint8_t> buffer;
-	ssize_t nbytes;
-	
-	while ( agent->IsRunning() ) {
-		
-		buffer.resize(TUN_BUF_SIZE);
-		nbytes = read(tun_fd, &buffer[0], TUN_BUF_SIZE);
-		if (nbytes > 0)
-		{	// Start of mutex for tcv fifo
-			tun_in ++;
-			
-			buffer.resize(static_cast<size_t>(nbytes));
-			tcv_fifo.push(buffer);
-			tcv_fifo_check.notify_one();
-		}	// End of mutex for tcv fifo
-	}
-}
-
-void tun_write_loop() {
-	vector<uint8_t> buffer;
-	ssize_t nbytes;
-	std::mutex tun_fifo_lock;
-	std::unique_lock<std::mutex> locker(tun_fifo_lock);
-	
-	while ( agent->IsRunning() ) {
-		
-		tun_fifo_check.wait(locker);
-		// End of mutex for tun fifo
-		
-		while (!tun_fifo.empty())
-		{
-			buffer = tun_fifo.front();
-			nbytes = write(tun_fd, &buffer[0], buffer.size());
-			if (nbytes > 0)
-			{
-				tun_fifo.pop();
-				tun_out ++;
-			}
-		}
-	}
-}
-
-void tcv_read_loop() { // reading from gamalink packet buffer (incoming)
-	vector<uint8_t> buffer;
-	ssize_t nbytes;
-	PyCubedPacket packet;
-	PyCubed *handler = nullptr;
-	
-	
-	while ( agent->IsRunning() ) {
-		
-		if ( handler == nullptr )
-			handler = pycubed->GetCustomProperty<PyCubed*>("handler");
-		
-		// Read data from receiver port
-		buffer.resize(TUN_BUF_SIZE);
-		
-		if ( handler == nullptr )
-			nbytes = 0;
-		else
-			nbytes = handler->IsOpen() ? handler->PopIncomingPacket(packet) : 0;
-		
-		if ( nbytes > 0 ) { // Start of mutex for tun FIFO
-			gl_in ++;
-			buffer.resize(0);
-			
-			for(uint16_t i = 0; i < nbytes; i++){
-				buffer.push_back(packet.content.data[i+6]);
-			}
-			
-			tun_fifo.push(buffer);
-			tun_fifo_check.notify_one();
-			
-		} // End of mutex for tun FIFO
-	}
-}
-
-void tcv_write_loop() { // telecommand send gamalink packet (outgoing)
-	std::mutex tcv_fifo_lock;
-	std::unique_lock<std::mutex> locker(tcv_fifo_lock);
-	vector<uint8_t> buffer;
-	PyCubed *handler;
-	
-	PyCubedDataPacket out_packet;
-	while ( agent->IsRunning()) {
-		tcv_fifo_check.wait(locker);
-		
-		if ( handler == nullptr )
-			handler = pycubed->GetCustomProperty<PyCubed*>("handler");
-		
-		while ( !tcv_fifo.empty() ) {
-			// Get next packet from transceiver FIFO
-			buffer = tcv_fifo.front();
-			tcv_fifo.pop();
-			gl_out ++;
-			// Write data to transmitter port
-			out_packet.length = buffer.size();
-			out_packet.addr = 255;
-			out_packet.data = buffer;
-			
-			if ( handler != nullptr && handler->IsOpen() )
-				handler->TelecommandOutboundPacket(out_packet);
-			else
-				printf("Attempted to send packets, but PyCubed device is not open.\n");
-			//gamalink->telecommand_outbound_packet(out_packet);
-		}
-	}
-}
 
