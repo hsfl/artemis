@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <termios.h>
 
-namespace cubesat {
+namespace artemis {
 	
 	/**
 	 * @class UARTDevice

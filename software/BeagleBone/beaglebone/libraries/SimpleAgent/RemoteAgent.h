@@ -14,7 +14,7 @@
 #include <unordered_map>
 #include <sstream>
 
-namespace cubesat {
+namespace artemis {
 	
 	struct RemoteDeviceProperty {
 		std::string device_name;

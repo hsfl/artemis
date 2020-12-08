@@ -2,7 +2,7 @@
 #include "SimpleAgent/SimpleAgent.h"
 
 using namespace std;
-using namespace cubesat;
+using namespace artemis;
 
 // A simple request that gives a friendly greeting
 string SayHi() {

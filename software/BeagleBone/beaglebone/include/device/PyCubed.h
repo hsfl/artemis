@@ -8,7 +8,7 @@
 #include "SimpleAgent/DeviceDetail.h"
 #include <unordered_map>
 
-namespace cubesat {
+namespace artemis {
 	
 	class PyCubed;
 	

@@ -5,7 +5,7 @@
 
 
 using namespace std;
-using namespace cubesat;
+using namespace artemis;
 
 
 TelemetryLog::TelemetryLog(const std::string &agent, const std::string &node) {

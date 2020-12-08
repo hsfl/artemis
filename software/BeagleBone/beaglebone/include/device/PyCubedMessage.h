@@ -19,7 +19,7 @@
 #define PYCUBED_PACKET_MSGTYPE "PKT"
 #define PYCUBED_COMMAND_MSGTYPE "CMD"
 
-namespace cubesat {
+namespace artemis {
 	
 	struct PyCubedPacketHeader {
 		uint8_t bytes[6];

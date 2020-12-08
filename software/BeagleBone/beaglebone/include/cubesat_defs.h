@@ -13,7 +13,7 @@
 #define CUBESAT_AGENT_PYCUBED_NAME "pycubed"
 #define CUBESAT_AGENT_RASPI_NAME "raspi"
 
-namespace cubesat {
+namespace artemis {
 	
 }
 

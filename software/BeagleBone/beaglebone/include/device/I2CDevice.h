@@ -6,7 +6,7 @@
 #include <string>
 
 
-namespace cubesat {
+namespace artemis {
 	
 	
 	class I2CDevice {

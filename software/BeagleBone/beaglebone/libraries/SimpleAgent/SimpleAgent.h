@@ -45,7 +45,7 @@
 #pragma GCC diagnostic ignored "-Wpointer-arith"
 
 
-namespace cubesat {
+namespace artemis {
 	
 	//===============================================================
 	//=========================== SUPPORT ===========================

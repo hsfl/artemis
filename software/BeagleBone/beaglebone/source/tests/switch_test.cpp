@@ -8,7 +8,7 @@
 
  
 using namespace std;
-using namespace cubesat;
+using namespace artemis;
 
 
 void TestSwitch(const char *device_name, int blink_count = 5) {

@@ -4,7 +4,7 @@
 
 #include "device/SPIDevice.h"
 
-namespace cubesat {
+namespace artemis {
 	
 	
 	

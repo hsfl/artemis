@@ -9,7 +9,7 @@
 #include <fstream>
 #include <algorithm>
 
-using namespace cubesat;
+using namespace artemis;
 
 PinInfo GPIO::pin_table[] = {
     { "USR0", "USR0", 53, -1, -1, 1 },

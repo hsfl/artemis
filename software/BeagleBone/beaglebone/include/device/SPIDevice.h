@@ -29,7 +29,7 @@
 #include<stdint.h>
 
 
-namespace cubesat {
+namespace artemis {
 	
 	/**
 	 * @class SPIDevice

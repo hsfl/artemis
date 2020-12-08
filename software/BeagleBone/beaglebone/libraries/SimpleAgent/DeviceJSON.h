@@ -10,7 +10,7 @@
 #include <sstream>
 
 
-namespace cubesat {
+namespace artemis {
 	
 	
 	class DeviceSerializer {

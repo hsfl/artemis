@@ -5,7 +5,7 @@
 #include <sstream>
 
 using namespace std;
-using namespace cubesat;
+using namespace artemis;
 
 //! Computes the checksum of a string
 char GetChecksum(const std::string &str);

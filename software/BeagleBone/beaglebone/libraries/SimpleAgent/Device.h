@@ -22,7 +22,7 @@
 #pragma GCC diagnostic ignored "-Wpointer-arith"
 
 
-namespace cubesat {
+namespace artemis {
 	
 	/**
 	 * @brief Used to redirect external requests to device request callbacks

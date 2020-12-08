@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 using namespace std;
-using namespace cubesat;
+using namespace artemis;
 
 SwitchedDeviceInfo PDUSwitch::switch_info[] = {
 	{SWITCH_HEATER_NAME, SWITCH_HEATER_KEY},

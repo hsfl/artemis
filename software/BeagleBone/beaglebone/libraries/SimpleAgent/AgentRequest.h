@@ -10,7 +10,7 @@
 #include "Exceptions.h"
 #include "StringTools.h"
 
-namespace cubesat {
+namespace artemis {
 	
 	//! Holds the callback function for an agent request
 	class AgentRequest {

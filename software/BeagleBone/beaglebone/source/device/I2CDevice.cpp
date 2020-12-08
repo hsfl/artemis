@@ -16,7 +16,7 @@
 #define BBB_I2C_2 "/dev/i2c-2"
 
 using namespace std;
-using namespace cubesat;
+using namespace artemis;
 
 #define HEX(x) setw(2) << setfill('0') << hex << (int)(x)
 

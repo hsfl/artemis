@@ -9,7 +9,7 @@
 #define BEAGLEBONE_INCOMING_FOLDER "/home/debian/raspi/incoming"
 #define BEAGLEBONE_OUTCOMING_FOLDER "/home/debian/raspi/outgoing"
 
-namespace cubesat {
+namespace artemis {
 	
 	
 	

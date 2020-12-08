@@ -8,7 +8,7 @@
 
  
 using namespace std;
-using namespace cubesat;
+using namespace artemis;
 
 void PrintBinary(uint8_t byte, int bits) {
 	printf("0b");

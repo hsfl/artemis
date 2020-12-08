@@ -2,7 +2,7 @@
 #include "SimpleAgent.h"
 
 using namespace std;
-using namespace cubesat;
+using namespace artemis;
 
 SimpleAgent* SimpleAgent::instance = nullptr;
 
@@ -198,7 +198,7 @@ std::string SimpleAgent::GetDebugString(bool print_all) const {
 //=========================== SUPPORT ===========================
 //===============================================================
 
-int32_t cubesat::RequestProxy(std::string &request_str_, std::string &response, Agent *agent_) {
+int32_t artemis::RequestProxy(std::string &request_str_, std::string &response, Agent *agent_) {
 	
 	std::string request_str = request_str_;
 	
@@ -254,7 +254,7 @@ int32_t cubesat::RequestProxy(std::string &request_str_, std::string &response, 
 
 
 
-std::string cubesat::_Request_DebugPrint() {
+std::string artemis::_Request_DebugPrint() {
 	return SimpleAgent::GetInstance()->GetDebugString();
 }
 

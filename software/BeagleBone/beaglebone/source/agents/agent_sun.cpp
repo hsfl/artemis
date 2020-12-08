@@ -15,7 +15,7 @@
 
 
 using namespace std;
-using namespace cubesat;
+using namespace artemis;
 using namespace rapidjson;
 
 

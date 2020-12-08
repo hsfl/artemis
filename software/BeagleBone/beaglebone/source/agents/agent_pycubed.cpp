@@ -17,7 +17,7 @@
 #define PYCUBED_BAUD 9600
 
 using namespace std;
-using namespace cubesat;
+using namespace artemis;
 
 // |----------------------------------------------|
 // |                   Variables                  |

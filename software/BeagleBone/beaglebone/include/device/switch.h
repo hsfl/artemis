@@ -18,7 +18,7 @@
 #include "device/GPIO.h"
 
 
-namespace cubesat {
+namespace artemis {
 	
 	
 	enum class SwitchID : int {

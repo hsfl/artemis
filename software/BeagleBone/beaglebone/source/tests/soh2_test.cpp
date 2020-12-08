@@ -8,7 +8,7 @@
 
  
 using namespace std;
-using namespace cubesat;
+using namespace artemis;
 
 void TestGPIOClass(const char *pin_key, int blink_count = 5) {
 	cout << "Blinking GPIO pin '" << pin_key << "' for " << blink_count << " times" << endl;

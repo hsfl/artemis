@@ -6,7 +6,7 @@
 
 #define SYSFS_GPIO_DIR "/sys/class/gpio"
 
-namespace cubesat {
+namespace artemis {
 	
 	typedef unsigned int Pin;
 	

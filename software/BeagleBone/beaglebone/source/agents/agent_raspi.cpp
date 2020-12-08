@@ -13,7 +13,7 @@
 #define SLEEP_TIME 1
 
 using namespace std;
-using namespace cubesat;
+using namespace artemis;
 
 //! The agent object which allows for communication with COSMOS
 SimpleAgent *agent;

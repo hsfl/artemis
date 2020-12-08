@@ -4,7 +4,7 @@
 
 #include "device/I2CDevice.h"
 
-namespace cubesat {
+namespace artemis {
 	
 	/**
 	 * @brief Provides access to the OPT3001 temperature sensor.

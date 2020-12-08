@@ -43,7 +43,7 @@
 #define SPI_PATH "/dev/spidev"
 
 using namespace std;
-using namespace cubesat;
+using namespace artemis;
 
 #define HEX(x) setw(2) << setfill('0') << hex << (int)(x)  //!< Macro for filling in leading 0 on HEX outputs
 

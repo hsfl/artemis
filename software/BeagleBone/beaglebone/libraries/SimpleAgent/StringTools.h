@@ -7,7 +7,7 @@
 #include "Types.h"
 
 
-namespace cubesat {
+namespace artemis {
 	
 	
 	struct CapturedInput {
