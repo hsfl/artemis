@@ -3,7 +3,6 @@
 #include <fstream>
 #include  <iomanip>
 #include "device/GPIO.h"
-#include "device/switch.h"
 #include "support/configCosmos.h"
 
  
