@@ -13,7 +13,7 @@ namespace artemis {
 	
 	
 	inline std::string GetConfigFile(const std::string &config_name) {
-		return getenv("HOME") + ("/agents/" + config_name + ".json");
+		return getenv("HOME") + ("/agents/config/" + config_name + ".json");
 	}
 	
 	

@@ -250,9 +250,6 @@ string Request_List() {
 	
 	for (auto pair : sensors) {
 		sensor = pair.second;
-		
-		cout << pair.first << endl;
-		
 		ss << "\t{" << std::endl;
 		ss << "\t\t\"name\": \"" << pair.first << "\", " << std::endl;
 		ss << "\t\t\"utc\": " << (double)sensor->utc << ", " << std::endl;

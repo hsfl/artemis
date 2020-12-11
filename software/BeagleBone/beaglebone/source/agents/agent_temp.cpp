@@ -97,6 +97,7 @@ int main() {
 		
 		// Create a new temperature sensor device
 		sensor = agent->NewDevice<TemperatureSensor>(name);
+		sensors[name] = sensor;
 		
 		
 		// Initialize the device as a sensor
@@ -125,6 +126,7 @@ int main() {
 				.RegisterProperty("voltage", sensor->voltage)
 				.RegisterProperty("current", sensor->current)
 				.RegisterProperty("power", sensor->power);
+		
 	}
 	
 	// Finish up
