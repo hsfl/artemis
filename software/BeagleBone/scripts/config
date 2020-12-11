@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+	echo "usage: config filename"
+	echo "Where 'filename' is one of the following:"
+	
+	ls ~/agents/config | sed -n 's/\.json$//p'
+	exit
+fi
+
+target=~/agents/config/$1.json
+if [ ! -f "$target" ]; then
+	echo "Configuration file $target does not exist!"
+	exit
+fi
+
+nano "$target"
+
