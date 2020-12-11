@@ -164,7 +164,7 @@ int main(int argc, char** argv) {
 
 void ConnectRaspi() {
 	
-	std::string ping_cmd = "ping -c1 -W1 " + hostname + " > nul  && echo 'UP' || echo 'DOWN'";
+	std::string ping_cmd = "ping -c1 -W1 " + hostname + " > /dev/null  && echo 'UP' || echo 'DOWN'";
 	std::string response;
 	const int kNumAttempts = 3;
 	
