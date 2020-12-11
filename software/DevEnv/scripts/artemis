@@ -1,0 +1,5 @@
+#!/bin/bash
+
+NODE_NAME="cubesat"
+
+agent ${NODE_NAME} "$@"
