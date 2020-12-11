@@ -10,7 +10,7 @@ using namespace artemis;
 //! Computes the checksum of a string
 char GetChecksum(const std::string &str);
 
-PyCubed::PyCubed(uint8_t bus, unsigned int baud) : UARTDevice(bus, baud) {
+PyCubed::PyCubed(uint8_t device, unsigned int baud) : UARTDevice(device, baud) {
 	
 	// Add default message parsers
 	AddMessageParser(PYCUBED_PACKET_MSGTYPE, Parser_PKT);
@@ -82,7 +82,7 @@ bool PyCubed::SendMessage(const std::string &message_type_str, const std::vector
 	std::string message_str = "$" + message.str();
 	
 	// Write the entire message
-	printf("PyCubed: writing message '%s'\n", message_str.c_str());
+	printf("PyCubed: writing message '%s'", message_str.c_str());
 	const char *message_cstr = message_str.c_str();
 	Write((uint8_t*)message_cstr, message_str.length());
 	
@@ -124,12 +124,12 @@ int PyCubed::ReceiveMessages() {
 	int num_messages = 0;
 	
 	// Receive messages
-	
 	while ( InWaiting() != 0 ) {
-		printf("Received message\n");
 		if ( ReceiveNextMessage() )
 			++num_messages;
 	}
+	if ( num_messages != 0 )
+		printf("PyCubed: received %d message%s\n", num_messages, num_messages == 1 ? "" : "s");
 	
 	return num_messages;
 }
@@ -177,15 +177,14 @@ bool PyCubed::ReceiveNextMessage() {
 	
 	// Read until the first '$' character is found
 	do {
-		if ( Read(buff, 1) == 0 ) {
+		if ( Read(buff, 1) == 0 )
 			return false;
-		}
-	} while ( (char)buff[0] != '$' );
-	
+	} while ( (char)*buff != '$' );
 		
 	// Read message type and the trailing comma
 	status = Read(buff, 4);
 	if ( status != 4 ) {
+		printf("PyCubed: incomplete message received. Discarding message.\n");
 		return false;
 	}
 	

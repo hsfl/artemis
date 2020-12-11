@@ -55,15 +55,16 @@ namespace artemis {
 		using UARTDevice::IsOpen;
 		using UARTDevice::Open;
 		using UARTDevice::Close;
+		using UARTDevice::SpoofInput;
 		
 		/**
 		 * @brief Constructs a PyCubed object using the given bus and device numbers
-		 * @param bus The UART bus number to use
+		 * @param device The UART device number to use
 		 * @param device The device number to use
 		 */
-		PyCubed(uint8_t bus, unsigned int baud);
+		PyCubed(uint8_t device, unsigned int baud);
 		/**
-		 * @brief Destructor
+		 * @brief Destructor. Closes the PyCubed connection.
 		 */
 		virtual ~PyCubed();
 		
