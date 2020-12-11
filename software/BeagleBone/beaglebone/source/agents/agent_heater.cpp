@@ -262,7 +262,7 @@ bool Request_Disable() {
 	return SetHeaterState(false);
 }
 string Request_Get() {
-	return heater->enabled ? "on" : "off";
+	return heater->enabled ? "\"on\"" : "\"off\"";
 }
 string Request_Config() {
 	string config;
