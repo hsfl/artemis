@@ -123,8 +123,11 @@ string Request_GetTemperatureData();
  */
 bool Request_KillRadio();
 
-
-
+/**
+ * @brief Spoofs the given string as input from the PyCubed.
+ * @param input The input string
+ */
+void Request_Spoof(string input);
 
 
 // |----------------------------------------------|
@@ -164,6 +167,7 @@ int main(int argc, char** argv) {
 	agent->AddRequest("temperature", Request_GetTemperatureData, "Returns the latest temperature data received");
 	agent->AddRequest("power", Request_GetPowerData, "Returns the latest power data received");
 	agent->AddRequest("kill_radio", Request_KillRadio, "Sends a message to the PyCubed to kill the radio");
+	agent->AddRequest("spoof", Request_Spoof, "Spoofs the given string as input from the PyCubed. Do not include checksum or syncword", "Usage: spoof msgtype arg1 arg2 ...");
 	
 	// Initialize the PyCubed
 	InitPyCubed();
@@ -287,7 +291,7 @@ bool ConnectPyCubed() {
 		return true;
 	
 	// Try to open the PyCubed device
-	if ( handler->Open() >= 0 ) {
+	if ( handler->Open() ) {
 		
 		// Mark the time the PyCubed was connected to
 		connection_timer.Start();
@@ -424,6 +428,24 @@ bool Request_SendMessage(string message_type, string message_args) {
 	
 	// Send the message
 	return handler->SendMessage(message_type, args);
+}
+
+void Request_Spoof(string input) {
+	stringstream spoofed;
+	
+	char checksum = 0;
+	for (char c : input)
+		checksum ^= c;
+	
+	int cs = checksum;
+	
+	spoofed << input << "," << std::setfill('0') << std::setw(2) << std::hex << cs;
+	spoofed << '\n';
+	string result = "$" + spoofed.str();
+	
+	printf("Spoofing string: %s\n", result.c_str());
+	
+	handler->SpoofInput((uint8_t*)result.c_str(), result.size());
 }
 
 
