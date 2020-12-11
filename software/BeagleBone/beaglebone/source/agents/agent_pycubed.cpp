@@ -3,6 +3,7 @@
 #include "SimpleAgent/SimpleAgent.h"
 #include "SimpleAgent/DeviceJSON.h"
 #include "device/PyCubed.h"
+#include "utility/Configuration.h"
 
 #include <iostream>
 #include <fstream>
@@ -18,6 +19,7 @@
 
 using namespace std;
 using namespace artemis;
+using namespace rapidjson;
 
 // |----------------------------------------------|
 // |                   Variables                  |
@@ -28,6 +30,9 @@ SimpleAgent *agent;
 //! The handler object used to communicate with the PyCubed
 PyCubed *handler = nullptr;
 unsigned int uart, baud;
+
+Document config;
+
 
 //! The CPU device representing the PyCubed
 CPU *pycubed;
@@ -135,8 +140,15 @@ void Request_Spoof(string input);
 // |----------------------------------------------|
 
 int main(int argc, char** argv) {
-	uart = PYCUBED_UART;
-	baud = PYCUBED_BAUD;
+	
+	if ( GetConfigDocument("pycubed", config) ) {
+		uart = config["uart"].GetInt();
+		baud = config["baud"].GetInt();
+	}
+	else {
+		uart = PYCUBED_UART;
+		baud = PYCUBED_BAUD;
+	}
 	
 	switch ( argc ) {
 		case 3:
@@ -144,8 +156,10 @@ int main(int argc, char** argv) {
 		case 2:
 			uart = atoi(argv[1]);
 			break;
+		case 1:
+			break;
 		default:
-			printf("usage: agent_pycubed [uart [baud]]\n");
+			printf("usage: agent_pycubed [uart=1 [baud]]\n");
 			exit(1);
 	}
 	printf("Using PyCubed on UART%d at %d baud\n", uart, baud);
@@ -433,19 +447,17 @@ bool Request_SendMessage(string message_type, string message_args) {
 void Request_Spoof(string input) {
 	stringstream spoofed;
 	
-	char checksum = 0;
+	// Compute the checksum of the message
+	int checksum = 0;
 	for (char c : input)
 		checksum ^= c;
 	
-	int cs = checksum;
-	
-	spoofed << input << "," << std::setfill('0') << std::setw(2) << std::hex << cs;
+	// Format the message string
+	spoofed << '$' << input << "," << std::setfill('0') << std::setw(2) << std::hex << checksum;
 	spoofed << '\n';
-	string result = "$" + spoofed.str();
 	
-	printf("Spoofing string: %s\n", result.c_str());
-	
-	handler->SpoofInput((uint8_t*)result.c_str(), result.size());
+	// Pass the message to the PyCubed
+	handler->SpoofInput((uint8_t*)spoofed.str().c_str(), spoofed.str().size());
 }
 
 

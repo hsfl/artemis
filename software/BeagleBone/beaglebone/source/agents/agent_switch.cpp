@@ -3,7 +3,7 @@
 #include "device/GPIO.h"
 //#include "device/switch.h"
 
-#include "rapidjson/document.h"
+#include "utility/Configuration.h"
 
 #include <iostream>
 #include <fstream>
@@ -45,6 +45,11 @@ string Request_Switch_State(Switch *sw);
  */
 string Request_List();
 
+/**
+ * @brief Returns the heater configuration JSON
+ * @return The configuration JSON string
+ */
+string Request_Config();
 
 // |----------------------------------------------|
 // |                   Variables                  |
@@ -59,29 +64,23 @@ Document switch_config;
 //! A map of switch names to Switch devices
 std::unordered_map<std::string, Switch*> switches;
 
-
-// Include the switch configuration
-const char *switch_config_json =
-#include "config/switches.json"
-;
-
 // |----------------------------------------------|
 // |                 Main Function                |
 // |----------------------------------------------|
 
 int main(int argc, char** argv) {
 	
-	
-	
-	
 	// Create the agent
 	agent = new SimpleAgent(CUBESAT_AGENT_SWITCH_NAME);
 	agent->SetLoopPeriod(SLEEP_TIME);
 	agent->AddRequest("list", Request_List, "Lists available switches");
-	
+	agent->AddRequest("config", Request_Config, "Returns the switch configuration");
 	
 	// Parse the switch configuration
-	switch_config.Parse(switch_config_json);
+	if ( !GetConfigDocument("switches", switch_config) ) {
+		printf("Fatal: failed to find configuration file\n");
+		return 1;
+	}
 	assert(switch_config.IsArray());
 	
 	
@@ -206,4 +205,10 @@ string Request_List() {
 	ss << "}";
 	
 	return ss.str();
+}
+
+string Request_Config() {
+	string config;
+	GetConfigString("switches", config);
+	return config;
 }

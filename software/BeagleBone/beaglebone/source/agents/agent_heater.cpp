@@ -6,7 +6,7 @@
 #include <fstream>
 #include <unordered_map>
 
-#include "rapidjson/document.h"
+#include "utility/Configuration.h"
 
 #define SLEEP_TIME 10
 
@@ -95,11 +95,6 @@ vector<TemperatureDependency> temperature_dependencies;
 //! Holds the parsed heater configuration
 Document heater_config;
 
-// Include the switch configuration
-const char *heater_config_json =
-#include "config/heaters.json"
-;
-
 // |----------------------------------------------|
 // |                 Main Function                |
 // |----------------------------------------------|
@@ -116,7 +111,10 @@ int main(int argc, char** argv) {
 	
 	
 	// Parse the configuration
-	heater_config.Parse(heater_config_json);
+	if ( !GetConfigDocument("heater", heater_config) ) {
+		printf("Fatal: failed to find configuration file\n");
+		return 1;
+	}
 	heater_switch = heater_config["switch"].GetString();
 	
 	// Add the heater device
@@ -267,6 +265,8 @@ string Request_Get() {
 	return heater->enabled ? "on" : "off";
 }
 string Request_Config() {
-	return heater_config_json;
+	string config;
+	GetConfigString("heater", config);
+	return config;
 }
 

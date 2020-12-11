@@ -4,7 +4,7 @@
 #include "SimpleAgent/DeviceJSON.h"
 #include "device/OPT3001.h"
 
-#include "rapidjson/document.h"
+#include "utility/Configuration.h"
 
 #include <iostream>
 #include <fstream>
@@ -50,7 +50,11 @@ bool Request_Sensor_Connected(SunSensor *sensor);
 string Request_Sensor(string sensor_name);
 //! Returns a list of sensors
 string Request_List();
-
+/**
+ * @brief Returns the sun sensor configuration JSON
+ * @return The configuration JSON string
+ */
+string Request_Config();
 
 // |----------------------------------------------|
 // |                   Variables                  |
@@ -69,12 +73,6 @@ OPT3001::Configuration active_config;
 unordered_map<string, SunSensor*> sensors;
 
 
-
-//! The sun sensor JSON configuration
-const char *sensor_config_json =
-#include "config/sun_sensors.json"
-;
-
 // |----------------------------------------------|
 // |                 Main Function                |
 // |----------------------------------------------|
@@ -86,10 +84,13 @@ int main() {
 	agent->SetLoopPeriod(SLEEP_TIME);
 	agent->AddRequest("sensor", Request_Sensor, "Returns the status of a sensor");
 	agent->AddRequest("list", Request_List, "Returns a list of sensors");
-	
+	agent->AddRequest("config", Request_Config, "Returns the sun sensor configuration");
 	
 	// Parse the sensor configuration
-	sensor_config.Parse(sensor_config_json);
+	if ( !GetConfigDocument("sun_sensors", sensor_config) ) {
+		printf("Fatal: failed to find configuration file\n");
+		return 1;
+	}
 	
 	string name;
 	int bus, address;
@@ -263,4 +264,9 @@ string Request_List() {
 	ss << "]";
 	
 	return ss.str();
+}
+string Request_Config() {
+	string config;
+	GetConfigString("sun_sensors", config);
+	return config;
 }

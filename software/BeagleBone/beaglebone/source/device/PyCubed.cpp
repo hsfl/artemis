@@ -75,6 +75,8 @@ bool PyCubed::SendMessage(const std::string &message_type_str, const std::vector
 	// Write the checksum
 	message << ',' << std::setfill('0') << std::setw(2) << std::hex << checksum;
 	
+	printf("PyCubed: writing message '%s'\n", message.str().c_str());
+	
 	// Write the newline character
 	message << '\n';
 	
@@ -82,7 +84,6 @@ bool PyCubed::SendMessage(const std::string &message_type_str, const std::vector
 	std::string message_str = "$" + message.str();
 	
 	// Write the entire message
-	printf("PyCubed: writing message '%s'", message_str.c_str());
 	const char *message_cstr = message_str.c_str();
 	Write((uint8_t*)message_cstr, message_str.length());
 	
@@ -128,9 +129,6 @@ int PyCubed::ReceiveMessages() {
 		if ( ReceiveNextMessage() )
 			++num_messages;
 	}
-	if ( num_messages != 0 )
-		printf("PyCubed: received %d message%s\n", num_messages, num_messages == 1 ? "" : "s");
-	
 	return num_messages;
 }
 

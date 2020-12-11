@@ -3,7 +3,7 @@
 #include "SimpleAgent/SimpleAgent.h"
 #include "device/ADT7311.h"
 
-#include "rapidjson/document.h"
+#include "utility/Configuration.h"
 
 #include <iostream>
 #include <fstream>
@@ -36,6 +36,11 @@ bool Request_Connected(TemperatureSensor *sensor);
 //! Request for listing sensors
 string Request_List();
 
+/**
+ * @brief Returns the temperature sensor configuration JSON
+ * @return The configuration JSON string
+ */
+string Request_Config();
 
 
 // |----------------------------------------------|
@@ -53,12 +58,6 @@ ADT7311::Configuration default_sensor_config;
 //! A map of sensor names to TemperatureSensor devices
 unordered_map<string, TemperatureSensor*> sensors;
 
-//! The temperature sensor JSON configuration
-const char *sensor_config_json =
-#include "config/temp_sensors.json"
-;
-
-
 
 // |----------------------------------------------|
 // |                 Main Function                |
@@ -70,10 +69,13 @@ int main() {
 	agent = new SimpleAgent(CUBESAT_AGENT_TEMP_NAME);
 	agent->SetLoopPeriod(SLEEP_TIME);
 	agent->AddRequest("list", Request_List, "Returns a list of sensors");
-	
+	agent->AddRequest("config", Request_Config, "Returns the temperature sensor configuration");
 	
 	// Parse the sensor configuration
-	sensor_config.Parse(sensor_config_json);
+	if ( !GetConfigDocument("temp_sensors", sensor_config) ) {
+		printf("Fatal: failed to find configuration file\n");
+		return 1;
+	}
 	
 	// Create a default configuration register value
 	default_sensor_config.fault_queue = 0;
@@ -281,3 +283,9 @@ string Request_List() {
 	
 	return ss.str();
 }
+string Request_Config() {
+	string config;
+	GetConfigString("temp_sensors", config);
+	return config;
+}
+

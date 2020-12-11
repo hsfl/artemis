@@ -55,6 +55,16 @@ set(CUBESAT_LIBS CubesatDevices SimpleAgent)
 # Add the source subdirectory
 add_subdirectory(source)
 
+# Copy the config directory
+file(GLOB JSON_CONFIGS
+  "config/*.json"
+)
+add_custom_target(configuration SOURCES ${JSON_CONFIGS})
+add_custom_target(config
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/config ${CMAKE_CURRENT_BINARY_DIR}/bin/config
+)
+add_dependencies(agent_pycubed config)
+
 
 
 

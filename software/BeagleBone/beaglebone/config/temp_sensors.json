@@ -1,4 +1,4 @@
-R"=====([
+[
 	{
 		"name": "eps",
 		"type": "sensor",
@@ -28,4 +28,3 @@ R"=====([
 		"key": "device_imu_temp_000"
 	}
 ]
-)====="
