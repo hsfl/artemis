@@ -44,8 +44,8 @@ namespace artemis {
 			MODE2 = 2,   // High at idle, capture on falling clock edge
 			MODE3 = 3    // High at idle, capture on rising clock edge
 		};
-	
-		SPIDevice() {}
+		
+		
 		SPIDevice(unsigned int bus, unsigned int device);
 		virtual ~SPIDevice();
 		

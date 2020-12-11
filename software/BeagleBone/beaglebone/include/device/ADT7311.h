@@ -94,8 +94,7 @@ namespace artemis {
 		using SPIDevice::GetBus;
 		using SPIDevice::GetDeviceAddr;
 		
-				
-		ADT7311() : SPIDevice(0, 0) {} // TODO: remove this
+		
 		/**
 		 * @brief Constructs a new ADT7311 object with the given bus and device address
 		 * @param bus The bus address
@@ -107,7 +106,10 @@ namespace artemis {
 		 */
 		virtual ~ADT7311();
 		
-		
+		/**
+		 * @brief Attempts to open the device
+		 * @return True if successful
+		 */
 		virtual bool Open() override;
 		
 		/**
@@ -207,34 +209,66 @@ namespace artemis {
 			return status.crit_flag;
 		}
 		
+		/**
+		 * @brief Returns the configuration register
+		 * @return The register
+		 */
 		inline Configuration GetConfiguration() const {
 			return config;
 		}
 		
+		/**
+		 * @brief Returns the temperature register
+		 * @return The register
+		 */
 		inline TemperatureData GetTemperatureRegister() const {
 			return temp_data;
 		}
 		
+		/**
+		 * @brief Returns the status register
+		 * @return The register
+		 */
 		inline StatusData GetStatusRegister() const {
 			return status;
 		}
 		
+		/**
+		 * @brief Returns the manufacturer register
+		 * @return The register
+		 */
 		inline ManufacturerData GetManufacturerRegister() const {
 			return manufacturer_data;
 		}
 		
+		/**
+		 * @brief Returns the crit setpoint register
+		 * @return The register
+		 */
 		inline uint16_t GetCritSetpointRegister() const {
 			return crit_setpoint;
 		}
 		
+		/**
+		 * @brief Returns the hysteresis register
+		 * @return The register
+		 */
 		inline uint8_t GetHystSetpointRegister() const {
 			return hyst_setpoint;
 		}
 		
+		/**
+		 * @brief Returns the low setpoint register
+		 * @return The register
+		 */
 		inline uint16_t GetLowSetpointRegister() const {
 			return low_setpoint;
 		}
 		
+		/**
+		 * @brief Returns the high setpoint register
+		 * @return The register
+		 */
 		inline uint16_t GetHighSetpointRegister() const {
 			return high_setpoint;
 		}
@@ -242,17 +276,23 @@ namespace artemis {
 		
 		
 	private:
-		// Register data
-		Configuration config; // Config register value
-		StatusData status; // Status register value
-		TemperatureData temp_data; // Temperature register value
+		//! Config register value
+		Configuration config;
+		//! Status register value
+		StatusData status;
+		//! Temperature register value
+		TemperatureData temp_data;
+		//! Manufacturer register value
 		ManufacturerData manufacturer_data;
 		
-		// Setpoint register data
-		uint16_t low_setpoint; // Low setpoint register value
-		uint16_t high_setpoint; // High setpoint register value
-		uint16_t crit_setpoint; // Critical setpoint register value
-		uint8_t hyst_setpoint; // Hysteresis setpoint register value
+		//! Low setpoint register value
+		uint16_t low_setpoint;
+		//! High setpoint register value
+		uint16_t high_setpoint;
+		//! Critical setpoint register value
+		uint16_t crit_setpoint;
+		//! Hysteresis setpoint register value
+		uint8_t hyst_setpoint;
 		
 		
 		// ================ SPI helper stuff ================
@@ -261,10 +301,36 @@ namespace artemis {
 			Read = 1,
 		};
 		
+		/**
+		 * @brief Formats a command byte
+		 * @param mode The mode (read/write)
+		 * @param reg The register to act on
+		 * @return The command byte
+		 */
 		uint8_t GetCommand(CommandMode mode, Register reg);
+		/**
+		 * @brief Writes to an 8-bit register
+		 * @param reg The register address
+		 * @param value The value to write
+		 */
 		void Write8Bit(Register reg, uint8_t value);
+		/**
+		 * @brief Writes to a 16-bit register
+		 * @param reg The register address
+		 * @param value The value to write
+		 */
 		void Write16Bit(Register reg, uint16_t value);
+		/**
+		 * @brief Reads an 8-bit register
+		 * @param reg The register address
+		 * @return The register value
+		 */
 		uint8_t Read8Bit(Register reg);
+		/**
+		 * @brief Reads a 16-bit register
+		 * @param reg The register address
+		 * @return The register value
+		 */
 		uint16_t Read16Bit(Register reg);
 	};
 	

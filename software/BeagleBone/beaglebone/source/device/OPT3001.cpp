@@ -8,9 +8,7 @@ using namespace std;
 using namespace artemis;
 
 
-OPT3001::OPT3001() {
-	// This should be removed later on
-}
+
 OPT3001::OPT3001(uint8_t bus, uint8_t device) : I2CDevice(bus, device) {
 	
 }

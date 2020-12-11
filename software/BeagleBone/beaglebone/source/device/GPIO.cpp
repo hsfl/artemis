@@ -108,7 +108,7 @@ PinInfo GPIO::pin_table[] = {
     { "DGND", "P9_44", 0, -1, -1, -1 },
     { "DGND", "P9_45", 0, -1, -1, -1 },
     { "DGND", "P9_46", 0, -1, -1, -1 },
-	{ NULL, NULL, 0}
+	{ NULL, NULL, 0, 0, 0, 0}
 };
 
 GPIO::GPIO(Pin pin) : pin(pin) {

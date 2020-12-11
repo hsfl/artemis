@@ -75,7 +75,6 @@ namespace artemis {
 		using I2CDevice::GetBusAddr;
 		using I2CDevice::GetDeviceAddr;
 		
-		OPT3001();
 		/**
 		 * @brief Constructs a new OPT3001 with the given bus and device numbers.
 		 * @param bus The I2C bus number
@@ -84,7 +83,7 @@ namespace artemis {
 		OPT3001(uint8_t bus, uint8_t device);
 		OPT3001(const OPT3001 &other) = delete; // Forbid copy construction for safety
 		/**
-		 * @brief Destructor
+		 * @brief Closes the connection to the device
 		 */
 		virtual ~OPT3001();
 		
@@ -126,23 +125,42 @@ namespace artemis {
 		 */
 		float GetLowLimit() const;
 		
-		
+		/**
+		 * @brief Returns the result register
+		 * @return The register
+		 */
 		inline ResultData GetResultRegister() const {
 			return result;
 		}
 		
+		/**
+		 * @brief Returns the low limit register
+		 * @return The register
+		 */
 		inline ResultData GetLowLimitRegister() const {
 			return low_limit;
 		}
 		
+		/**
+		 * @brief Returns the high limit register
+		 * @return The register
+		 */
 		inline ResultData GetHighLimitRegister() const {
 			return high_limit;
 		}
 		
+		/**
+		 * @brief Returns the manufacturer ID register
+		 * @return The register
+		 */
 		inline uint16_t GetManufacturerID() const {
 			return manufacturer_id;
 		}
 		
+		/**
+		 * @brief Returns the device ID register
+		 * @return The register
+		 */
 		inline uint16_t GetDeviceID() const {
 			return device_id;
 		}
@@ -151,16 +169,19 @@ namespace artemis {
 		
 		
 	private:
-		// Data pulled from Result, High Limit, and Low Limit registers
+		//! The result register
 		ResultData result;
+		//! The low limit register
 		ResultData low_limit;
+		//! The high limit register
 		ResultData high_limit;
-		
-		// The configuration used
-		Configuration config;
-		
+		//! The manufacturer ID register
 		uint16_t manufacturer_id;
+		//! The device ID register
 		uint16_t device_id;
+		
+		//! The configuration used
+		Configuration config;
 	};
 	
 }

@@ -5,7 +5,6 @@ set(CUBESAT_DEVICE_SRC	I2CDevice.cpp
                         OPT3001.cpp
                         ADT7311.cpp
                         PyCubed.cpp
-                        switch.cpp
                         GPIO.cpp)
 
 
