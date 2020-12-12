@@ -1,6 +1,6 @@
 
 
-set(UtilitySrc message.cpp)
+set(UtilitySrc message.cpp files.cpp)
 
 add_library(Utilities STATIC ${UtilitySrc})
 

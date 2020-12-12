@@ -1,7 +1,7 @@
 
 // Internal headers
 #include "SimpleAgent/SimpleAgent.h"
-#include "utility/message.h"
+#include "utility/files.h"
 
 #include <iostream>
 #include <fstream>
@@ -10,18 +10,31 @@
 using namespace artemis;
 using namespace std;
 
-
+//! A command ID used to identify responses to specific commands
 using CommandID = decltype(IncomingMessage::contents.command_response.command_id);
 
+//! The agent
 SimpleAgent *agent;
 
-queue<IncomingMessage> incoming_messages;
-queue<OutgoingMessage> outgoing_messages;
+IMU *imu;
+GPS *gps;
+TemperatureSensor *temp_sensors[5];
+SunSensor *sun_sensors[6];
 
+//! A queue of incoming messages
+queue<IncomingMessage> incoming_messages;
+//! A queue of outgoing messages
+queue<OutgoingMessage> outgoing_messages;
+//! A list of commands that have not received responses yet
 std::vector<CommandID> waiting_command_ids;
 
+IncomingFolder incoming("ground");
+OutgoingFolder outgoing("ground");
 
-int FetchMessages();
+
+
+void FetchOutgoingMessages();
+void FetchIncomingMessages();
 
 /**
  * @brief Handles the next incoming message
@@ -29,14 +42,28 @@ int FetchMessages();
  */
 bool HandleNextIncomingMessage();
 
-CommandID SendCommand(const string &command);
+void SendNextOutgoingMessage();
+
 
 
 int main(int argc, char *argv[]) {
 	
-	agent = new SimpleAgent("ground", "cubesat");
+	// Create the agent
+	agent = new SimpleAgent("ground", "ground");
 	agent->SetLoopPeriod(1);
 	
+	// Add devices
+	imu = agent->NewDevice<IMU>("imu");
+	imu->Post(imu->utc = 0);
+	imu->Post(imu->magnetic_field = Vec3(0, 0, 0));
+	imu->Post(imu->acceleration = Vec3(0, 0, 0));
+	imu->Post(imu->angular_velocity = Vec3(0, 0, 0));
+	
+	gps = agent->NewDevice<GPS>("gps");
+	gps->Post(gps->utc = 0);
+	gps->Post(gps->location = Location(0, 0, 0));
+	gps->Post(gps->velocity = Vec3(0, 0, 0));
+	gps->Post(gps->satellites_used = 0);
 	
 	
 	agent->Finalize();
@@ -45,9 +72,17 @@ int main(int argc, char *argv[]) {
 	
 	while ( agent->StartLoop() ) {
 		
-		// Fetch and handle incoming messages
-		FetchMessages();
+		// Fetch outgoing messages from the outgoing folder
+		FetchOutgoingMessages();
+		// Fetch incoming messages from the radio
+		FetchIncomingMessages();
+		
+		// Go through the incoming messages
 		while ( HandleNextIncomingMessage() );
+		
+		// Send outgoing messages through the radio
+		while ( outgoing_messages.size() != 0 )
+			SendNextOutgoingMessage();
 		
 	}
 	
@@ -58,67 +93,86 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
+void FetchIncomingMessages() {
+	// Communicate with the radio, then push the received
+	// messages to the incoming queue
+}
 
-int FetchMessages() {
-	
-	int num_pushed = 0;
-	
-	unsigned char bytes[sizeof(IncomingMessage)];
+void FetchOutgoingMessages() {
 	
 	
-	// fetch any new messages here
+	vector<string> files;
 	
 	
-	return num_pushed;
+	OutgoingMessage out_msg;
+	files = outgoing.GetAllFiles();
+	for (const string &file : files) {
+		if ( outgoing.ReadMessage(file, out_msg) )
+			outgoing_messages.push(out_msg);
+		outgoing.RemoveFile(file);
+	}
 }
 
 bool HandleNextIncomingMessage() {
+	
+	if ( incoming_messages.size() == 0 )
+		return false;
 	
 	// Get the next element
 	IncomingMessage message = incoming_messages.front();
 	incoming_messages.pop();
 	
 	switch ( message.type ) {
+		case IncomingMessageType::IMUTelemetry:
+			printf("Received IMU telemetry message\n");
+			imu->utc = message.timestamp;
+			imu->acceleration = Vec3(message.contents.imu_telem.acceleration[0],
+					message.contents.imu_telem.acceleration[1],
+					message.contents.imu_telem.acceleration[2]);
+			imu->angular_velocity = Vec3(message.contents.imu_telem.angular_velocity[0],
+					message.contents.imu_telem.angular_velocity[1],
+					message.contents.imu_telem.angular_velocity[2]);
+			imu->magnetic_field = Vec3(message.contents.imu_telem.magnetic_field[0],
+					message.contents.imu_telem.magnetic_field[1],
+					message.contents.imu_telem.magnetic_field[2]);
+			break;
+		case IncomingMessageType::GPSTelemetry:
+			printf("Received GPS telemetry message\n");
+			gps->utc = message.timestamp;
+			gps->location = Location(message.contents.gps_telem.latitude,
+									 message.contents.gps_telem.longitude,
+									 message.contents.gps_telem.altitude);
+			break;
 		case IncomingMessageType::CommandResponse:
+			printf("Received command response message\n");
+			
+			// Copy the received message to the incoming folder
+			incoming.WriteMessage(message);
 			break;
 		case IncomingMessageType::Invalid:
 			printf("[Warning] Received invalid message\n");
 			break;
 		default:
-			printf("[Error] Received message of invalid type '%hhu'\n", message.type);
+			printf("[Error] Received message of unsupported type '%hhu'\n", message.type);
 			break;
 	}
-	
 	
 	
 	return incoming_messages.size() != 0;
 }
 
 
-
-
-CommandID SendCommand(const string &command) {
-	
-	CommandID id;
-	
-	do id = rand();
-	while ( std::find(waiting_command_ids.begin(), waiting_command_ids.end(), id) != waiting_command_ids.end());
-	
-	OutgoingMessage message;
-	
-	// Fill in message here
+void SendNextOutgoingMessage() {
+	printf("Sending message...\n");
 	
 	
-	outgoing_messages.push(message);
+	OutgoingMessage &message = outgoing_messages.front();
 	
+	// Use the radio to send the message
 	
+	outgoing_messages.pop();
 	
-	waiting_command_ids.push_back(id);
-	
-	
-	return id;
 }
-
 
 
 

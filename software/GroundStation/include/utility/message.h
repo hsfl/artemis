@@ -15,6 +15,7 @@ namespace artemis {
 		PowerTelemetry,
 		LuxTelemetry,
 		IMUTelemetry,
+		GPSTelemetry,
 		// ----------
 		Invalid
 	};
@@ -78,6 +79,12 @@ namespace artemis {
 		Invalid
 	};
 	
+	enum class CommandOBC : unsigned char {
+		PyCubed = 0,
+		BeagleBone,
+		RaspberryPi
+	};
+	
 	struct OutgoingMessage {
 		unsigned int length;
 		unsigned char checksum;
@@ -86,6 +93,7 @@ namespace artemis {
 		union {
 			struct {
 				unsigned int command_id;
+				unsigned char obc;
 				char command[256];
 			} command;
 			struct {

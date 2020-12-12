@@ -14,7 +14,7 @@ unsigned char artemis::GetChecksum(const IncomingMessage &message) {
 	
 	unsigned char checksum = 0;
 	
-	for (unsigned i = 0; i < message.length; ++i)
+	for (unsigned i = 0; i < message.length - offsetof(IncomingMessage, type); ++i)
 		checksum ^= *p++;
 	
 	return checksum;
@@ -26,7 +26,7 @@ unsigned char artemis::GetChecksum(const OutgoingMessage &message) {
 	
 	unsigned char checksum = 0;
 	
-	for (unsigned i = 0; i < message.length; ++i)
+	for (unsigned i = 0; i < message.length - offsetof(OutgoingMessage, type); ++i)
 		checksum ^= *p++;
 	
 	return checksum;
@@ -58,7 +58,7 @@ IncomingMessage artemis::BytesToIncomingMessage(char *bytes, unsigned int max_le
 	return message;
 }
 
-bool PrepareOutgoingMessage(OutgoingMessage &message) {
+bool artemis::PrepareOutgoingMessage(OutgoingMessage &message) {
 	
 	// Find the minimum length of the message
 	unsigned int length = offsetof(OutgoingMessage, contents);
