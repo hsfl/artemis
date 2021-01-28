@@ -71,7 +71,7 @@ Some of the commands you will need:
 
 
 Download the Artemis box from
-[here](https://drive.google.com/file/d/1n7STiXjn-9vVHDCc5zBzeENrUTrOm2Gb/view?usp=sharing). An example location of the file on Windows is
+[here](https://drive.google.com/file/d/14slc_5AHery2TkT4guIsQOVaNav0zdbC/view?usp=sharing). An example location of the file on Windows is
 `C:\Users\YOUR_USERNAME\Documents\Vagrant\artemis`. 
 
 
@@ -99,7 +99,7 @@ Enter the following command:
 $ vagrant init artemis
 ```
 
-Download the "Vagrantfile" file from [here](https://drive.google.com/file/d/1pGEJUORE0b6cQiSA7cCokXybwREfteta/view?usp=sharing). You will have to find the folder where the files have been installed and copy the "Vagrantfile" to the folder you previously chose, overwriting the existing "Vagrantfile" file. It will likely be the same folder your Command prompt was in at the time of the `vagrant init artemis` command.
+Download the "Vagrantfile" file from [here](https://drive.google.com/file/d/1YqGf7kaUyD1uRo8xKAWAwQrHmqKQplRl/view?usp=sharing). You will have to find the folder where the files have been installed and copy the "Vagrantfile" to the folder you previously chose, overwriting the existing "Vagrantfile" file. It will likely be the same folder your Command prompt was in at the time of the `vagrant init artemis` command.
 
 The new Vagrantfile will set up the virtual machine with necessary virtualization settings.
 
@@ -176,7 +176,7 @@ This section will allow you to use USB devices that are attached to your physica
 
 When your download is complete, find the file and open it. This should give you a prompt in the VirtualBox program, so just follow the steps to install the extension.
 
-{% include image.html file="/resources/tutorials/setup/part2/usb.png" width="100%" %}
+{% include image.html file="/resources/tutorials/setup/part2/usb.png" width="40%" %}
 
 After the install is complete, highlight the Development Environment and open the Settings menu. Select USB, click the box to _Enable USB Controller_, and select _USB 3.0_. If only _USB 1.0_ is available, the Extension Pack is not properly installed, so repeat this section.
 

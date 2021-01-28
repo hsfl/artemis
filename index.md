@@ -7,7 +7,9 @@ toc: false
 ---
 
 
-{% include image.html file="/resources/logos/hsfl.png" width="30%" %}
+{% include image.html file="/resources/logos/artemis_ck.png" width="30%" %}
+
+
 
 ## Welcome to the Website!                                                            
 
