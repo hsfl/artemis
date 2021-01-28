@@ -71,7 +71,7 @@ Some of the commands you will need:
 
 
 Download the Artemis box from
-[here](https://drive.google.com/file/d/1DE3rlG3X5IrTut54pok7zP7xZzsjPFm_/view?usp=sharing). An example location of the file on Windows is
+[here](https://drive.google.com/file/d/1n7STiXjn-9vVHDCc5zBzeENrUTrOm2Gb/view?usp=sharing). An example location of the file on Windows is
 `C:\Users\YOUR_USERNAME\Documents\Vagrant\artemis`. 
 
 
@@ -99,7 +99,7 @@ Enter the following command:
 $ vagrant init artemis
 ```
 
-Download the "Vagrantfile" file from [here](https://drive.google.com/file/d/101mCavBwqa-DI9gCteU7ywSimwF4yU0Z/view?usp=sharing). You will have to find the folder where the files have been installed and copy the "Vagrantfile" to the folder you previously chose, overwriting the existing "Vagrantfile" file. It will likely be the same folder your Command prompt was in at the time of the `vagrant init artemis` command.
+Download the "Vagrantfile" file from [here](https://drive.google.com/file/d/1pGEJUORE0b6cQiSA7cCokXybwREfteta/view?usp=sharing). You will have to find the folder where the files have been installed and copy the "Vagrantfile" to the folder you previously chose, overwriting the existing "Vagrantfile" file. It will likely be the same folder your Command prompt was in at the time of the `vagrant init artemis` command.
 
 The new Vagrantfile will set up the virtual machine with necessary virtualization settings.
 
@@ -110,6 +110,10 @@ Next run the command:
 ```bash
 $ vagrant up
 ```
+
+#### Network Selection
+
+If you are prompted to select a network option, just type in a number to select an option. Look for keywords such as _Wireless_ or _Ethernet_ for the appropriate selection, depending on your host computer's network connection. (If a list of options is not printed in the terminal, you may have an old and incompatible version of VirtualBox. Try checking if you need an update.)
 
 After a minute or so should see the virtual machine boot. Login with the password below:
 
@@ -143,7 +147,7 @@ In the future you should be able to start the virtual machine directly from the 
 running `vagrant up` in the virtual machine folder.
 
 
-{% include image.html file="/resources/tutorials/setup/part2/virtual_box.png" width="100%" %}
+
 
 
 ### 2.5 Enable Useful Features
@@ -165,6 +169,20 @@ Click on the _Devices_ menu at the top of the virtual machine and click on _Shar
 {% include note.html content="When you paste text into a terminal you must use the
 <kbd>Control</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd> shortcut, and when you copy text from a terminal you must
 use the <kbd>Control</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> shortcut." %}
+
+#### Enabling USB in Virtual Machine
+
+This section will allow you to use USB devices that are attached to your physical machine from the development environment. First, download the VirtualBox extension pack [here](https://download.virtualbox.org/virtualbox/6.1.18/Oracle_VM_VirtualBox_Extension_Pack-6.1.18.vbox-extpack).
+
+When your download is complete, find the file and open it. This should give you a prompt in the VirtualBox program, so just follow the steps to install the extension.
+
+{% include image.html file="/resources/tutorials/setup/part2/usb.png" width="100%" %}
+
+After the install is complete, highlight the Development Environment and open the Settings menu. Select USB, click the box to _Enable USB Controller_, and select _USB 3.0_. If only _USB 1.0_ is available, the Extension Pack is not properly installed, so repeat this section.
+
+Start the machine with your chosen USB device plugged in. After logging in and seeing the desktop, select _Devices/USB_ at the top of the window, and select the device you would like to access in the virtual environment (the device will not be accessible in your physical host machine after this step).
+
+If you'd like to dismount the USB device from your VM, select the device in the _Devices_ menu again.
 
 ## 3. Update Software
 
