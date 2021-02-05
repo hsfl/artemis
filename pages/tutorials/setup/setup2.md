@@ -71,7 +71,7 @@ Some of the commands you will need:
 
 
 Download the Artemis box from
-[here](https://drive.google.com/file/d/14slc_5AHery2TkT4guIsQOVaNav0zdbC/view?usp=sharing). An example location of the file on Windows is
+[here](https://drive.google.com/file/d/14ZFFmgebgWbKsh4k-2yTeld7FoEISoUQ/view?usp=sharing). An example location of the file on Windows is
 `C:\Users\YOUR_USERNAME\Documents\Vagrant\artemis`. 
 
 
@@ -99,7 +99,7 @@ Enter the following command:
 $ vagrant init artemis
 ```
 
-Download the "Vagrantfile" file from [here](https://drive.google.com/file/d/1YqGf7kaUyD1uRo8xKAWAwQrHmqKQplRl/view?usp=sharing). You will have to find the folder where the files have been installed and copy the "Vagrantfile" to the folder you previously chose, overwriting the existing "Vagrantfile" file. It will likely be the same folder your Command prompt was in at the time of the `vagrant init artemis` command.
+Download the "Vagrantfile" file from [here](https://drive.google.com/file/d/1y82XES80d_1MENRu4WuJlonlU89l9JsC/view?usp=sharing). You will have to find the folder where the files have been installed and copy the "Vagrantfile" to the folder you previously chose, overwriting the existing "Vagrantfile" file. It will likely be the same folder your Command prompt was in at the time of the `vagrant init artemis` command.
 
 The new Vagrantfile will set up the virtual machine with necessary virtualization settings.
 
