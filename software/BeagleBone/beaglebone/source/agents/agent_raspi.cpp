@@ -48,6 +48,8 @@ void SetDefaultSOHData();
 string Request_GetData();
 //! Request to run a shell command on the Raspberry Pi over SSH
 string Request_SSH(CapturedInput command);
+//! Takes a test picture on the Raspberry Pi over SSH
+string Request_Picture();
 //! Pings the Raspberry Pi
 string Request_Ping();
 //! Shuts down the Raspberry Pi if it is connected
@@ -136,11 +138,12 @@ int main(int argc, char** argv) {
 	
 		
 	// Add requests
-    agent->AddRequest("agent_data", Request_GetData, "\n\t\tPrints data collected from other agents");
-    agent->AddRequest("command", Request_SSH, "\n\t\tRuns a command on the Raspberry Pi (an ssh keygen pair MUST be established before this request can work)");
-    agent->AddRequest("is_up", Request_Ping, "\n\t\tChecks if the Raspberry Pi is up");
-    agent->AddRequest("shutdown_raspi", Request_Shutdown, "\n\t\tAttempts to shut down the Raspberry Pi");
-    agent->AddRequest("set_soh", Request_SetSOH, "\n\t\tSets the state of health for a payload script");
+    agent->AddRequest("agent_data", Request_GetData, "", "Prints data collected from other agents");
+    agent->AddRequest("command", Request_SSH, "", "Runs a command on the Raspberry Pi (an ssh \n\t\tkeygen pair MUST be established before this \n\t\trequest can work)");
+    agent->AddRequest("capture", Request_Picture, "", "Takes a picture with the Raspberry Pi camera (an ssh \n\t\tkeygen pair MUST be established before this \n\t\trequest can work)");
+    agent->AddRequest("is_up", Request_Ping, "","Checks if the Raspberry Pi is up");
+    agent->AddRequest("shutdown_raspi", Request_Shutdown, "", "Attempts to shut down the Raspberry Pi");
+    agent->AddRequest("set_soh", Request_SetSOH, "", "Sets the state of health for a payload script");
 	agent->DebugPrint();
 	
 	
@@ -562,7 +565,6 @@ string Request_GetData() {
 
 string Request_SSH(CapturedInput input) {
 	
-    printf("Hello, world!\n");
 	// Make sure we actually have arguments
 	if ( input.input.empty() )
 		return "Usage: ssh command";
@@ -579,6 +581,22 @@ string Request_SSH(CapturedInput input) {
 	
 	// Return the output of the shell command
 	return output;
+}
+
+string Request_Picture() {
+
+    // Create the command string
+    std::string take_picture = "ssh " + username + "@" + hostname + " rm -f test.jpeg && ssh " + username + "@" + hostname + " raspistill -o test.jpeg";
+
+
+    // Call the command
+    std::string output;
+    printf("$ %s\n", take_picture.c_str());
+    SystemCall(take_picture, output);
+    printf("%s\n", output.c_str());
+
+    // Return the output of the shell command
+    return "picture taken";
 }
 
 string Request_Ping() {

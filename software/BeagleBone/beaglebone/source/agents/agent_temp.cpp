@@ -68,8 +68,8 @@ int main() {
 	// Create the agent
 	agent = new SimpleAgent(CUBESAT_AGENT_TEMP_NAME);
 	agent->SetLoopPeriod(SLEEP_TIME);
-    agent->AddRequest("list", Request_List, "\n\t\tReturns a list of sensors");
-    agent->AddRequest("config", Request_Config, "\n\t\tReturns the temperature sensor configuration");
+    agent->AddRequest("list", Request_List, "", "Returns a list of sensors");
+    agent->AddRequest("config", Request_Config, "", "Returns the temperature sensor configuration");
 	
 	// Parse the sensor configuration
 	if ( !GetConfigDocument("temp_sensors", sensor_config) ) {

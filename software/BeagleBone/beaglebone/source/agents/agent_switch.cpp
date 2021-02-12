@@ -73,8 +73,8 @@ int main(int argc, char** argv) {
 	// Create the agent
 	agent = new SimpleAgent(CUBESAT_AGENT_SWITCH_NAME);
 	agent->SetLoopPeriod(SLEEP_TIME);
-	agent->AddRequest("list", Request_List, "Lists available switches");
-	agent->AddRequest("config", Request_Config, "Returns the switch configuration");
+    agent->AddRequest("list", Request_List, "", "Lists available switches");
+    agent->AddRequest("config", Request_Config, "", "Returns the switch configuration");
 	
 	// Parse the switch configuration
 	if ( !GetConfigDocument("switches", switch_config) ) {
