@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content="software,  software">
+<title>Setting up the Raspberry Pi From Scratch | Artemis Cubesat Kit</title>
+<link rel="stylesheet" href="/artemis/css/syntax.css">
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="/artemis/css/modern-business.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="/artemis/css/customstyles.css">
+<link rel="stylesheet" href="/artemis"">
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="/artemis/css/theme-blue.css">
+
+
+<link rel="stylesheet" href="/artemis/css/doc-styles.css">
+<link rel="stylesheet" href="/artemis/css/highlighter.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/artemis/js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="/artemis/js/toc.js"></script>
+<script src="/artemis/js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="/artemis/images/favicon.png">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="Artemis CubeSat Kit" href="http://localhost:4000/feed.xml">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container topnavlinks">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="fa fa-rocket fa-lg navbar-brand" href="/artemis/index.html">&nbsp;<span class="projectTitle"> Artemis Cubesat Kit</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <!-- <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li> -->
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+                
+                
+                
+                <li><a href="http://leonidas-b.hsfl.hawaii.edu/wordpress-5.0.1/artemis-2-2/" target="_blank" rel="noopener">Project Website</a></li>
+                
+                
+                
+                <li><a href="https://github.com/hsfl/artemis" target="_blank" rel="noopener">GitHub</a></li>
+                
+                
+                
+                <li><a href="https://github.com/hsfl/artemis/issues" target="_blank" rel="noopener">Submit an Issue</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <!--comment out this block if you want to hide search-->
+                <li>
+                    <!--start search-->
+                    <div id="search-demo-container">
+                        <input type="text" id="search-input" placeholder="search...">
+                        <ul id="results-container"></ul>
+                    </div>
+                    <script src="/artemis/js/jekyll-search.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                            SimpleJekyllSearch.init({
+                                searchInput: document.getElementById('search-input'),
+                                resultsContainer: document.getElementById('results-container'),
+                                dataSource: '/artemis/search.json',
+                                searchResultTemplate: '<li><a href="{url}" title="Setting up the Raspberry Pi From Scratch">{title}</a></li>',
+                    noResultsText: 'No results found.',
+                            limit: 10,
+                            fuzzy: true,
+                    })
+                    </script>
+                    <!--end search-->
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+  <div id="main">
+    <!-- Content Row -->
+    <div class="row">
+        
+        
+            <!-- Sidebar Column -->
+            <div class="col-md-3" id="tg-sb-sidebar">
+                
+
+<ul id="mysidebar" class="nav">
+  <li class="sidebarTitle">Artemis Cubesat Kit </li>
+  
+  
+  
+  <li>
+      <a title="Overview" href="#">Overview</a>
+      <ul>
+          
+          
+          
+          <li><a title="Home" href="/artemis/index.html">Home</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Design Overview" href="/artemis/pages/documentation/design-overview.html">Design Overview</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="FAQ" href="/artemis/pages/faq.html">FAQ</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Safety First" href="/artemis/pages/safety-procedures.html">Safety First</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Tutorials" href="#">Tutorials</a>
+      <ul>
+          
+          
+          
+          <li><a title="Tutorial Home" href="/artemis/pages/tutorials/index.html">Tutorial Home</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Getting Started Series" href="#">Getting Started Series</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="1. Unboxing" href="/artemis/pages/tutorials/setup/setup1.html">1. Unboxing</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="2. Development Environment" href="/artemis/pages/tutorials/setup/setup2.html">2. Development Environment</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="3. COSMOS Web" href="/artemis/pages/tutorials/setup/setup3.html">3. COSMOS Web</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="4. Camera Script" href="/artemis/pages/tutorials/setup/setup4.html">4. Camera Script</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Payload Script Series" href="#">Payload Script Series</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="1. Writing a Payload Script" href="/artemis/pages/tutorials/scripts/scripts1.html">1. Writing a Payload Script</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="2. Uploading the Script" href="/artemis/pages/tutorials/scripts/scripts2.html">2. Uploading the Script</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="3. Running the Script" href="/artemis/pages/tutorials/scripts/scripts3.html">3. Running the Script</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="COSMOS Series" href="#">COSMOS Series</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="1. COSMOS and QtCreator" href="/artemis/pages/tutorials/cosmos/cosmos1.html">1. COSMOS and QtCreator</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="2. Writing Agents" href="/artemis/pages/tutorials/cosmos/cosmos2.html">2. Writing Agents</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="3. Building and Deploying" href="/artemis/pages/tutorials/cosmos/cosmos3.html">3. Building and Deploying</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="4. Modifying COSMOS Web" href="/artemis/pages/tutorials/cosmos/cosmos4.html">4. Modifying COSMOS Web</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Setup from Scratch" href="#">Setup from Scratch</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="COSMOS from Scratch" href="/artemis/pages/tutorials/setup-from-scratch/cosmos-from-scratch.html">COSMOS from Scratch</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="BeagleBone from Scratch" href="/artemis/pages/tutorials/setup-from-scratch/beaglebone-from-scratch.html">BeagleBone from Scratch</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li class="active"><a title="Raspberry Pi from Scratch" href="/artemis/pages/tutorials/setup-from-scratch/raspi-from-scratch.html">Raspberry Pi from Scratch</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="BeagleBone Software" href="#">BeagleBone Software</a>
+      <ul>
+          
+          
+          
+          <li><a title="Doxygen" href="/artemis/pages/documentation/other/doxygen.html">Doxygen</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="COSMOS" href="#">COSMOS</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="COSMOS" href="/artemis/pages/documentation/cosmos/cosmos.html">COSMOS</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="COSMOS Web" href="/artemis/pages/documentation/cosmos/cosmos-web.html">COSMOS Web</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Agents" href="#">Agents</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="Heater Agent" href="/artemis/pages/documentation/agents/heater-agent.html">Heater Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="PyCubed Agent" href="/artemis/pages/documentation/agents/pycubed-agent.html">PyCubed Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Raspberry Pi Agent" href="/artemis/pages/documentation/agents/raspberry-pi-agent.html">Raspberry Pi Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Sun Sensor Agent" href="/artemis/pages/documentation/agents/sun-sensor-agent.html">Sun Sensor Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Switch Agent" href="/artemis/pages/documentation/agents/switch-agent.html">Switch Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Temperature Sensor Agent" href="/artemis/pages/documentation/agents/temperature-sensor-agent.html">Temperature Sensor Agent</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Utility Classes" href="#">Utility Classes</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="SimpleAgent Class" href="/artemis/pages/documentation/utility-classes/simpleagent.html">SimpleAgent Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Device Classes" href="/artemis/pages/documentation/utility-classes/simpleagent-devices.html">Device Classes</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="PyCubed Utility" href="/artemis/pages/documentation/utility-classes/pycubed.html">PyCubed Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Raspberry Pi Utility" href="/artemis/pages/documentation/utility-classes/raspi.html">Raspberry Pi Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Time Utility" href="/artemis/pages/documentation/utility-classes/time.html">Time Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Timer Utility" href="/artemis/pages/documentation/utility-classes/timer.html">Timer Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="GPIO Utility" href="/artemis/pages/documentation/utility-classes/gpio.html">GPIO Utility</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Raspberry Pi Software" href="#">Raspberry Pi Software</a>
+      <ul>
+          
+          
+          
+          <li><a title="Overview" href="/artemis/pages/documentation/raspi-library/index.html">Overview</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Classes" href="#">Classes</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="CubeSat Class" href="/artemis/pages/documentation/raspi-library/cubesat-class.html">CubeSat Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="BeagleBone Class" href="/artemis/pages/documentation/raspi-library/beaglebone-class.html">BeagleBone Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Agent Class" href="/artemis/pages/documentation/raspi-library/agent-class.html">Agent Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Heater Class" href="/artemis/pages/documentation/raspi-library/heater-class.html">Heater Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="IMU Class" href="/artemis/pages/documentation/raspi-library/imu-class.html">IMU Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="GPS Class" href="/artemis/pages/documentation/raspi-library/gps-class.html">GPS Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="SunSensor Class" href="/artemis/pages/documentation/raspi-library/sunsensor-class.html">SunSensor Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="TempSensor Class" href="/artemis/pages/documentation/raspi-library/tempsensor-class.html">TempSensor Class</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="PyCubed Software" href="#">PyCubed Software</a>
+      <ul>
+          
+          
+          
+          <li><a title="Overview" href="/artemis/pages/documentation/pycubed/overview.html">Overview</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Main Script" href="/artemis/pages/documentation/pycubed/main-script.html">Main Script</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="PyCubed Communication" href="/artemis/pages/documentation/pycubed/communication-protocol.html">PyCubed Communication</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Classes" href="#">Classes</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="BeagleBone Class" href="/artemis/pages/documentation/pycubed/beaglebone-class.html">BeagleBone Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Switch Class" href="/artemis/pages/documentation/pycubed/switch-class.html">Switch Class</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Development Environment" href="#">Development Environment</a>
+      <ul>
+          
+          
+          
+          <li><a title="Development Environment" href="/artemis/pages/documentation/other/development-environment.html">Development Environment</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Utility Scripts" href="/artemis/pages/documentation/other/scripts.html">Utility Scripts</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Additional Resources" href="#">Additional Resources</a>
+      <ul>
+          
+          
+          
+          <li><a title="Programming Tutorials" href="/artemis/pages/other/programming-tutorials.html">Programming Tutorials</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Hardware Interfaces" href="/artemis/pages/other/hardware-interfaces.html">Hardware Interfaces</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Useful Tools" href="/artemis/pages/other/useful-tools.html">Useful Tools</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+      
+      <!-- if you aren't using the accordion, uncomment this block:
+         <p class="external">
+             <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
+         </p>
+         -->
+</ul>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+            </div>
+            
+        
+
+        <!-- Content Column -->
+        <div class="col-md-9" id="tg-sb-content">
+            <div class="post-header">
+   <h1 class="post-title-main">Setting up the Raspberry Pi From Scratch</h1>
+</div>
+
+
+
+<div class="post-content">
+
+   
+
+    
+    
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 10);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+    
+
+
+    
+
+   <div markdown="span" class="alert alert-warning" role="alert"><i class="fa fa-warning"></i> <b>Important:</b> Before getting started, make sure to review the <a href="/artemis/pages/safety-procedures.html#raspberry-pi">safety procedures</a> for working with the Raspberry Pi.
+</div>
+<hr />
+<blockquote>
+<p>What you will need:</p>
+<ul>
+<li>
+<p>Raspberry Pi Zero W</p>
+</li>
+<li>
+<p>Raspberry Pi Camera Module V2</p>
+</li>
+<li>
+<p>Pi Zero Camera Cable</p>
+</li>
+<li>
+<p>Micro USB Cable</p>
+</li>
+<li>
+<p>MicroSD Card and Adapter (8 GB or greater)</p>
+</li>
+<li>
+<p>WiFi connection</p>
+</li>
+</ul>
+</blockquote>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/raspi/components.png" style="width:75%;" /></p>
+</div>
+<hr />
+<h1 id="about-this-tutorial">About this Tutorial</h1>
+<p>If you follow these directions, you will have your Raspberry Pi camera setup working in no time! Some things for you to note:</p>
+<ul>
+<li>a Pi <strong>Zero</strong> <strong>W</strong> is required for this setup (the <strong>W</strong> indicates that this model has a WiFi module included on the board)</li>
+<li>It is <em>highly</em> <em>recommended</em> that you set up your Pi with a microSD card. It is possible to use the Pi without one, but is more complicated, especially for those with little/no experience</li>
+<li>if you are using a laptop to plug in your USB cable, do not leave it unattended. If your laptop goes into sleep mode, the Pi will lose power and your microSD may be corrupted</li>
+<li>a few downloads are required to complete the setup. They are all open-source, but read ahead and take a look at the links if you'd like</li>
+</ul>
+<div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> If you would like to connect to your Pi over SSH through USB (instead of over WiFi), try this <a href="https://desertbot.io/blog/ssh-into-pi-zero-over-usb">tutorial</a>
+</div>
+<h2 id="preparing-the-microsd">Preparing the MicroSD</h2>
+<p>The first step for the microSD is to format it. An <a href="https://www.sdcard.org/downloads/formatter/">SD card formatter</a> will make this easier (be sure to select the correct version for you OS). Formatting will clear the card of any data so that it can be loaded with the operating system for your Pi.</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/raspi/card_form.png" style="width:50%;" /></p>
+</div>
+<p>Connect your microSD card adapter and open the formatter. It should select your microSD automatically, but if not, the card should have a drive tag of &quot;D:&quot;. Select Quick format and click &quot;Format&quot;.</p>
+<p>After receiving confirmation, close the formatter.</p>
+<p>Next, the OS must be installed on the memory card. Download a Raspberry Pi Imager <a href="https://www.raspberrypi.org/downloads/">here</a>. Open the imager, and for select &quot;Raspberry Pi OS Lite&quot; under &quot;Raspberry Pi OS (Other)&quot;. This version uses less data because it does not have to support peripherals like its own monitor, keyboard, and mouse. Select your microSD card and click &quot;Write&quot;.</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/raspi/imager.png" style="width:70%;" /></p>
+</div>
+<p>After the setup is complete, your adapter may disconnect. Check your file explorer for a drive called &quot;D:&quot; or &quot;D:boot&quot; or &quot;SDHC (D:)&quot;. If it is missing or you cannot access it, just unplug your adapter and plug it back in.</p>
+<p>When you are able to open up your microSD's drive, you should see various files inside. There are a couple more files that you will need to download and include so that you can access your Pi. An <a href="https://drive.google.com/file/d/1DUJifUyqbFnxzawpOPD8wK9qO9SceDlm/view?usp=sharing">ssh</a> file will allow you to control the Pi securely from your computer. It is a <em>blank</em> <em>file</em> (may have a single space), and just having it on your memory card enables ssh access. Another file called <a href="https://drive.google.com/file/d/16kqigwpuCYL6QoGRqliyvyxbc_CHEY0w/view?usp=sharing">wpa_supplicant.conf</a> connects your Pi to WiFi. Open the file in a text editor such as Notepad++ or Visual Studio Code (not Notepad, it may have formatting issues) and add your WiFi name and password inside the double quotes. Keep in mind that the Pi Zero is not yet compatible with 5G networks, so a WiFi connection at about 2.4 GHz is preferable.</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/raspi/folder.png" style="width:90%;" /></p>
+</div>
+<p>Copy these two files to your microSD.</p>
+<p>Make sure they are in the drive folder, and then you can remove the adapter.</p>
+<div markdown="span" class="alert alert-warning" role="alert"><i class="fa fa-warning"></i> <b>Important:</b> Make sure to remove the drive safely! The microSD card may be corrupted if you don't and you will have to repeat this section.
+</div>
+<h2 id="access-your-raspberry-pi-by-ssh">Access Your Raspberry Pi By SSH</h2>
+<p>Start by gathering your formatted microSD card, Pi Zero W, and micro USB cable. Insert your microSD into the port on the Pi. Make sure it is all the way in and secured. Plug in your micro USB into the power port (the one further from the microSD). The other port is for transferring data, which we will do over WiFi.</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/raspi/ports.png" style="width:50%;" /></p>
+</div>
+<p>You may now plug in the USB end of the cable into power. The green LED should light up, blink on and off for about a minute, then remain on. Give your Pi about 1-2 minutes to boot up. If you hae followed the directions correctly, it will connect to your WiFi automatically. The next step is to make sure the Pi did connect successfully. This can be done by &quot;pinging&quot; the Pi. Open a Command prompt, Terminal, or other command line app and enter the command below</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ping raspberrypi
+</code></pre></div></div>
+<p>and you should get something like this.</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/raspi/ping.png" style="width:75%;" /></p>
+</div>
+<p>The <code>bytes from raspberry pi</code> show that your Raspberry Pi has connect to WiFi and is returning its state of health. If you get an error message like &quot;Ping request could not find host raspberrypi. Please check the name and try again.&quot;, then the Pi did not connect to WiFi. Try repeating the steps from <strong>Preparing the MicroSD</strong>. This process can be frustrating and may take a few tries, but don't give up!</p>
+<p>Now we can try to log into it with <code>ssh</code>.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ssh pi@raspberrypi
+</code></pre></div></div>
+<p>You will then be prompted to enter a password. The default can be seen below:</p>
+<pre><code>    password: raspberry
+</code></pre>
+<p>If you have logged in successfully, you will see somthing like the picture below.</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/raspi/login.png" style="width:80%;" /></p>
+</div>
+<p>The <code>pi@raspberrypi</code> to the left of the <code>$</code> sign indicates that you are logged in to the Raspberry Pi as the user <code>pi</code>! All commands will be executed in this window. If you accidentally close it, don't worry, just open another terminal window and log back in.</p>
+<p>We are now able to see the files stored on the Pi and start to change some settings. First, we must install the camera module so that the Pi knows how to interact with it.</p>
+<pre><code>$ sudo apt-get update
+$ sudo apt-get install python-picamera python3-picamera
+</code></pre>
+<p>The install will take a minute, then we can move on to the Raspberry Pi's settings menu. To do this type in the command below:</p>
+<pre><code>$ sudo raspi-config
+</code></pre>
+<p>Once the settings display is open, you can navigate through the options with your arrow keys and the enter key. First, if you would like to change the password for your Pi, you can do so. This will prevent unwanted logins to your Pi, which is particularly easy with the same default password for all Raspberry Pi's. In order to use the camera with your Pi, you will need to enable the camera port.</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/raspi/port.png" style="width:90%;" /></p>
+</div>
+<p>Scroll to <code>5 Interfacing Options</code> and hit enter. Select the camera port option and enable it. The Pi is now ready to interface with the camera.</p>
+<div markdown="span" class="alert alert-warning" role="alert"><i class="fa fa-warning"></i> <b>Important:</b> Do not plug in or remove the camera while the Raspberry Pi is running! Issues have occurred in the past and components may short circuit and be rendered unusable.
+</div>
+<p>Before we plug in and test out the camera, we need to safely shutdown the Pi. Type in the command below.</p>
+<pre><code>$ sudo shutdown -h now
+</code></pre>
+<p>The green LED will flash 10 times to indicate shutdown, and then it will turn off. The USB can now be safely removed.</p>
+<h2 id="setting-up-the-camera">Setting Up the Camera</h2>
+<p>Next we can plug in the camera. Setup your parts in the configuration below.</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/raspi/cable.png" style="width:75%;" /></p>
+</div>
+<p>The Pi should be face up, the metallic pins on the cable face down, and the camera face down. Now that you know how to correctly insert the cable to each component, carefully pull back the black cable lock on each part. Try to be gentle with these pieces, but if they come completely loose, just put them back where they were. Insert the cable on each side, then secure the lock back in place.</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/raspi/setup.png" style="width:75%;" /></p>
+</div>
+<p>Plug in your USB and follow the login steps again. Next we will take a sample picture!</p>
+<p>Position your camera at the desired target and execute the following command.</p>
+<pre><code>$ raspistill -o image.jpeg
+</code></pre>
+<p>You can use any name for your picture, but we'll just use <code>image.jpeg</code>. The filetype must be <code>jpeg</code> or <code>jpg</code>. The camera will open its shutter to examine the ambient light for about 5 seconds, then take a picture and turn off. When it is finished, type in <code>ls</code> (lowercase L) and you should see <code>image.jpeg</code> in the directory!</p>
+<p>Because we are using a &quot;headless&quot; boot, where the Pi does not have its own monitor, the picture cannot be viewed directly. We can easily circumvent this issue by secure copying the file to the local machine (your computer or the virtual machine you are using to access the Pi). Open a new terminal window and navigate to the Desktop to make things easy. A simple <code>$ cd Desktop</code> should work in a new terminal. Copy and paste the following command:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>scp pi@raspberrypi:~/image.jpeg image.jpeg
+</code></pre></div></div>
+<p>The first <code>image.jpeg</code> is the file being copied from the Pi, and the second is what the file is called in the place it is copied to. Now minimize all your windows and find the file and take a look. You should see the file on your desktop and be able to view the jpeg. You have now officially set up your Raspberry Pi camera device!</p>
+<div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> The secure copy command above requires a filepath to the file being copied. In the above example, the file is in the home directory (~), so all that is required for the filepath is '~/'. If your file is in another directory, just add the filepath like this: ~/folder1/folder2/.../folder17/image.jpeg.
+</div>
+<p>If you would like to take a video, try the following command.</p>
+<pre><code>$ rapsivid -o video.h264
+</code></pre>
+<p>H264 is the only video filetype available with the Rapsberry Pi. After copying to your local machine, you will need a way to view this file. It is not easily viewable on most PCs because of its relative high quality. The easiest method is to convert the file to MP4, which can be done in an internet browser <a href="https://anyconv.com/h264-to-mp4-converter/">here</a>. There are methods to view the original files, which can be <a href="https://reolink.com/how-to-play-h264-files-in-vlc/">explored</a> if you wish.</p>
+<h2 id="navigating-the-rapsberry-pi">Navigating the Rapsberry Pi</h2>
+<p>Two commands are the most commonly used when navigating through command line.</p>
+<ol>
+<li><code>cd</code>: change directory. This alone will move you to the home directory. This followed by a folder or path (<code>cd folder</code> or <code>cd folder1/folder2/folder3</code>) will move to that directory. <code>cd ..</code> will move you up one directory. For Raspberry Pi, start with <code>cd /</code> to see the pre-installed files.</li>
+<li><code>ls</code>: list directory items. This lists everything within the current directory. Add a -F like this <code>ls -F</code> to distingush files from folders/directories.</li>
+</ol>
+<p>Anytime you see <code>$</code>, what you type goes afterward.</p>
+<p>It is a good idea to create a directory for your picture and video files and eventually for Python scripts that you may use in the future. This directory can be place anywhere, but let's put it in the home directory for simplicity. The command below will create a directory called <code>picamera</code> in the home directory.</p>
+<pre><code>pi@raspberrypi:~ $ mkdir picamera
+</code></pre>
+<p>Type <code>ls</code> and you should see <code>picamera</code> in the directory. Enter this directory and run your <code>raspistill</code> and <code>raspivid</code> commands to save the files here.</p>
+
+
+    <div class="tags">
+        
+        <b>Tags: </b>
+        
+        
+        
+        
+        
+    </div>
+
+
+
+
+</div>
+
+<hr class="shaded"/>
+
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+               &copy;2021 Hawaii Space Flight Laboratory. All rights reserved. <br />
+ Site last generated: Jan 28, 2021 <br />
+<p><img src="/artemis/resources/logos/hsfl.png" width="100px" alt="HSFL Logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
+        </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+</div>
+<!-- /#main -->
+    </div>
+
+</body>
+
+</html>

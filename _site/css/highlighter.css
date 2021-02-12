@@ -1,0 +1,95 @@
+div.highlight {
+    background-color: rgba(245, 245, 245) !important;
+}
+
+figure.highlight {
+    background-color: rgb(245, 245, 245) !important;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px
+}
+
+figure.highlight pre {
+    background-color: transparent !important;
+    border: none;
+
+    overflow-x: hidden !important;
+    margin: 0 0 0 0;
+}
+
+figure.highlight pre code {
+    background-color: transparent !important;
+    border: none;
+
+    width: 100%;
+    overflow-x: hidden !important;
+    margin: 0 0 0 0;
+
+}
+
+
+table.rouge-table {
+    border: none !important;
+    background-color: transparent !important;
+
+    table-layout: fixed !important;
+    width: 100% !important;
+    max-width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+table.rouge-table tbody {
+    border: none !important;
+    background-color: transparent !important;
+    
+    width: 100% !important;
+}
+
+table.rouge-table tbody tr {
+    border: none !important;
+    white-space: nowrap !important;
+    background-color: transparent !important;
+}
+
+
+table.rouge-table tbody tr td.code {
+    border: none !important;
+    background-color: transparent !important;
+    
+    width: 100% !important;
+
+    white-space: nowrap !important;
+    overflow-x: hidden !important;
+}
+
+
+td.code pre {
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px !important;
+    background-color: rgb(255, 255, 255) !important;
+
+
+    white-space: pre !important;
+    overflow-x: scroll !important;
+
+
+    width:100%;
+}
+
+.gutter {
+    width: 50px;
+    border: none;
+}
+
+.lineno {
+    width: 40px;
+    background-color: transparent !important;
+    margin: 4% 4% 4% 4% !important;
+
+    border-radius: 0px !important;
+    border-right: 2px solid rgb(185, 185, 185) !important;
+
+
+    overflow-wrap: break-word;
+    white-space: wrap;
+}

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libCosmosDeviceI2C.a  CMakeFiles/CosmosDeviceI2C.dir/i2c.cpp.o
+/usr/bin/ranlib libCosmosDeviceI2C.a

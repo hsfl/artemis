@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content="softwarepayloadscriptscamera,  software, payload, scripts, camera">
+<title>Writing a Payload Script | Artemis Cubesat Kit</title>
+<link rel="stylesheet" href="/artemis/css/syntax.css">
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="/artemis/css/modern-business.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="/artemis/css/customstyles.css">
+<link rel="stylesheet" href="/artemis"">
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="/artemis/css/theme-blue.css">
+
+
+<link rel="stylesheet" href="/artemis/css/doc-styles.css">
+<link rel="stylesheet" href="/artemis/css/highlighter.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/artemis/js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="/artemis/js/toc.js"></script>
+<script src="/artemis/js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="/artemis/images/favicon.png">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="Artemis CubeSat Kit" href="http://localhost:4000/feed.xml">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container topnavlinks">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="fa fa-rocket fa-lg navbar-brand" href="/artemis/index.html">&nbsp;<span class="projectTitle"> Artemis Cubesat Kit</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <!-- <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li> -->
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+                
+                
+                
+                <li><a href="http://leonidas-b.hsfl.hawaii.edu/wordpress-5.0.1/artemis-2-2/" target="_blank" rel="noopener">Project Website</a></li>
+                
+                
+                
+                <li><a href="https://github.com/hsfl/artemis" target="_blank" rel="noopener">GitHub</a></li>
+                
+                
+                
+                <li><a href="https://github.com/hsfl/artemis/issues" target="_blank" rel="noopener">Submit an Issue</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <!--comment out this block if you want to hide search-->
+                <li>
+                    <!--start search-->
+                    <div id="search-demo-container">
+                        <input type="text" id="search-input" placeholder="search...">
+                        <ul id="results-container"></ul>
+                    </div>
+                    <script src="/artemis/js/jekyll-search.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                            SimpleJekyllSearch.init({
+                                searchInput: document.getElementById('search-input'),
+                                resultsContainer: document.getElementById('results-container'),
+                                dataSource: '/artemis/search.json',
+                                searchResultTemplate: '<li><a href="{url}" title="Writing a Payload Script">{title}</a></li>',
+                    noResultsText: 'No results found.',
+                            limit: 10,
+                            fuzzy: true,
+                    })
+                    </script>
+                    <!--end search-->
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+  <div id="main">
+    <!-- Content Row -->
+    <div class="row">
+        
+        
+            <!-- Sidebar Column -->
+            <div class="col-md-3" id="tg-sb-sidebar">
+                
+
+<ul id="mysidebar" class="nav">
+  <li class="sidebarTitle">Artemis Cubesat Kit </li>
+  
+  
+  
+  <li>
+      <a title="Overview" href="#">Overview</a>
+      <ul>
+          
+          
+          
+          <li><a title="Home" href="/artemis/index.html">Home</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Design Overview" href="/artemis/pages/documentation/design-overview.html">Design Overview</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="FAQ" href="/artemis/pages/faq.html">FAQ</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Safety First" href="/artemis/pages/safety-procedures.html">Safety First</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Tutorials" href="#">Tutorials</a>
+      <ul>
+          
+          
+          
+          <li><a title="Tutorial Home" href="/artemis/pages/tutorials/index.html">Tutorial Home</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Getting Started Series" href="#">Getting Started Series</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="1. Unboxing" href="/artemis/pages/tutorials/setup/setup1.html">1. Unboxing</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="2. Development Environment" href="/artemis/pages/tutorials/setup/setup2.html">2. Development Environment</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="3. COSMOS Web" href="/artemis/pages/tutorials/setup/setup3.html">3. COSMOS Web</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="4. Camera Script" href="/artemis/pages/tutorials/setup/setup4.html">4. Camera Script</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Payload Script Series" href="#">Payload Script Series</a>
+              <ul>
+                  
+                  
+                  
+                  <li class="active"><a title="1. Writing a Payload Script" href="/artemis/pages/tutorials/scripts/scripts1.html">1. Writing a Payload Script</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="2. Uploading the Script" href="/artemis/pages/tutorials/scripts/scripts2.html">2. Uploading the Script</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="3. Running the Script" href="/artemis/pages/tutorials/scripts/scripts3.html">3. Running the Script</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="COSMOS Series" href="#">COSMOS Series</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="1. COSMOS and QtCreator" href="/artemis/pages/tutorials/cosmos/cosmos1.html">1. COSMOS and QtCreator</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="2. Writing Agents" href="/artemis/pages/tutorials/cosmos/cosmos2.html">2. Writing Agents</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="3. Building and Deploying" href="/artemis/pages/tutorials/cosmos/cosmos3.html">3. Building and Deploying</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="4. Modifying COSMOS Web" href="/artemis/pages/tutorials/cosmos/cosmos4.html">4. Modifying COSMOS Web</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Setup from Scratch" href="#">Setup from Scratch</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="COSMOS from Scratch" href="/artemis/pages/tutorials/setup-from-scratch/cosmos-from-scratch.html">COSMOS from Scratch</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="BeagleBone from Scratch" href="/artemis/pages/tutorials/setup-from-scratch/beaglebone-from-scratch.html">BeagleBone from Scratch</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Raspberry Pi from Scratch" href="/artemis/pages/tutorials/setup-from-scratch/raspi-from-scratch.html">Raspberry Pi from Scratch</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="BeagleBone Software" href="#">BeagleBone Software</a>
+      <ul>
+          
+          
+          
+          <li><a title="Doxygen" href="/artemis/pages/documentation/other/doxygen.html">Doxygen</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="COSMOS" href="#">COSMOS</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="COSMOS" href="/artemis/pages/documentation/cosmos/cosmos.html">COSMOS</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="COSMOS Web" href="/artemis/pages/documentation/cosmos/cosmos-web.html">COSMOS Web</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Agents" href="#">Agents</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="Heater Agent" href="/artemis/pages/documentation/agents/heater-agent.html">Heater Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="PyCubed Agent" href="/artemis/pages/documentation/agents/pycubed-agent.html">PyCubed Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Raspberry Pi Agent" href="/artemis/pages/documentation/agents/raspberry-pi-agent.html">Raspberry Pi Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Sun Sensor Agent" href="/artemis/pages/documentation/agents/sun-sensor-agent.html">Sun Sensor Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Switch Agent" href="/artemis/pages/documentation/agents/switch-agent.html">Switch Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Temperature Sensor Agent" href="/artemis/pages/documentation/agents/temperature-sensor-agent.html">Temperature Sensor Agent</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Utility Classes" href="#">Utility Classes</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="SimpleAgent Class" href="/artemis/pages/documentation/utility-classes/simpleagent.html">SimpleAgent Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Device Classes" href="/artemis/pages/documentation/utility-classes/simpleagent-devices.html">Device Classes</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="PyCubed Utility" href="/artemis/pages/documentation/utility-classes/pycubed.html">PyCubed Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Raspberry Pi Utility" href="/artemis/pages/documentation/utility-classes/raspi.html">Raspberry Pi Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Time Utility" href="/artemis/pages/documentation/utility-classes/time.html">Time Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Timer Utility" href="/artemis/pages/documentation/utility-classes/timer.html">Timer Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="GPIO Utility" href="/artemis/pages/documentation/utility-classes/gpio.html">GPIO Utility</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Raspberry Pi Software" href="#">Raspberry Pi Software</a>
+      <ul>
+          
+          
+          
+          <li><a title="Overview" href="/artemis/pages/documentation/raspi-library/index.html">Overview</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Classes" href="#">Classes</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="CubeSat Class" href="/artemis/pages/documentation/raspi-library/cubesat-class.html">CubeSat Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="BeagleBone Class" href="/artemis/pages/documentation/raspi-library/beaglebone-class.html">BeagleBone Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Agent Class" href="/artemis/pages/documentation/raspi-library/agent-class.html">Agent Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Heater Class" href="/artemis/pages/documentation/raspi-library/heater-class.html">Heater Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="IMU Class" href="/artemis/pages/documentation/raspi-library/imu-class.html">IMU Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="GPS Class" href="/artemis/pages/documentation/raspi-library/gps-class.html">GPS Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="SunSensor Class" href="/artemis/pages/documentation/raspi-library/sunsensor-class.html">SunSensor Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="TempSensor Class" href="/artemis/pages/documentation/raspi-library/tempsensor-class.html">TempSensor Class</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="PyCubed Software" href="#">PyCubed Software</a>
+      <ul>
+          
+          
+          
+          <li><a title="Overview" href="/artemis/pages/documentation/pycubed/overview.html">Overview</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Main Script" href="/artemis/pages/documentation/pycubed/main-script.html">Main Script</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="PyCubed Communication" href="/artemis/pages/documentation/pycubed/communication-protocol.html">PyCubed Communication</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Classes" href="#">Classes</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="BeagleBone Class" href="/artemis/pages/documentation/pycubed/beaglebone-class.html">BeagleBone Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Switch Class" href="/artemis/pages/documentation/pycubed/switch-class.html">Switch Class</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Development Environment" href="#">Development Environment</a>
+      <ul>
+          
+          
+          
+          <li><a title="Development Environment" href="/artemis/pages/documentation/other/development-environment.html">Development Environment</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Utility Scripts" href="/artemis/pages/documentation/other/scripts.html">Utility Scripts</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Additional Resources" href="#">Additional Resources</a>
+      <ul>
+          
+          
+          
+          <li><a title="Programming Tutorials" href="/artemis/pages/other/programming-tutorials.html">Programming Tutorials</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Hardware Interfaces" href="/artemis/pages/other/hardware-interfaces.html">Hardware Interfaces</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Useful Tools" href="/artemis/pages/other/useful-tools.html">Useful Tools</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+      
+      <!-- if you aren't using the accordion, uncomment this block:
+         <p class="external">
+             <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
+         </p>
+         -->
+</ul>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+            </div>
+            
+        
+
+        <!-- Content Column -->
+        <div class="col-md-9" id="tg-sb-content">
+            <div class="post-header">
+   <h1 class="post-title-main">Writing a Payload Script</h1>
+</div>
+
+
+
+<div class="post-content">
+
+   
+
+    
+
+
+    
+
+   <div style="float: left;">
+
+<button type="button" class="btn btn-primary" disabled >
+    Previous
+</button>
+
+</div>
+<div style="float:right;">
+
+<a href="/artemis/pages/tutorials/scripts/scripts2.html">
+    <button type="button" class="btn btn-primary">
+        Next
+    </button>
+</a>
+
+</div>
+
+<div style="margin: 0 auto; width: fit-content;"><strong>Language: </strong>
+Python
+</div>
+
+
+<hr>
+
+
+
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 10);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+
+<br><br>
+
+
+<!-- ==================== Page Contents ==================== -->
+<div markdown="span" class="alert alert-warning" role="alert"><i class="fa fa-warning"></i> <b>Important:</b> Before proceeding, make sure the Raspberry Pi is connected to the BeagleBone, and the
+BeagleBone to your computer. The camera should be connected to the Raspberry Pi as well.
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>Payload scripts running on the Raspberry Pi Zero make use of Python. You should probably have a decent understanding of Python before continuing.</p>
+<p>In this tutorial, we'll use the <a href="https://picamera.readthedocs.io/en/release-1.13/">picamera</a> package to control the <a href="https://www.raspberrypi.org/documentation/hardware/camera/">Raspberry Pi Camera Module V2</a>.</p>
+<h2 id="the-payload-script">The Payload Script</h2>
+<h3 id="getting-started">Getting Started</h3>
+<p>First, you'll want to import the necessary packages:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">artemis</span> <span class="kn">import</span> <span class="n">cubesat</span>
+<span class="kn">from</span> <span class="nn">picamera</span> <span class="kn">import</span> <span class="n">PiCamera</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+</code></pre></div></div>
+<p>The first line imports the <code>cubesat</code> module, which is used to communicate with the rest of the cubesat. The second line imports the <code>PiCamera</code> module, which is used to control the Raspberry Pi Camera. The last line imports the <code>sleep</code> function, which we will use later in the main loop.</p>
+<div markdown="span" class="alert alert-success" role="alert"><i class="fa fa-check-square-o"></i> <b>Tip:</b> If you are modifying your payload device, then you should import any packages needed to control it.
+</div>
+<h3 id="initializing-the-payload-device">Initializing the Payload Device</h3>
+<p>Next, we'll want to initialize the payload device. For the Raspberry Pi Camera it's very straightforward:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">camera</span> <span class="o">=</span> <span class="n">PiCamera</span><span class="p">()</span>
+</code></pre></div></div>
+<p>You can also configure a bunch of camera settings if you would like. For details on using and configuring the camera using PiCamera, you can visit their <a href="https://picamera.readthedocs.io/en/release-1.13/api_camera.html">API documentation</a> on this.</p>
+<h3 id="the-main-loop">The Main Loop</h3>
+<p>Inside your payload script you will need an infinite <code>while</code> loop. Inside this loop you can perform all of the repetitive tasks needed to handle operations with your payload. Additionally, inside the loop you'll need to call the <code>cubesat</code>'s update function to make sure it's kept up to date with the latest sensor and agent information.</p>
+<p>A simple main loop for the Raspberry Pi Camera might look like this:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="c1"># Update the cubesat
+</span>    <span class="n">cubesat</span><span class="p">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="c1"># Perform any other tasks here...
+</span>
+    <span class="c1"># Wait for some amount of time (in seconds)
+</span>    <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+<h3 id="putting-it-all-together">Putting it all Together</h3>
+<p>Below is a basic payload script that captures images using the Raspberry Pi Camera and copies them to the BeagleBone.
+For the purposes of this tutorial, we will assume you have placed the code below in a file called <code>my_script.py</code>
+in the folder <code>~/scripts</code> in Ubuntu.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. Import necessary modules
+</span><span class="kn">from</span> <span class="nn">artemis</span> <span class="kn">import</span> <span class="n">cubesat</span>
+<span class="kn">from</span> <span class="nn">picamera</span> <span class="kn">import</span> <span class="n">PiCamera</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="c1"># 2. Initialize the camera
+</span><span class="n">camera</span> <span class="o">=</span> <span class="n">PiCamera</span><span class="p">()</span>
+
+<span class="c1"># (this is the main loop)
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="c1"># 3. Update the cubesat (important!)
+</span>    <span class="n">cubesat</span><span class="p">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="c1"># 4. Pick the destination file on the Raspberry Pi
+</span>    <span class="n">image_file</span> <span class="o">=</span> <span class="s">'/home/pi/payload_files/image_%d.jpeg'</span> <span class="o">%</span> <span class="n">image_count</span>
+    <span class="n">image_count</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="c1"># 5. Capture the image to the file we picked
+</span>    <span class="n">camera</span><span class="p">.</span><span class="n">capture</span><span class="p">(</span><span class="n">image_file</span><span class="p">,</span> <span class="s">'jpeg'</span><span class="p">)</span>
+    
+    <span class="c1"># 6. Send the image file to the BeagleBone
+</span>    <span class="n">cubesat</span><span class="p">.</span><span class="n">beaglebone</span><span class="p">.</span><span class="n">copy_to</span><span class="p">(</span><span class="n">image_file</span><span class="p">)</span>
+    
+    <span class="c1"># 7. Wait for a little
+</span>    <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+<p>Here's an explanation of what is happening at each step:</p>
+<ol>
+<li>We first import all the necessary modules, as previously explained.</li>
+<li>We initialize our payload device. In this example we use <code>picamera</code> to help us out.</li>
+<li>We call the vital <code>cubesat.update</code> function</li>
+<li>We pick a file path to capture the image to. Here we've decided to place all our images in a folder called <code>payload_files</code> in the home directory, with names <code>image_XXX.jpeg</code>, where <code>XXX</code> refers to the image number determined by the variable <code>image_count</code>.</li>
+<li>We capture the image to the file path picked in step 2, using a <code>jpeg</code> image format. You can check out the picamera API to see which file formats are available.</li>
+<li>We send our newly-captured image file to the BeagleBone. Unless you provide a destination path, all files will end up in the <code>/home/debian/raspi/incoming</code> folder on the BeagleBone with the same file name as the source file.</li>
+<li>We tell the program to wait for 5 seconds before continuing, using Python's built-in <code>sleep</code> function. Without this, the program would quickly cycle through the main loop and would eat up a bunch of memory on the Raspberry Pi and BeagleBone with all those image files.</li>
+</ol>
+<div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> Since steps 3 through 7 occur in the main loop, they'll keep running until the program terminates.
+</div>
+<h2 id="accessing-device-data">Accessing Device Data</h2>
+<p>You can also read data from external devices by using the <code>cubesat</code> object's device members. For more information, visit
+the <a href="/artemis/pages/documentation/python-library/python-library.html">library documentation</a></p>
+<h2 id="related-pages">Related Pages</h2>
+<ul>
+<li><a href="/artemis/pages/documentation/python-library/python-library.html">Artemis CubeSat Library</a></li>
+</ul>
+
+
+
+<hr>
+
+<div style="float: left;">
+
+<button type="button" class="btn btn-primary" disabled >
+    Previous
+</button>
+
+</div>
+<div style="float:right;">
+
+<a href="/artemis/pages/tutorials/scripts/scripts2.html">
+    <button type="button" class="btn btn-primary">
+        Next
+    </button>
+</a>
+
+</div>
+
+<div style="margin: 0 auto; width: fit-content;">
+    &nbsp;
+</div>
+
+
+<br><br>
+
+
+    <div class="tags">
+        
+        <b>Tags: </b>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </div>
+
+
+
+
+</div>
+
+<hr class="shaded"/>
+
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+               &copy;2021 Hawaii Space Flight Laboratory. All rights reserved. <br />
+ Site last generated: Jan 28, 2021 <br />
+<p><img src="/artemis/resources/logos/hsfl.png" width="100px" alt="HSFL Logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
+        </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+</div>
+<!-- /#main -->
+    </div>
+
+</body>
+
+</html>

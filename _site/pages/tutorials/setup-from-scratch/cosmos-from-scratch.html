@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content="software,  software">
+<title>Installing COSMOS From Scratch | Artemis Cubesat Kit</title>
+<link rel="stylesheet" href="/artemis/css/syntax.css">
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="/artemis/css/modern-business.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="/artemis/css/customstyles.css">
+<link rel="stylesheet" href="/artemis"">
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="/artemis/css/theme-blue.css">
+
+
+<link rel="stylesheet" href="/artemis/css/doc-styles.css">
+<link rel="stylesheet" href="/artemis/css/highlighter.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/artemis/js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="/artemis/js/toc.js"></script>
+<script src="/artemis/js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="/artemis/images/favicon.png">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="Artemis CubeSat Kit" href="http://localhost:4000/feed.xml">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container topnavlinks">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="fa fa-rocket fa-lg navbar-brand" href="/artemis/index.html">&nbsp;<span class="projectTitle"> Artemis Cubesat Kit</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <!-- <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li> -->
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+                
+                
+                
+                <li><a href="http://leonidas-b.hsfl.hawaii.edu/wordpress-5.0.1/artemis-2-2/" target="_blank" rel="noopener">Project Website</a></li>
+                
+                
+                
+                <li><a href="https://github.com/hsfl/artemis" target="_blank" rel="noopener">GitHub</a></li>
+                
+                
+                
+                <li><a href="https://github.com/hsfl/artemis/issues" target="_blank" rel="noopener">Submit an Issue</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <!--comment out this block if you want to hide search-->
+                <li>
+                    <!--start search-->
+                    <div id="search-demo-container">
+                        <input type="text" id="search-input" placeholder="search...">
+                        <ul id="results-container"></ul>
+                    </div>
+                    <script src="/artemis/js/jekyll-search.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                            SimpleJekyllSearch.init({
+                                searchInput: document.getElementById('search-input'),
+                                resultsContainer: document.getElementById('results-container'),
+                                dataSource: '/artemis/search.json',
+                                searchResultTemplate: '<li><a href="{url}" title="Installing COSMOS From Scratch">{title}</a></li>',
+                    noResultsText: 'No results found.',
+                            limit: 10,
+                            fuzzy: true,
+                    })
+                    </script>
+                    <!--end search-->
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+  <div id="main">
+    <!-- Content Row -->
+    <div class="row">
+        
+        
+            <!-- Sidebar Column -->
+            <div class="col-md-3" id="tg-sb-sidebar">
+                
+
+<ul id="mysidebar" class="nav">
+  <li class="sidebarTitle">Artemis Cubesat Kit </li>
+  
+  
+  
+  <li>
+      <a title="Overview" href="#">Overview</a>
+      <ul>
+          
+          
+          
+          <li><a title="Home" href="/artemis/index.html">Home</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Design Overview" href="/artemis/pages/documentation/design-overview.html">Design Overview</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="FAQ" href="/artemis/pages/faq.html">FAQ</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Safety First" href="/artemis/pages/safety-procedures.html">Safety First</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Tutorials" href="#">Tutorials</a>
+      <ul>
+          
+          
+          
+          <li><a title="Tutorial Home" href="/artemis/pages/tutorials/index.html">Tutorial Home</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Getting Started Series" href="#">Getting Started Series</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="1. Unboxing" href="/artemis/pages/tutorials/setup/setup1.html">1. Unboxing</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="2. Development Environment" href="/artemis/pages/tutorials/setup/setup2.html">2. Development Environment</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="3. COSMOS Web" href="/artemis/pages/tutorials/setup/setup3.html">3. COSMOS Web</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="4. Camera Script" href="/artemis/pages/tutorials/setup/setup4.html">4. Camera Script</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Payload Script Series" href="#">Payload Script Series</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="1. Writing a Payload Script" href="/artemis/pages/tutorials/scripts/scripts1.html">1. Writing a Payload Script</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="2. Uploading the Script" href="/artemis/pages/tutorials/scripts/scripts2.html">2. Uploading the Script</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="3. Running the Script" href="/artemis/pages/tutorials/scripts/scripts3.html">3. Running the Script</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="COSMOS Series" href="#">COSMOS Series</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="1. COSMOS and QtCreator" href="/artemis/pages/tutorials/cosmos/cosmos1.html">1. COSMOS and QtCreator</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="2. Writing Agents" href="/artemis/pages/tutorials/cosmos/cosmos2.html">2. Writing Agents</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="3. Building and Deploying" href="/artemis/pages/tutorials/cosmos/cosmos3.html">3. Building and Deploying</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="4. Modifying COSMOS Web" href="/artemis/pages/tutorials/cosmos/cosmos4.html">4. Modifying COSMOS Web</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Setup from Scratch" href="#">Setup from Scratch</a>
+              <ul>
+                  
+                  
+                  
+                  <li class="active"><a title="COSMOS from Scratch" href="/artemis/pages/tutorials/setup-from-scratch/cosmos-from-scratch.html">COSMOS from Scratch</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="BeagleBone from Scratch" href="/artemis/pages/tutorials/setup-from-scratch/beaglebone-from-scratch.html">BeagleBone from Scratch</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Raspberry Pi from Scratch" href="/artemis/pages/tutorials/setup-from-scratch/raspi-from-scratch.html">Raspberry Pi from Scratch</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="BeagleBone Software" href="#">BeagleBone Software</a>
+      <ul>
+          
+          
+          
+          <li><a title="Doxygen" href="/artemis/pages/documentation/other/doxygen.html">Doxygen</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="COSMOS" href="#">COSMOS</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="COSMOS" href="/artemis/pages/documentation/cosmos/cosmos.html">COSMOS</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="COSMOS Web" href="/artemis/pages/documentation/cosmos/cosmos-web.html">COSMOS Web</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Agents" href="#">Agents</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="Heater Agent" href="/artemis/pages/documentation/agents/heater-agent.html">Heater Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="PyCubed Agent" href="/artemis/pages/documentation/agents/pycubed-agent.html">PyCubed Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Raspberry Pi Agent" href="/artemis/pages/documentation/agents/raspberry-pi-agent.html">Raspberry Pi Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Sun Sensor Agent" href="/artemis/pages/documentation/agents/sun-sensor-agent.html">Sun Sensor Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Switch Agent" href="/artemis/pages/documentation/agents/switch-agent.html">Switch Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Temperature Sensor Agent" href="/artemis/pages/documentation/agents/temperature-sensor-agent.html">Temperature Sensor Agent</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Utility Classes" href="#">Utility Classes</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="SimpleAgent Class" href="/artemis/pages/documentation/utility-classes/simpleagent.html">SimpleAgent Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Device Classes" href="/artemis/pages/documentation/utility-classes/simpleagent-devices.html">Device Classes</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="PyCubed Utility" href="/artemis/pages/documentation/utility-classes/pycubed.html">PyCubed Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Raspberry Pi Utility" href="/artemis/pages/documentation/utility-classes/raspi.html">Raspberry Pi Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Time Utility" href="/artemis/pages/documentation/utility-classes/time.html">Time Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Timer Utility" href="/artemis/pages/documentation/utility-classes/timer.html">Timer Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="GPIO Utility" href="/artemis/pages/documentation/utility-classes/gpio.html">GPIO Utility</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Raspberry Pi Software" href="#">Raspberry Pi Software</a>
+      <ul>
+          
+          
+          
+          <li><a title="Overview" href="/artemis/pages/documentation/raspi-library/index.html">Overview</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Classes" href="#">Classes</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="CubeSat Class" href="/artemis/pages/documentation/raspi-library/cubesat-class.html">CubeSat Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="BeagleBone Class" href="/artemis/pages/documentation/raspi-library/beaglebone-class.html">BeagleBone Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Agent Class" href="/artemis/pages/documentation/raspi-library/agent-class.html">Agent Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Heater Class" href="/artemis/pages/documentation/raspi-library/heater-class.html">Heater Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="IMU Class" href="/artemis/pages/documentation/raspi-library/imu-class.html">IMU Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="GPS Class" href="/artemis/pages/documentation/raspi-library/gps-class.html">GPS Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="SunSensor Class" href="/artemis/pages/documentation/raspi-library/sunsensor-class.html">SunSensor Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="TempSensor Class" href="/artemis/pages/documentation/raspi-library/tempsensor-class.html">TempSensor Class</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="PyCubed Software" href="#">PyCubed Software</a>
+      <ul>
+          
+          
+          
+          <li><a title="Overview" href="/artemis/pages/documentation/pycubed/overview.html">Overview</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Main Script" href="/artemis/pages/documentation/pycubed/main-script.html">Main Script</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="PyCubed Communication" href="/artemis/pages/documentation/pycubed/communication-protocol.html">PyCubed Communication</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Classes" href="#">Classes</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="BeagleBone Class" href="/artemis/pages/documentation/pycubed/beaglebone-class.html">BeagleBone Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Switch Class" href="/artemis/pages/documentation/pycubed/switch-class.html">Switch Class</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Development Environment" href="#">Development Environment</a>
+      <ul>
+          
+          
+          
+          <li><a title="Development Environment" href="/artemis/pages/documentation/other/development-environment.html">Development Environment</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Utility Scripts" href="/artemis/pages/documentation/other/scripts.html">Utility Scripts</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Additional Resources" href="#">Additional Resources</a>
+      <ul>
+          
+          
+          
+          <li><a title="Programming Tutorials" href="/artemis/pages/other/programming-tutorials.html">Programming Tutorials</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Hardware Interfaces" href="/artemis/pages/other/hardware-interfaces.html">Hardware Interfaces</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Useful Tools" href="/artemis/pages/other/useful-tools.html">Useful Tools</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+      
+      <!-- if you aren't using the accordion, uncomment this block:
+         <p class="external">
+             <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
+         </p>
+         -->
+</ul>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+            </div>
+            
+        
+
+        <!-- Content Column -->
+        <div class="col-md-9" id="tg-sb-content">
+            <div class="post-header">
+   <h1 class="post-title-main">Installing COSMOS From Scratch</h1>
+</div>
+
+
+
+<div class="post-content">
+
+   
+
+    
+    
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 10);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+    
+
+
+    
+
+   <h1 id="introduction">Introduction</h1>
+<p>If you want to install COSMOS without using the <a href="https://hsfl.github.io/artemis/pages/tutorials/setup/setup2.html">development environment</a>, you can always install COSMOS from scratch. This allows you to build your own virtual machine and use it as you choose, without the preconfigured settings included in the Vagrant box. If you are running a Linux machine, you can skip the steps below for &quot;Creating the Virtual Machine&quot;. If you are on Windows or MacOS, it is recommended that you follow all the steps for ease of compatibility with COSMOS and your machine. In this case, your computer will be the <strong>host</strong>, and the virtual machine will be the <strong>guest</strong>.</p>
+<h2 id="creating-the-virtual-machine">Creating the Virtual Machine</h2>
+<p>The first step to installing COSMOS on your own (without the prebuilt Vagrant box) is to create your own VirtualBox machine. A virtual machine is essentially an operating system within your computer's local host OS that allows you to perform software tasks on a guest machine separate from your own. To do this, there are a few dependencies to download:</p>
+<ol>
+<li><a href="https://www.virtualbox.org/">Oracle VirtualBox</a></li>
+<li><a href="https://www.7-zip.org/">7-Zip</a></li>
+<li><a href="https://www.osboxes.org/ubuntu/">Ubuntu 18.04.3</a></li>
+</ol>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/from scratch/cosmos from scratch/bionic_beaver.png" style="width:60%;" /></p>
+</div>
+<blockquote>
+<p>Be sure to choose the correct OS for downloads 2 and 3 above (host computer). VirtualBox and 7Zip include install wizards to make things easy, just follow the steps and the wizard will do all the hard work for you. Make sure you have all 3 downloaded before moving on!</p>
+</blockquote>
+<p>Now that you have your dependencies, you can unzip the Ubuntu disk image. Open your file explorer and find the Ubuntu file you just downloaded (probably in <strong>Downloads</strong>). Right-click on the file and click <strong>7-Zip -&gt; Extract files...</strong> and choose a location you will remember. It isn't of particular importance where you decide to save it, but once it is saved, you won't be able to move it without changing the filepath later.</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/from scratch/cosmos from scratch/extract.png" style="width:50%;" /></p>
+</div>
+<p>Once the file is done extracting, you are ready to build the virtual machine. Start the Oracle VirtualBox program and click the blue &quot;New&quot; icon. This will bring up a new window where you can name your VM and define the OS type you are using. You can name the VM whatever you want, but use the picture below as a guide.</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/from scratch/cosmos from scratch/machine_setup1.png" style="width:75%;" /></p>
+</div>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/from scratch/cosmos from scratch/machine_setup2.png" style="width:75%;" /></p>
+</div>
+<p>Make sure you select <strong>Ubuntu (64bit)</strong>, or you will have errors with compatibility. After clicking next, you will have to select a &quot;virtual hard disk&quot;. This is the file you extracted in the previous step. Select <em>Use an existing virtual hard disk file</em> and click on the little folder icon. Find the file you extracted (wherever you extracted it to), and double click. The next page asks you to choose how much memory will be used by the VM. You can select any number within the green area, but it is recommended to use at least 2000 Mb. Click <strong>Next</strong>, and you have just created the virtual machine!</p>
+<p>Before booting the VM, some settings need to be changed.</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/from scratch/cosmos from scratch/VB_machines.png" style="width:75%;" /></p>
+</div>
+<p>Click the <strong>Settings</strong> icon to reconfigure the VM. First, in the <strong>General</strong> tab, click <strong>Advanced</strong>, and for both <strong>Shared Clipboard</strong> and <strong>Drag'n'Drop</strong> select <strong>Bidirectional</strong>.</p>
+<p>In the <strong>Display</strong> tab, slide the <strong>Video Memory</strong> indicator all the way to the right.</p>
+<p>Finally, in the <strong>Storage</strong> tab, make sure there is a small CD icon with <strong>Empty</strong> next to it. If it says anything else next to the CD icon, right-click and remove it, then click the small CD icon with a green plus sign and select <strong>Leave Empty</strong>. This is important for the next section.</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/from scratch/cosmos from scratch/VB_guestadditions.png" style="width:75%;" /></p>
+</div>
+<p>After making all of the changes, you can close the <strong>Settings</strong> window and start your machine using the green arrow icon.</p>
+<h2 id="booting-up-the-vm">Booting up the VM</h2>
+<p>When the VM is starting up, you will see something like this:</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/from scratch/cosmos from scratch/machine_startup.png" style="width:75%;" /></p>
+</div>
+<p>It will take a few minutes the first time. You will see a screen like this:</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/from scratch/cosmos from scratch/login_screen.png" style="width:75%;" /></p>
+</div>
+<p>You will need to log in to the machine as if you were starting up your host computer. The default password is shown below.</p>
+<pre><code>username: osboxes.org
+password: osboxes.org
+</code></pre>
+<p>After logging in and a couple more minutes, you will see a desktop screen with icons on the left toolbar. Press <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd> to open up a new terminal.</p>
+<div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> Try not to have too many windows open or switch between the VM window and other windows on your host computer while the VM is running. The VM can, at times, use as much RAM as your host computer on its own, and it may not handle multiple processes well.
+</div>
+<p>In the terminal, type in the following command to ensure some vital extensions are included in your guest machine's OS:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>dkms build-essential linux-generic-headers
+</code></pre></div></div>
+<p>Give your machine a minute to install these files. When it is finished, you can set up Guest Additions, which is important for everything that we will do in the virtual machine.</p>
+<p>To start the process, click <strong>Devices</strong> in the top toolbar and select <em>Insert Guest Additions CD Image</em>. You will be prompted to reenter the password, and after doing so a terminal will open. A few processes will run, and then the terminal will ask if you would like to continue. Type <code>yes</code> and hit enter, and the installation will continue. When it is finished, the last line in the terminal will say &quot;Press Return to close the window&quot;.</p>
+<p>The virtual machine is now ready for working on software.</p>
+<h2 id="installing-the-development-tools">Installing the Development Tools</h2>
+<p>Next, a few tools are needed to develop with COSMOS agents. Most of them will be installed using the terminal.</p>
+<p>The first tool we will add is called <strong>git</strong>. This tool allows you to easily clone repositories from Github and to manage different updates and versions of the code. Type in the command below:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>git
+</code></pre></div></div>
+<p>The install make take a couple minutes, and watch out for prompts to continue. These statements will appear in the terminal, ending in a parenthesis statement <code>(y/n)</code>. Be sure to type <code>y</code> and hit enter, including for any of the following terminal installs in this tutorial. After the process is finished, try typing in <code>git</code>. You should see an output like below.</p>
+<pre><code>usage: git [--version] [--help] [-C &lt;path&gt;] [-c &lt;name&gt;=&lt;value&gt;]
+       [--exec-path[=&lt;path&gt;]] [--html-path] [--man-path] [--info-path]
+       [-p | --paginate | --no-pager] [--no-replace-objects] [--bare]
+       [--git-dir=&lt;path&gt;] [--work-tree=&lt;path&gt;] [--namespace=&lt;name&gt;]
+       &lt;command&gt; [&lt;args&gt;]
+
+These are common Git commands used in various situations:
+
+start a working area (see also: git help tutorial)
+  clone      Clone a repository into a new directory
+  init       Create an empty Git repository or reinitialize an existing one
+
+work on the current change (see also: git help everyday)
+  add        Add file contents to the index
+  mv         Move or rename a file, a directory, or a symlink
+  reset      Reset current HEAD to the specified state
+  rm         Remove files from the working tree and from the index
+
+examine the history and state (see also: git help revisions)
+  bisect     Use binary search to find the commit that introduced a bug
+  grep       Print lines matching a pattern
+  log        Show commit logs
+  show       Show various types of objects
+  status     Show the working tree status
+
+grow, mark and tweak your common history
+  branch     List, create, or delete branches
+  checkout   Switch branches or restore working tree files
+  commit     Record changes to the repository
+  diff       Show changes between commits, commit and working tree, etc
+  merge      Join two or more development histories together
+  rebase     Reapply commits on top of another base tip
+  tag        Create, list, delete or verify a tag object signed with GPG
+
+collaborate (see also: git help workflows)
+  fetch      Download objects and refs from another repository
+  pull       Fetch from and integrate with another repository or a local branch
+  push       Update remote refs along with associated objects
+
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help &lt;command&gt;' or 'git help &lt;concept&gt;'
+to read about a specific subcommand or concept.
+</code></pre>
+<p>If you see this, git has installed successfully.</p>
+<p>Next, we will install Qt Creator. This is a program that allows for easy viewing and editing of code, and for compiling the COSMOS projet as well. Type in the command below to install Qt Creator.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>qtcreator
+</code></pre></div></div>
+<p>Before moving on, let's make sure the Qt program boots up. In the terminal, enter <code>qtcreator</code> and wait for the window to pop up. Once it opens, go ahead and close it again. Our next tool is called CMake. This tool is used by Qt to compile the flight software project. This program can actually be installed in the Ubuntu software store.</p>
+<div markdown="span" class="alert alert-warning" role="alert"><i class="fa fa-warning"></i> <b>Important:</b> Be careful of installing CMake from the terminal! In the past, older versions of CMake have been installed, which can cause issues with Qt Creator. It is recommended (and much easier) to install from the Software Shop, which automatically chooses the newest released version.
+</div>
+<p>On the toolbar, you should have an orange icon called <strong>Ubuntu Software</strong>. Open that, and search for CMake. the correct choice will be the first on the list. Go ahead and hit install, and when it is finished you can close the window.</p>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/from scratch/cosmos from scratch/cmake.png" style="width:100%;" /></p>
+</div>
+<p>Qt Creator will now be able to build our project software, so it can be installed.</p>
+<h2 id="cloning-cosmos-software">Cloning COSMOS Software</h2>
+<p>First, we can clone the COSMOS core repository. This repo is the basis for the Artemis flight software, but Artemis has a different set of agents. COSMOS core can be used to understand how agents work. Enter the command below in a terminal to download the installer.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git clone https://github.com/hsfl/cosmos-installer.git ~/cosmos
+</code></pre></div></div>
+<p>This will save the downloaded files to a folder called &quot;cosmos&quot;. You will need to move into that folder to run the installer script, which will give you access to all the files in the COSMOS core repository. If you type <code>ls</code>, you should see the &quot;cosmos&quot; folder listed. If you see it, you can run the installer script:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> ~/cosmos
+<span class="nv">$ </span>./cosmos-install.sh
+</code></pre></div></div>
+<p>After a couple minutes, the install should be finished. Check the file explorer for a folder called &quot;bin&quot; inside the &quot;cosmos&quot; folder. If you don't see this folder, there may be an issue with CMake. Try removing the files, reinstalling CMake, and following the steps above again.</p>
+<p>Now we can add the Artemis repo. This contains all the COSMOS agents that will be used for this specific cubesatellite.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span>
+<span class="nv">$ </span>git clone https://github.com/hsfl/artemis.git artemis
+</code></pre></div></div>
+<p>There is no installer for the Artemis repo, so you are already set up! We have installed quite a few different tools and files, so it is a good idea to reboot the machine. Hit the red X at the top right of the window, and select <em>Power off the machine</em>.</p>
+<p>Start up the virtual machine again and login. Open a terminal and move into the &quot;cosmos&quot; folder with <code>cd cosmos</code>. Type in <code>agent</code>, and you should see an output like below:</p>
+<pre><code>Usage: agent [ list | dump [soh, beat, ###] | node_name agent_name &quot;request [ arguments ]&quot; ]
+</code></pre>
+<p>This means that COSMOS is installed correctly! Go ahead and try the same in the &quot;artemis&quot; folder, and you should get the same result.</p>
+<h2 id="compiling-cosmos-locally">Compiling COSMOS Locally</h2>
+<p>In Qt Creator, click on <em>File &gt; Open File or Project...</em>, and open up the file <code>~/cosmos/source/core/CMakeLists.txt</code>.</p>
+<p>Once the project is finished loading, click the <strong>Projects</strong> button on the left side of the window, and then click
+on <strong>Desktop</strong>, and then click on <strong>Build</strong> under it.</p>
+<p>Make sure the build directory looks something like:</p>
+<pre><code>/home/cosmos/source/core/build-core-Desktop-Debug
+or
+/home/artemis/software/BeagleBone/build-beaglebone-Desktop_Qt_5_15_0_GCC_64bit-Debug
+</code></pre>
+<div align="center">
+<p><img align="center"
+src="/artemis/resources/tutorials/from scratch/cosmos from scratch/qt_project.png" style="width:100%;" /></p>
+</div>
+<p>Now you can press <kbd>Control</kbd> + <kbd>B</kbd> (or the hammer icon at the bottom left) to build the project.
+This can take a while.</p>
+<p>All of the executables (files that can be run) are now located in the build directory from above. They are nested in a bunch of different folders,
+but we need to put them together all in the same folder. To do so, run the following command in a terminal:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> /home/cosmos/source/core/build-core-Desktop-Debug
+<span class="nv">$ </span><span class="nb">mkdir </span>bin
+<span class="nv">$ </span>find ./ <span class="nt">-perm</span> /a+x <span class="nt">-exec</span> <span class="nb">cp</span> <span class="o">{}</span> bin <span class="se">\;</span>
+</code></pre></div></div>
+<p>You can also replace the first command with the filepath for the Artemis project. It is easiest to copy the path in the <strong>Project</strong> tab of Qt and paste it in for this command.</p>
+<p>Now you can copy the contents of the <code>/home/cosmos/source/core/build-core-Desktop-Debug/bin</code> folder to the <code>/home/cosmos/bin</code> folder in a file explorer. There will be a bunch of files already in the destination folder, but you can remove the old ones.</p>
+
+
+    <div class="tags">
+        
+        <b>Tags: </b>
+        
+        
+        
+        
+        
+    </div>
+
+
+
+
+</div>
+
+<hr class="shaded"/>
+
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+               &copy;2021 Hawaii Space Flight Laboratory. All rights reserved. <br />
+ Site last generated: Jan 28, 2021 <br />
+<p><img src="/artemis/resources/logos/hsfl.png" width="100px" alt="HSFL Logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
+        </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+</div>
+<!-- /#main -->
+    </div>
+
+</body>
+
+</html>

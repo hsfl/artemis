@@ -1,0 +1,2 @@
+/usr/bin/ar qc libSimpleAgent.a  CMakeFiles/SimpleAgent.dir/Device.cpp.o CMakeFiles/SimpleAgent.dir/SimpleAgent.cpp.o CMakeFiles/SimpleAgent.dir/RemoteAgent.cpp.o CMakeFiles/SimpleAgent.dir/Telemetry.cpp.o
+/usr/bin/ranlib libSimpleAgent.a

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libCosmosDeviceDisk.a  CMakeFiles/CosmosDeviceDisk.dir/devicedisk.cpp.o
+/usr/bin/ranlib libCosmosDeviceDisk.a

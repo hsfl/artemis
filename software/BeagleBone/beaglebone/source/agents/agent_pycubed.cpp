@@ -173,15 +173,15 @@ int main(int argc, char** argv) {
 	agent->AddNodeProperty<Node::BatteryCapacity>(3.5f * 4);
 	agent->AddNodeProperty<Node::BatteryCharge>(0);
 	
-	agent->AddRequest("is_up", Request_IsUp, "Checks if the PyCubed is reachable");
-	agent->AddRequest("send", Request_SendMessage, "Sends a message to the PyCubed", "Usage: send msgtype arg1 arg2 ...");
-	agent->AddRequest("cpu", Request_GetCPUData, "Returns the latest CPU data received");
-	agent->AddRequest("imu", Request_GetIMUData, "Returns the latest IMU data received");
-	agent->AddRequest("gps", Request_GetGPSData, "Returns the latest GPS data received");
-	agent->AddRequest("temperature", Request_GetTemperatureData, "Returns the latest temperature data received");
-	agent->AddRequest("power", Request_GetPowerData, "Returns the latest power data received");
-	agent->AddRequest("kill_radio", Request_KillRadio, "Sends a message to the PyCubed to kill the radio");
-	agent->AddRequest("spoof", Request_Spoof, "Spoofs the given string as input from the PyCubed. Do not include checksum or syncword", "Usage: spoof msgtype arg1 arg2 ...");
+    agent->AddRequest("is_up", Request_IsUp, "\n\t\tChecks if the PyCubed is reachable");
+    agent->AddRequest("send", Request_SendMessage, "\n\t\tSends a message to the PyCubed", "Usage: send msgtype arg1 arg2 ...");
+    agent->AddRequest("cpu", Request_GetCPUData, "\n\t\tReturns the latest CPU data received");
+    agent->AddRequest("imu", Request_GetIMUData, "\n\t\tReturns the latest IMU data received");
+    agent->AddRequest("gps", Request_GetGPSData, "\n\t\tReturns the latest GPS data received");
+    agent->AddRequest("temperature", Request_GetTemperatureData, "\n\t\tReturns the latest temperature data received");
+    agent->AddRequest("power", Request_GetPowerData, "\n\t\tReturns the latest power data received");
+    agent->AddRequest("kill_radio", Request_KillRadio, "\n\t\tSends a message to the PyCubed to kill the radio");
+    agent->AddRequest("spoof", Request_Spoof, "\n\t\tSpoofs the given string as input from the PyCubed. Do not include checksum or syncword", "Usage: spoof msgtype arg1 arg2 ...");
 	
 	// Initialize the PyCubed
 	InitPyCubed();

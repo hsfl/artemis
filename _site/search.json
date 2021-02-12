@@ -1,0 +1,781 @@
+[
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "404.html",
+"summary": ""
+}
+,
+
+
+
+
+
+{
+"title": "About Us",
+"tags": "",
+"keywords": "",
+"url": "about.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Agent Class (Raspberry Pi)",
+"tags": "",
+"keywords": "python, library",
+"url": "pagesdocumentationraspi-libraryagent-class.html",
+"summary": ""
+}
+,
+
+
+
+
+
+{
+"title": "BeagleBone Class (PyCubed)",
+"tags": "software",
+"keywords": "software",
+"url": "pagesdocumentationpycubedbeaglebone-class.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "BeagleBone Class (Raspberry Pi)",
+"tags": "",
+"keywords": "python, library",
+"url": "pagesdocumentationraspi-librarybeaglebone-class.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Setting up the BeagleBone From Scratch",
+"tags": "software",
+"keywords": "software",
+"url": "pagestutorialssetup-from-scratchbeaglebone-from-scratch.html",
+"summary": ""
+}
+,
+
+
+
+
+
+{
+"title": "Installing COSMOS From Scratch",
+"tags": "software",
+"keywords": "software",
+"url": "pagestutorialssetup-from-scratchcosmos-from-scratch.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "COSMOS Web",
+"tags": "software",
+"keywords": "software",
+"url": "pagesdocumentationcosmoscosmos-web.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "COSMOS",
+"tags": "cosmos",
+"keywords": "software, documentation, cosmos",
+"url": "pagesdocumentationcosmoscosmos.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "COSMOS Tutorial Part 1 - COSMOS and QtCreator",
+"tags": "software",
+"keywords": "software",
+"url": "pagestutorialscosmoscosmos1.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "COSMOS Tutorial Part 2 - Writing Agents",
+"tags": "software",
+"keywords": "software",
+"url": "pagestutorialscosmoscosmos2.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "COSMOS Tutorial Part 3 - Building and Deploying",
+"tags": "software",
+"keywords": "software",
+"url": "pagestutorialscosmoscosmos3.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "COSMOS Tutorial Part 4 - Modifying COSMOS Web",
+"tags": "software",
+"keywords": "software",
+"url": "pagestutorialscosmoscosmos4.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "CubeSat Class (Raspberry Pi)",
+"tags": "",
+"keywords": "python, library",
+"url": "pagesdocumentationraspi-librarycubesat-class.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Design Overview",
+"tags": "software",
+"keywords": "software",
+"url": "pagesdocumentationdesign-overview.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Development Environment",
+"tags": "",
+"keywords": "software",
+"url": "pagesdocumentationotherdevelopment-environment.html",
+"summary": ""
+}
+,
+
+
+
+
+
+{
+"title": "Doxygen",
+"tags": "",
+"keywords": "software",
+"url": "pagesdocumentationotherdoxygen.html",
+"summary": ""
+}
+,
+
+
+
+
+
+{
+"title": "Frequently Asked Questions",
+"tags": "",
+"keywords": "faq",
+"url": "pagesfaq.html",
+"summary": ""
+}
+,
+
+
+
+
+
+
+
+{
+"title": "GPIO (Class)",
+"tags": "software",
+"keywords": "software",
+"url": "pagesdocumentationutility-classesgpio.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "GPS Class (Raspberry Pi)",
+"tags": "",
+"keywords": "python, library",
+"url": "pagesdocumentationraspi-librarygps-class.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Hardware Interfaces",
+"tags": "",
+"keywords": "software",
+"url": "pagesotherhardware-interfaces.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Heater Agent",
+"tags": "softwareheater",
+"keywords": "software",
+"url": "pagesdocumentationagentsheater-agent.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Heater Class (Raspberry Pi)",
+"tags": "",
+"keywords": "python, library",
+"url": "pagesdocumentationraspi-libraryheater-class.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "IMU Class (Raspberry Pi)",
+"tags": "",
+"keywords": "python, library",
+"url": "pagesdocumentationraspi-libraryimu-class.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Raspberry Pi Library",
+"tags": "",
+"keywords": "python, library",
+"url": "pagesdocumentationraspi-libraryindex.html",
+"summary": ""
+}
+,
+
+
+
+
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "pagesdocumentationagents",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Documentation",
+"tags": "software",
+"keywords": "software",
+"url": "pagesdocumentationindex.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Setup",
+"tags": "software",
+"keywords": "software",
+"url": "pagestutorialssetupindex.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Tutorials",
+"tags": "software",
+"keywords": "software",
+"url": "pagestutorialsindex.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Artemis CubeSat Kit",
+"tags": "",
+"keywords": "homepage",
+"url": "index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "PyCubed Main Script",
+"tags": "",
+"keywords": "software",
+"url": "pagesdocumentationpycubedmain-script.html",
+"summary": ""
+}
+,
+
+
+
+
+
+{
+"title": "Programming Tutorials",
+"tags": "",
+"keywords": "software",
+"url": "pagesotherprogramming-tutorials.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "PyCubed Agent",
+"tags": "softwarepycubed",
+"keywords": "software",
+"url": "pagesdocumentationagentspycubed-agent.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "PyCubed Communication Protocol",
+"tags": "",
+"keywords": "software",
+"url": "pagesdocumentationpycubedcommunication-protocol.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "PyCubed Software",
+"tags": "software",
+"keywords": "software",
+"url": "pagesdocumentationpycubedpycubed.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "PyCubed Utility Class",
+"tags": "software",
+"keywords": "software",
+"url": "pagesdocumentationutility-classespycubed.html",
+"summary": ""
+}
+,
+
+
+
+
+
+{
+"title": "Raspberry Pi Agent",
+"tags": "softwareraspberrypi",
+"keywords": "software",
+"url": "pagesdocumentationagentsraspberry-pi-agent.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Setting up the Raspberry Pi From Scratch",
+"tags": "software",
+"keywords": "software",
+"url": "pagestutorialssetup-from-scratchraspi-from-scratch.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Raspberry Pi Utility Class",
+"tags": "software",
+"keywords": "software",
+"url": "pagesdocumentationutility-classesraspi.html",
+"summary": ""
+}
+,
+
+
+
+
+
+{
+"title": "Safety Procedures",
+"tags": "",
+"keywords": "safety",
+"url": "pagessafety-procedures.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Development Environment",
+"tags": "",
+"keywords": "software",
+"url": "pagesdocumentationotherscripts.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Writing a Payload Script",
+"tags": "softwarepayloadscriptscamera",
+"keywords": "software, payload, scripts, camera",
+"url": "pagestutorialsscriptsscripts1.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Uploading the Script",
+"tags": "softwarepayloadscriptscamera",
+"keywords": "software, payload, scripts, camera",
+"url": "pagestutorialsscriptsscripts2.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Running the Script",
+"tags": "softwarepayloadscriptscamera",
+"keywords": "software, payload, scripts, camera",
+"url": "pagestutorialsscriptsscripts3.html",
+"summary": ""
+}
+,
+
+
+
+
+
+{
+"title": "Getting Started Part 1 - Unboxing",
+"tags": "software",
+"keywords": "software",
+"url": "pagestutorialssetupsetup1.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Getting Started Part 2 - Development Environment",
+"tags": "software",
+"keywords": "software",
+"url": "pagestutorialssetupsetup2.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Getting Started Part 3 - COSMOS Web",
+"tags": "software",
+"keywords": "software",
+"url": "pagestutorialssetupsetup3.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Getting Started Part 4 - Camera Script",
+"tags": "software",
+"keywords": "software",
+"url": "pagestutorialssetupsetup4.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "SimpleAgent Devices",
+"tags": "software",
+"keywords": "software",
+"url": "pagesdocumentationutility-classessimpleagent-devices.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "SimpleAgent",
+"tags": "software",
+"keywords": "software",
+"url": "pagesdocumentationutility-classessimpleagent.html",
+"summary": ""
+}
+,
+
+
+
+
+
+
+
+{
+"title": "Sun Sensor Agent",
+"tags": "softwaresunsensor",
+"keywords": "software",
+"url": "pagesdocumentationagentssun-sensor-agent.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "SunSensor Class (Raspberry Pi)",
+"tags": "",
+"keywords": "python, library",
+"url": "pagesdocumentationraspi-librarysunsensor-class.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Switch Agent",
+"tags": "software",
+"keywords": "software",
+"url": "pagesdocumentationagentsswitch-agent.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Switch Class (PyCubed)",
+"tags": "software",
+"keywords": "software",
+"url": "pagesdocumentationpycubedswitch-class.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Temperature Sensor Agent",
+"tags": "software",
+"keywords": "software",
+"url": "pagesdocumentationagentstemperature-sensor-agent.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "TempSensor Class (Raspberry Pi)",
+"tags": "",
+"keywords": "python, library",
+"url": "pagesdocumentationraspi-librarytempsensor-class.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Time Class",
+"tags": "software",
+"keywords": "software",
+"url": "pagesdocumentationutility-classestime.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Timer Class",
+"tags": "software",
+"keywords": "software",
+"url": "pagesdocumentationutility-classestimer.html",
+"summary": ""
+}
+,
+
+
+
+
+
+
+
+
+
+
+
+{
+"title": "Useful Tools",
+"tags": "",
+"keywords": "software",
+"url": "pagesotheruseful-tools.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Setting up the Development Environment",
+"tags": "software",
+"keywords": "software",
+"url": "pagestutorialssetupsetup-dev-env.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "assetscssstyle.css",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "pagesdocumentationtestsgpio-test.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "pagesdocumentationtestspycubed-test.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "pagesdocumentationtestsraspi-test.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "pagesdocumentationtestssunsensor-test.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "pagesdocumentationtestsswitch-test.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "",
+"tags": "",
+"keywords": "",
+"url": "pagesdocumentationteststempsensor-test.html",
+"summary": ""
+}
+
+
+
+
+
+
+]

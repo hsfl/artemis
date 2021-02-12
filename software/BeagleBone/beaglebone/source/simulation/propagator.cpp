@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
 {
 	std::string node;
 	int32_t order = 6;
-    int32_t mode = 0; // attitude mode (0 - propagate?, 1-LVLH, ...)
+    int32_t mode = 1; // attitude mode (0 - propagate?, 1-LVLH, ...)
 	double mjdnow;
 	double mjdstart = -1.;
 	double dt = .1;

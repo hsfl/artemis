@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
 	switch ( argc ) {
 		// Set defaults for username and hostname
 		case 1:
-			hostname = "raspberrypi.local";
+            hostname = "raspberrypi.local";
 			username = "pi";
 			break;
 		// Set a default for the username
@@ -136,11 +136,11 @@ int main(int argc, char** argv) {
 	
 		
 	// Add requests
-	agent->AddRequest("agent_data", Request_GetData, "Prints data collected from other agents");
-	agent->AddRequest("command", Request_SSH, "Runs a command on the Raspberry Pi");
-	agent->AddRequest("is_up", Request_Ping, "Checks if the Raspberry Pi is up");
-	agent->AddRequest("shutdown_raspi", Request_Shutdown, "Attempts to shut down the Raspberry Pi");
-	agent->AddRequest("set_soh", Request_SetSOH, "Sets the state of health for a payload script");
+    agent->AddRequest("agent_data", Request_GetData, "\n\t\tPrints data collected from other agents");
+    agent->AddRequest("command", Request_SSH, "\n\t\tRuns a command on the Raspberry Pi (an ssh keygen pair MUST be established before this request can work)");
+    agent->AddRequest("is_up", Request_Ping, "\n\t\tChecks if the Raspberry Pi is up");
+    agent->AddRequest("shutdown_raspi", Request_Shutdown, "\n\t\tAttempts to shut down the Raspberry Pi");
+    agent->AddRequest("set_soh", Request_SetSOH, "\n\t\tSets the state of health for a payload script");
 	agent->DebugPrint();
 	
 	
@@ -562,16 +562,17 @@ string Request_GetData() {
 
 string Request_SSH(CapturedInput input) {
 	
+    printf("Hello, world!\n");
 	// Make sure we actually have arguments
 	if ( input.input.empty() )
 		return "Usage: ssh command";
 	
 	// Create the command string
-	string command = "ssh " + username + "@" + hostname + " " + input.input;
+    std::string command = "ssh " + username + "@" + hostname + " " + input.input;
 	
 	
 	// Call the command
-	string output;
+    std::string output;
 	printf("$ %s\n", command.c_str());
 	SystemCall(command, output);
 	printf("%s\n", output.c_str());

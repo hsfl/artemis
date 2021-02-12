@@ -115,9 +115,9 @@ int main(int argc, char** argv) {
 		sw->Post(sw->enabled = false);
 		
 		// Add device requests
-		sw->AddRequest("on", Request_Switch_On, "Turns on the switch");
-		sw->AddRequest("off", Request_Switch_Off, "Turns off the switch");
-		sw->AddRequest("state", Request_Switch_State, "Returns the state of the switch");
+        sw->AddRequest("on", Request_Switch_On, "\n\t\tTurns on the switch");
+        sw->AddRequest("off", Request_Switch_Off, "\n\t\tTurns off the switch");
+        sw->AddRequest("state", Request_Switch_State, "\n\t\tReturns the state of the switch");
 		
 		// Store the switch device by name
 		switches[switch_name] = sw;

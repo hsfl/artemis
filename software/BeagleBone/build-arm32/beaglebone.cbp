@@ -1,0 +1,2612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="beaglebone"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\cosmos\;CMake Files\..\..\..\..\cosmos\source\;CMake Files\..\..\..\..\cosmos\source\core\;CMake Files\..\..\..\..\cosmos\source\core\cmake\;CMake Files\..\..\..\..\cosmos\source\core\libraries\;CMake Files\..\..\..\..\cosmos\source\core\libraries\agent\;CMake Files\..\..\..\..\cosmos\source\core\libraries\support\;CMake Files\..\..\..\..\cosmos\source\core\libraries\math\;CMake Files\..\..\..\..\cosmos\source\core\libraries\physics\;CMake Files\..\..\..\..\cosmos\source\core\libraries\thirdparty\;CMake Files\..\..\..\..\cosmos\source\core\libraries\thirdparty\png\;CMake Files\..\..\..\..\cosmos\source\core\libraries\thirdparty\jpeg\;CMake Files\..\..\..\..\cosmos\source\core\libraries\thirdparty\zlib\;CMake Files\..\..\..\..\cosmos\source\core\libraries\device\;CMake Files\..\..\..\..\cosmos\source\core\libraries\device\general\;CMake Files\..\..\..\..\cosmos\source\core\libraries\device\disk\;CMake Files\..\..\..\..\cosmos\source\core\libraries\device\cpu\;CMake Files\..\..\..\..\cosmos\source\core\libraries\device\i2c\;CMake Files\..\..\..\..\cosmos\source\core\libraries\device\serial\;CMake Files\..\..\..\..\cosmos\source\core\libraries\device\ccsds\;CMake Files\libraries\;CMake Files\libraries\SimpleAgent\;CMake Files\source\;CMake Files\source\agents\;CMake Files\source\device\;CMake Files\source\simulation\;CMake Files\source\tests\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/local">
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 install/local"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="config">
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 config"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/strip">
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 install/strip"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="configuration">
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 configuration"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install">
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 install"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="list_install_components">
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 list_install_components"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosAgent">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/agent/libCosmosAgent.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/agent"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/agent/Makefile&quot;  VERBOSE=1 CosmosAgent"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/agent/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/agent/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/agent/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosAgent/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/agent/libCosmosAgent.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/agent"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/agent/Makefile&quot;  VERBOSE=1 CosmosAgent/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/agent/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/agent/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/agent/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosSupport">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/support/libCosmosSupport.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/support"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/support/Makefile&quot;  VERBOSE=1 CosmosSupport"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/support/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/support/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/support/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosSupport/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/support/libCosmosSupport.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/support"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/support/Makefile&quot;  VERBOSE=1 CosmosSupport/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/support/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/support/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/support/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosMath">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/math/libCosmosMath.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/math"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/math/Makefile&quot;  VERBOSE=1 CosmosMath"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/math/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/math/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/math/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosMath/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/math/libCosmosMath.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/math"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/math/Makefile&quot;  VERBOSE=1 CosmosMath/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/math/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/math/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/math/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosPhysics">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/physics/libCosmosPhysics.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/physics"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/physics/.."/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/physics/../thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/physics/../support"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/physics/Makefile&quot;  VERBOSE=1 CosmosPhysics"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/physics/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/physics/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/physics/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosPhysics/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/physics/libCosmosPhysics.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/physics"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/physics/.."/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/physics/../thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/physics/../support"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/physics/Makefile&quot;  VERBOSE=1 CosmosPhysics/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/physics/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/physics/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/physics/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="localpng">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/png/liblocalpng.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/png"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/libraries/thirdparty/zlib"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/png/Makefile&quot;  VERBOSE=1 localpng"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/png/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/png/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/png/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="localpng/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/png/liblocalpng.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/png"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/libraries/thirdparty/zlib"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/png/Makefile&quot;  VERBOSE=1 localpng/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/png/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/png/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/png/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="localjpeg">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/jpeg/liblocaljpeg.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/jpeg"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/jpeg/Makefile&quot;  VERBOSE=1 localjpeg"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/jpeg/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/jpeg/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/jpeg/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="localjpeg/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/jpeg/liblocaljpeg.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/jpeg"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/jpeg/Makefile&quot;  VERBOSE=1 localjpeg/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/jpeg/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/jpeg/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/jpeg/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="localzlib">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/zlib/liblocalzlib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/zlib"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/zlib/Makefile&quot;  VERBOSE=1 localzlib"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/zlib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/zlib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/zlib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="localzlib/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/zlib/liblocalzlib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/zlib"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/zlib/Makefile&quot;  VERBOSE=1 localzlib/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/zlib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/zlib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/zlib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosDeviceGeneral">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/general/libCosmosDeviceGeneral.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/general"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/general/Makefile&quot;  VERBOSE=1 CosmosDeviceGeneral"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/general/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/general/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/general/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosDeviceGeneral/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/general/libCosmosDeviceGeneral.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/general"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/general/Makefile&quot;  VERBOSE=1 CosmosDeviceGeneral/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/general/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/general/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/general/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosDeviceDisk">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/disk/libCosmosDeviceDisk.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/disk"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/disk/Makefile&quot;  VERBOSE=1 CosmosDeviceDisk"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/disk/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/disk/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/disk/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosDeviceDisk/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/disk/libCosmosDeviceDisk.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/disk"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/disk/Makefile&quot;  VERBOSE=1 CosmosDeviceDisk/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/disk/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/disk/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/disk/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosDeviceCpu">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/cpu/libCosmosDeviceCpu.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/cpu"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/cpu/Makefile&quot;  VERBOSE=1 CosmosDeviceCpu"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/cpu/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/cpu/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/cpu/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosDeviceCpu/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/cpu/libCosmosDeviceCpu.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/cpu"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/cpu/Makefile&quot;  VERBOSE=1 CosmosDeviceCpu/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/cpu/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/cpu/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/cpu/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosDeviceI2C">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/i2c/libCosmosDeviceI2C.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/i2c"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/i2c/Makefile&quot;  VERBOSE=1 CosmosDeviceI2C"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/i2c/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/i2c/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/i2c/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosDeviceI2C/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/i2c/libCosmosDeviceI2C.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/i2c"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/i2c/Makefile&quot;  VERBOSE=1 CosmosDeviceI2C/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/i2c/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/i2c/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/i2c/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosDeviceSerial">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/serial/libCosmosDeviceSerial.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/serial"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/serial/Makefile&quot;  VERBOSE=1 CosmosDeviceSerial"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/serial/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/serial/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/serial/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosDeviceSerial/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/serial/libCosmosDeviceSerial.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/serial"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/serial/Makefile&quot;  VERBOSE=1 CosmosDeviceSerial/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/serial/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/serial/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/serial/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosDeviceCcsds">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/ccsds/libCosmosDeviceCcsds.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/ccsds"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/ccsds/Makefile&quot;  VERBOSE=1 CosmosDeviceCcsds"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/ccsds/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/ccsds/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/ccsds/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CosmosDeviceCcsds/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/ccsds/libCosmosDeviceCcsds.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/ccsds"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/ccsds/Makefile&quot;  VERBOSE=1 CosmosDeviceCcsds/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/ccsds/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/ccsds/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/device/ccsds/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="SimpleAgent">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/SimpleAgent/libSimpleAgent.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/SimpleAgent"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/SimpleAgent/Makefile&quot;  VERBOSE=1 SimpleAgent"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/SimpleAgent/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/SimpleAgent/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/SimpleAgent/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="SimpleAgent/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/SimpleAgent/libSimpleAgent.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/SimpleAgent"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/SimpleAgent/Makefile&quot;  VERBOSE=1 SimpleAgent/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/SimpleAgent/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/SimpleAgent/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/libraries/SimpleAgent/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="agent_heater">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/agent_heater" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 agent_heater"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="agent_heater/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/agent_heater" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 agent_heater/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="agent_sun">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/agent_sun" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 agent_sun"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="agent_sun/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/agent_sun" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 agent_sun/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="agent_pycubed">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/agent_pycubed" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 agent_pycubed"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="agent_pycubed/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/agent_pycubed" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 agent_pycubed/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="agent_temp">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/agent_temp" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 agent_temp"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="agent_temp/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/agent_temp" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 agent_temp/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="agent_switch">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/agent_switch" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 agent_switch"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="agent_switch/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/agent_switch" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 agent_switch/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="agent_raspi">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/agent_raspi" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 agent_raspi"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="agent_raspi/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/agent_raspi" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 agent_raspi/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/agents/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CubesatDevices">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/source/device/libCubesatDevices.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/source/device"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/device/Makefile&quot;  VERBOSE=1 CubesatDevices"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/device/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/device/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/device/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CubesatDevices/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/source/device/libCubesatDevices.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/source/device"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/device/Makefile&quot;  VERBOSE=1 CubesatDevices/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/device/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/device/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/device/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="propagator">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/propagator" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/simulation/Makefile&quot;  VERBOSE=1 propagator"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/simulation/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/simulation/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/simulation/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="propagator/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/propagator" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/simulation/Makefile&quot;  VERBOSE=1 propagator/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/simulation/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/simulation/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/simulation/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="temp_test">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/temp_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 temp_test"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="temp_test/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/temp_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 temp_test/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="simpleagent_test">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/simpleagent_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 simpleagent_test"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="simpleagent_test/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/simpleagent_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 simpleagent_test/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="sun_test">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/sun_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 sun_test"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="sun_test/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/sun_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 sun_test/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gpio_test">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/gpio_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 gpio_test"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gpio_test/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/gpio_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 gpio_test/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="pycubed_test">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/pycubed_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 pycubed_test"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="pycubed_test/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/pycubed_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 pycubed_test/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="telemlog_test">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/telemlog_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 telemlog_test"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="telemlog_test/fast">
+				<Option output="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin/telemlog_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vagrant/artemis/software/BeagleBone/build-arm32/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/thirdparty"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/general"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/disk"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/cpu"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/i2c"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/serial"/>
+					<Add directory="/home/vagrant/cosmos/source/core/libraries/device/ccsds"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./include"/>
+					<Add directory="/home/vagrant/artemis/software/BeagleBone/beaglebone/./libraries"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/arm-linux-gnueabihf"/>
+					<Add directory="/usr/arm-linux-gnueabihf/include/c++/4.9.3/backward"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/include-fixed"/>
+					<Add directory="/usr/lib/gcc-cross/arm-linux-gnueabihf/4.9/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 telemlog_test/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vagrant/artemis/software/BeagleBone/build-arm32/source/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/config/heater.json">
+			<Option target="configuration"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/config/pycubed.json">
+			<Option target="configuration"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/config/sun_sensors.json">
+			<Option target="configuration"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/config/switches.json">
+			<Option target="configuration"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/config/temp_sensors.json">
+			<Option target="configuration"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/libraries/SimpleAgent/Device.cpp">
+			<Option target="SimpleAgent"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/libraries/SimpleAgent/Device.h">
+			<Option target="SimpleAgent"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/libraries/SimpleAgent/RemoteAgent.cpp">
+			<Option target="SimpleAgent"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/libraries/SimpleAgent/RemoteAgent.h">
+			<Option target="SimpleAgent"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/libraries/SimpleAgent/SimpleAgent.cpp">
+			<Option target="SimpleAgent"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/libraries/SimpleAgent/SimpleAgent.h">
+			<Option target="SimpleAgent"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/libraries/SimpleAgent/Telemetry.cpp">
+			<Option target="SimpleAgent"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/libraries/SimpleAgent/Telemetry.h">
+			<Option target="SimpleAgent"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/agents/agent_heater.cpp">
+			<Option target="agent_heater"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/agents/agent_pycubed.cpp">
+			<Option target="agent_pycubed"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/agents/agent_raspi.cpp">
+			<Option target="agent_raspi"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/agents/agent_sun.cpp">
+			<Option target="agent_sun"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/agents/agent_switch.cpp">
+			<Option target="agent_switch"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/agents/agent_temp.cpp">
+			<Option target="agent_temp"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/device/ADT7311.cpp">
+			<Option target="CubesatDevices"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/device/GPIO.cpp">
+			<Option target="CubesatDevices"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/device/I2CDevice.cpp">
+			<Option target="CubesatDevices"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/device/OPT3001.cpp">
+			<Option target="CubesatDevices"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/device/PyCubed.cpp">
+			<Option target="CubesatDevices"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/device/SPIDevice.cpp">
+			<Option target="CubesatDevices"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/device/UARTDevice.cpp">
+			<Option target="CubesatDevices"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/simulation/propagator.cpp">
+			<Option target="propagator"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/tests/gpio_test.cpp">
+			<Option target="gpio_test"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/tests/pycubed_test.cpp">
+			<Option target="pycubed_test"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/tests/simpleagent_test.cpp">
+			<Option target="simpleagent_test"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/tests/sun_test.cpp">
+			<Option target="sun_test"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/tests/telemlog_test.cpp">
+			<Option target="telemlog_test"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/tests/temp_test.cpp">
+			<Option target="temp_test"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/agent/agentclass.cpp">
+			<Option target="CosmosAgent"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/agent/agentclass.h">
+			<Option target="CosmosAgent"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/agent/scheduler.cpp">
+			<Option target="CosmosAgent"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/agent/scheduler.h">
+			<Option target="CosmosAgent"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/ccsds/spp.cpp">
+			<Option target="CosmosDeviceCcsds"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/ccsds/spp.h">
+			<Option target="CosmosDeviceCcsds"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/cpu/devicecpu.cpp">
+			<Option target="CosmosDeviceCpu"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/cpu/devicecpu.h">
+			<Option target="CosmosDeviceCpu"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/disk/devicedisk.cpp">
+			<Option target="CosmosDeviceDisk"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/disk/devicedisk.h">
+			<Option target="CosmosDeviceDisk"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/acq_a35.cpp">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/acq_a35.h">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/bbFctns.cpp">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/bbFctns.h">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/cssl_lib.cpp">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/cssl_lib.h">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/gige_lib.cpp">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/gige_lib.h">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/gs232b_lib.cpp">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/gs232b_lib.h">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/ic9100_lib.cpp">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/ic9100_lib.h">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/kisslib.cpp">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/kisslib.h">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/kisstnc_lib.cpp">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/kisstnc_lib.h">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/kpc9612p_lib.cpp">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/kpc9612p_lib.h">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/mixwtnc_lib.cpp">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/mixwtnc_lib.h">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/pic_lib.cpp">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/pic_lib.h">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/prkx2su_class.cpp">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/prkx2su_class.h">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/prkx2su_lib.cpp">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/prkx2su_lib.h">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/ts2000_lib.cpp">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/general/ts2000_lib.h">
+			<Option target="CosmosDeviceGeneral"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/i2c/i2c-dev-smbus.h">
+			<Option target="CosmosDeviceI2C"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/i2c/i2c.cpp">
+			<Option target="CosmosDeviceI2C"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/i2c/i2c.h">
+			<Option target="CosmosDeviceI2C"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/serial/serialclass.cpp">
+			<Option target="CosmosDeviceSerial"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/device/serial/serialclass.h">
+			<Option target="CosmosDeviceSerial"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/math/constants.h">
+			<Option target="CosmosMath"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/math/lsfit.cpp">
+			<Option target="CosmosMath"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/math/lsfit.h">
+			<Option target="CosmosMath"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/math/mathlib.cpp">
+			<Option target="CosmosMath"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/math/mathlib.h">
+			<Option target="CosmosMath"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/math/matrix.cpp">
+			<Option target="CosmosMath"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/math/matrix.h">
+			<Option target="CosmosMath"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/math/rotation.cpp">
+			<Option target="CosmosMath"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/math/rotation.h">
+			<Option target="CosmosMath"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/math/types.h">
+			<Option target="CosmosMath"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/math/vector.cpp">
+			<Option target="CosmosMath"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/math/vector.h">
+			<Option target="CosmosMath"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/physics/constants.cpp">
+			<Option target="CosmosPhysics"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/physics/constants.h">
+			<Option target="CosmosPhysics"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/physics/physicsdef.h">
+			<Option target="CosmosPhysics"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/physics/physicslib.cpp">
+			<Option target="CosmosPhysics"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/physics/physicslib.h">
+			<Option target="CosmosPhysics"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/command_queue.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/command_queue.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/configCosmos.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/convertdef.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/convertlib.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/convertlib.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/cosmos-defs.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/cosmos-errno.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/cosmos-errno.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/datadef.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/datalib.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/datalib.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/demlib.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/demlib.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/elapsedtime.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/elapsedtime.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/ephemlib.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/ephemlib.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/estimation_lib.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/estimation_lib.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/event.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/event.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/geomag.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/geomag.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/jpleph.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/jpleph.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/jsonclass.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/jsonclass.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/jsondef.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/jsonlib.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/jsonlib.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/jsonobject.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/jsonobject.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/jsonvalue.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/jsonvalue.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/nrlmsise-00.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/nrlmsise-00.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/nrlmsise-00_data.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/objlib.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/objlib.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/print_utils.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/print_utils.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/sliplib.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/sliplib.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/socketlib.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/socketlib.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/stringlib.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/stringlib.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/timelib.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/timelib.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/timeutils.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/timeutils.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/transferlib.cpp">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/support/transferlib.h">
+			<Option target="CosmosSupport"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/cderror.h">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/cdjpeg.h">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jcapimin.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jcapistd.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jccoefct.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jccolor.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jcdctmgr.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jchuff.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jchuff.h">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jcinit.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jcmainct.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jcmarker.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jcmaster.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jcomapi.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jconfig.h">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jcparam.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jcphuff.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jcprepct.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jcsample.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jctrans.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdapimin.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdapistd.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdatadst.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdatasrc.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdcoefct.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdcolor.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdct.h">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jddctmgr.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdhuff.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdhuff.h">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdinput.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdmainct.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdmarker.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdmaster.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdmerge.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdphuff.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdpostct.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdsample.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jdtrans.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jerror.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jerror.h">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jfdctflt.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jfdctfst.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jfdctint.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jidctflt.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jidctfst.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jidctint.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jidctred.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jinclude.h">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jmemmgr.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jmemnobs.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jmemsys.h">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jmorecfg.h">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jpeg_rw.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jpegint.h">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jpeglib.h">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jquant1.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jquant2.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jutils.cpp">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/jversion.h">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/jpeg/transupp.h">
+			<Option target="localjpeg"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/png.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/png.h">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngconf.h">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngdebug.h">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngerror.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngget.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pnginfo.h">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pnglibconf.h">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngmem.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngpread.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngpriv.h">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngread.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngrio.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngrtran.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngrutil.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngset.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngstruct.h">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngtest.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngtrans.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngwio.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngwrite.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngwtran.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/png/pngwutil.c">
+			<Option target="localpng"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/adler32.c">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/compress.c">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/crc32.c">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/crc32.h">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/deflate.c">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/deflate.h">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/gzclose.c">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/gzguts.h">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/gzlib.c">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/gzread.c">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/gzwrite.c">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/infback.c">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/inffast.c">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/inffast.h">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/inffixed.h">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/inflate.c">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/inflate.h">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/inftrees.c">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/inftrees.h">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/trees.c">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/trees.h">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/uncompr.c">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/zconf.h">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/zlib.h">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/zutil.c">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/cosmos/source/core/libraries/thirdparty/zlib/zutil.h">
+			<Option target="localzlib"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/../../../../cosmos/source/core/cmake/use_cosmos_from_source.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\cosmos\source\core\cmake\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/../../../../cosmos/source/core/libraries/agent/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\cosmos\source\core\libraries\agent\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/../../../../cosmos/source/core/libraries/support/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\cosmos\source\core\libraries\support\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/../../../../cosmos/source/core/libraries/math/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\cosmos\source\core\libraries\math\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/../../../../cosmos/source/core/libraries/physics/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\cosmos\source\core\libraries\physics\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/../../../../cosmos/source/core/libraries/thirdparty/png/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\cosmos\source\core\libraries\thirdparty\png\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/../../../../cosmos/source/core/libraries/thirdparty/jpeg/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\cosmos\source\core\libraries\thirdparty\jpeg\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/../../../../cosmos/source/core/libraries/thirdparty/zlib/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\cosmos\source\core\libraries\thirdparty\zlib\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/../../../../cosmos/source/core/libraries/device/general/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\cosmos\source\core\libraries\device\general\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/../../../../cosmos/source/core/libraries/device/disk/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\cosmos\source\core\libraries\device\disk\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/../../../../cosmos/source/core/libraries/device/cpu/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\cosmos\source\core\libraries\device\cpu\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/../../../../cosmos/source/core/libraries/device/i2c/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\cosmos\source\core\libraries\device\i2c\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/../../../../cosmos/source/core/libraries/device/serial/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\cosmos\source\core\libraries\device\serial\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/../../../../cosmos/source/core/libraries/device/ccsds/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\..\..\..\..\cosmos\source\core\libraries\device\ccsds\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/libraries/SimpleAgent/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\libraries\SimpleAgent\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\source\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/agents/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\source\agents\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/device/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\source\device\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/simulation/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\source\simulation\"/>
+		</Unit>
+		<Unit filename="/home/vagrant/artemis/software/BeagleBone/beaglebone/source/tests/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\source\tests\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,6 @@
+PING 192.168.0.134 (192.168.0.134) 56(84) bytes of data.
+64 bytes from 192.168.0.134: icmp_seq=1 ttl=64 time=53.4 ms
+
+--- 192.168.0.134 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 53.412/53.412/53.412/0.000 ms

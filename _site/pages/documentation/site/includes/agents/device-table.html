@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content=" ">
+<title>COSMOS Device Table | Artemis Cubesat Kit</title>
+<link rel="stylesheet" href="/artemis/css/syntax.css">
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="/artemis/css/modern-business.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="/artemis/css/customstyles.css">
+<link rel="stylesheet" href="/artemis"">
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="/artemis/css/theme-blue.css">
+
+
+<link rel="stylesheet" href="/artemis/css/doc-styles.css">
+<link rel="stylesheet" href="/artemis/css/highlighter.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/artemis/js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="/artemis/js/toc.js"></script>
+<script src="/artemis/js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="/artemis/images/favicon.png">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="Artemis CubeSat Kit" href="http://localhost:4000/feed.xml">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container topnavlinks">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="fa fa-rocket fa-lg navbar-brand" href="/artemis/index.html">&nbsp;<span class="projectTitle"> Artemis Cubesat Kit</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <!-- <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li> -->
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+                
+                
+                
+                <li><a href="http://leonidas-b.hsfl.hawaii.edu/wordpress-5.0.1/artemis-2-2/" target="_blank" rel="noopener">Project Website</a></li>
+                
+                
+                
+                <li><a href="https://github.com/hsfl/artemis" target="_blank" rel="noopener">GitHub</a></li>
+                
+                
+                
+                <li><a href="https://github.com/hsfl/artemis/issues" target="_blank" rel="noopener">Submit an Issue</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <!--comment out this block if you want to hide search-->
+                <li>
+                    <!--start search-->
+                    <div id="search-demo-container">
+                        <input type="text" id="search-input" placeholder="search...">
+                        <ul id="results-container"></ul>
+                    </div>
+                    <script src="/artemis/js/jekyll-search.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                            SimpleJekyllSearch.init({
+                                searchInput: document.getElementById('search-input'),
+                                resultsContainer: document.getElementById('results-container'),
+                                dataSource: '/artemis/search.json',
+                                searchResultTemplate: '<li><a href="{url}" title="COSMOS Device Table">{title}</a></li>',
+                    noResultsText: 'No results found.',
+                            limit: 10,
+                            fuzzy: true,
+                    })
+                    </script>
+                    <!--end search-->
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+  <div id="main">
+    <!-- Content Row -->
+    <div class="row">
+        
+        
+            <!-- Sidebar Column -->
+            <div class="col-md-3" id="tg-sb-sidebar">
+                
+
+<ul id="mysidebar" class="nav">
+  <li class="sidebarTitle">Website Documentation </li>
+  
+  
+  
+  <li>
+      <a title="Overview" href="#">Overview</a>
+      <ul>
+          
+          
+          
+          <li><a title="Developer Home" href="/artemis/pages/documentation/site/index.html">Developer Home</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Getting Started" href="/artemis/pages/documentation/site/getting-started.html">Getting Started</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Site Structure" href="/artemis/pages/documentation/site/structure.html">Site Structure</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Pages" href="#">Pages</a>
+      <ul>
+          
+          
+          
+          <li><a title="Contents" href="/artemis/pages/documentation/site/pages/contents.html">Contents</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Layouts" href="#">Layouts</a>
+      <ul>
+          
+          
+          
+          <li><a title="Agent Layout" href="/artemis/pages/documentation/site/layouts/agent.html">Agent Layout</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="FAQ Layout" href="/artemis/pages/documentation/site/layouts/faq.html">FAQ Layout</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Includes" href="#">Includes</a>
+      <ul>
+          
+          
+          
+          <li><a title="Includes" href="/artemis/pages/documentation/site/includes/index.html">Includes</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Agents" href="#">Agents</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="Quick Details Table" href="/artemis/pages/documentation/site/includes/agents/quick-details.html">Quick Details Table</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li class="active"><a title="Device Table" href="/artemis/pages/documentation/site/includes/agents/device-table.html">Device Table</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Request Table" href="/artemis/pages/documentation/site/includes/agents/request-table.html">Request Table</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+      
+      <!-- if you aren't using the accordion, uncomment this block:
+         <p class="external">
+             <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
+         </p>
+         -->
+</ul>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+            </div>
+            
+        
+
+        <!-- Content Column -->
+        <div class="col-md-9" id="tg-sb-content">
+            <div class="post-header">
+   <h1 class="post-title-main">COSMOS Device Table</h1>
+</div>
+
+
+
+<div class="post-content">
+
+   
+
+    
+    
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 10);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+    
+
+
+    
+
+   <h2 id="brief">Brief</h2>
+<p>The &quot;Device Table&quot; include generates a table of COSMOS properties for a page using the <code>agent</code> layout.</p>
+<p>This can be included in a page by using the following code:</p>
+<p><code>{% include agents/device_table.html %}</code></p>
+<h2 id="the-yaml-file">The YAML File</h2>
+<p>This requires that a YAML file be placed in the <code>_data/agents</code> folder named according to the agent page's <code>agent_name</code> frontmatter field.</p>
+<p>Here is an example taken from the <code>_data/agents/agent_heater.yml</code> YAML file:</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">cosmos_devices</span><span class="pi">:</span>
+
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Heater"</span>
+    <span class="na">cosmos_device_name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">htr"</span>
+    <span class="na">cosmos_device_number</span><span class="pi">:</span> <span class="s2">"</span><span class="s">000"</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">UTC"</span>
+        <span class="na">cosmos_name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">utc"</span>
+        <span class="na">storage_type</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">double"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">Time"</span><span class="pi">]</span>
+        <span class="na">description</span><span class="pi">:</span> <span class="s2">"</span><span class="s">The</span><span class="nv"> </span><span class="s">UTC</span><span class="nv"> </span><span class="s">timestamp</span><span class="nv"> </span><span class="s">as</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">Modified</span><span class="nv"> </span><span class="s">Julian</span><span class="nv"> </span><span class="s">Day"</span>
+        
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Enabled"</span>
+        <span class="na">cosmos_name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">enabled"</span>
+        <span class="na">storage_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">bool"</span>
+        <span class="na">description</span><span class="pi">:</span> <span class="s2">"</span><span class="s">`true`</span><span class="nv"> </span><span class="s">if</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">device</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">enabled"</span>
+        
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Voltage</span><span class="nv"> </span><span class="s">(V)"</span>
+        <span class="na">cosmos_name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">volt"</span>
+        <span class="na">storage_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">float"</span>
+        <span class="na">description</span><span class="pi">:</span> <span class="s2">"</span><span class="s">The</span><span class="nv"> </span><span class="s">voltage</span><span class="nv"> </span><span class="s">supplied"</span>
+
+<span class="c1"># Node Property table (commented since agent_heater doesn't use node properties)</span>
+<span class="c1"># cosmos_node:</span>
+<span class="c1">#   - name: "Enabled"</span>
+<span class="c1">#     cosmos_name: "enabled"</span>
+<span class="c1">#     storage_type: "bool"</span>
+<span class="c1">#     description: "`true` if the device is enabled"</span>
+</code></pre></div></div>
+
+
+    <div class="tags">
+        
+    </div>
+
+
+
+
+</div>
+
+<hr class="shaded"/>
+
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+               &copy;2021 Hawaii Space Flight Laboratory. All rights reserved. <br />
+ Site last generated: Jan 28, 2021 <br />
+<p><img src="/artemis/resources/logos/hsfl.png" width="100px" alt="HSFL Logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
+        </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+</div>
+<!-- /#main -->
+    </div>
+
+</body>
+
+</html>

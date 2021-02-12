@@ -1,0 +1,2 @@
+/usr/bin/ar qc libCosmosAgent.a  CMakeFiles/CosmosAgent.dir/agentclass.cpp.o CMakeFiles/CosmosAgent.dir/scheduler.cpp.o
+/usr/bin/ranlib libCosmosAgent.a

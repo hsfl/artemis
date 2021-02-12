@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content="software,  software">
+<title>COSMOS Tutorial Part 2 - Writing Agents | Artemis Cubesat Kit</title>
+<link rel="stylesheet" href="/artemis/css/syntax.css">
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="/artemis/css/modern-business.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="/artemis/css/customstyles.css">
+<link rel="stylesheet" href="/artemis"">
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="/artemis/css/theme-blue.css">
+
+
+<link rel="stylesheet" href="/artemis/css/doc-styles.css">
+<link rel="stylesheet" href="/artemis/css/highlighter.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/artemis/js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="/artemis/js/toc.js"></script>
+<script src="/artemis/js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="/artemis/images/favicon.png">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="Artemis CubeSat Kit" href="http://localhost:4000/feed.xml">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container topnavlinks">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="fa fa-rocket fa-lg navbar-brand" href="/artemis/index.html">&nbsp;<span class="projectTitle"> Artemis Cubesat Kit</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <!-- <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li> -->
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+                
+                
+                
+                <li><a href="http://leonidas-b.hsfl.hawaii.edu/wordpress-5.0.1/artemis-2-2/" target="_blank" rel="noopener">Project Website</a></li>
+                
+                
+                
+                <li><a href="https://github.com/hsfl/artemis" target="_blank" rel="noopener">GitHub</a></li>
+                
+                
+                
+                <li><a href="https://github.com/hsfl/artemis/issues" target="_blank" rel="noopener">Submit an Issue</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <!--comment out this block if you want to hide search-->
+                <li>
+                    <!--start search-->
+                    <div id="search-demo-container">
+                        <input type="text" id="search-input" placeholder="search...">
+                        <ul id="results-container"></ul>
+                    </div>
+                    <script src="/artemis/js/jekyll-search.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                            SimpleJekyllSearch.init({
+                                searchInput: document.getElementById('search-input'),
+                                resultsContainer: document.getElementById('results-container'),
+                                dataSource: '/artemis/search.json',
+                                searchResultTemplate: '<li><a href="{url}" title="COSMOS Tutorial Part 2 - Writing Agents">{title}</a></li>',
+                    noResultsText: 'No results found.',
+                            limit: 10,
+                            fuzzy: true,
+                    })
+                    </script>
+                    <!--end search-->
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+  <div id="main">
+    <!-- Content Row -->
+    <div class="row">
+        
+        
+            <!-- Sidebar Column -->
+            <div class="col-md-3" id="tg-sb-sidebar">
+                
+
+<ul id="mysidebar" class="nav">
+  <li class="sidebarTitle">Artemis Cubesat Kit </li>
+  
+  
+  
+  <li>
+      <a title="Overview" href="#">Overview</a>
+      <ul>
+          
+          
+          
+          <li><a title="Home" href="/artemis/index.html">Home</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Design Overview" href="/artemis/pages/documentation/design-overview.html">Design Overview</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="FAQ" href="/artemis/pages/faq.html">FAQ</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Safety First" href="/artemis/pages/safety-procedures.html">Safety First</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Tutorials" href="#">Tutorials</a>
+      <ul>
+          
+          
+          
+          <li><a title="Tutorial Home" href="/artemis/pages/tutorials/index.html">Tutorial Home</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Getting Started Series" href="#">Getting Started Series</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="1. Unboxing" href="/artemis/pages/tutorials/setup/setup1.html">1. Unboxing</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="2. Development Environment" href="/artemis/pages/tutorials/setup/setup2.html">2. Development Environment</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="3. COSMOS Web" href="/artemis/pages/tutorials/setup/setup3.html">3. COSMOS Web</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="4. Camera Script" href="/artemis/pages/tutorials/setup/setup4.html">4. Camera Script</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Payload Script Series" href="#">Payload Script Series</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="1. Writing a Payload Script" href="/artemis/pages/tutorials/scripts/scripts1.html">1. Writing a Payload Script</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="2. Uploading the Script" href="/artemis/pages/tutorials/scripts/scripts2.html">2. Uploading the Script</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="3. Running the Script" href="/artemis/pages/tutorials/scripts/scripts3.html">3. Running the Script</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="COSMOS Series" href="#">COSMOS Series</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="1. COSMOS and QtCreator" href="/artemis/pages/tutorials/cosmos/cosmos1.html">1. COSMOS and QtCreator</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li class="active"><a title="2. Writing Agents" href="/artemis/pages/tutorials/cosmos/cosmos2.html">2. Writing Agents</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="3. Building and Deploying" href="/artemis/pages/tutorials/cosmos/cosmos3.html">3. Building and Deploying</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="4. Modifying COSMOS Web" href="/artemis/pages/tutorials/cosmos/cosmos4.html">4. Modifying COSMOS Web</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Setup from Scratch" href="#">Setup from Scratch</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="COSMOS from Scratch" href="/artemis/pages/tutorials/setup-from-scratch/cosmos-from-scratch.html">COSMOS from Scratch</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="BeagleBone from Scratch" href="/artemis/pages/tutorials/setup-from-scratch/beaglebone-from-scratch.html">BeagleBone from Scratch</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Raspberry Pi from Scratch" href="/artemis/pages/tutorials/setup-from-scratch/raspi-from-scratch.html">Raspberry Pi from Scratch</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="BeagleBone Software" href="#">BeagleBone Software</a>
+      <ul>
+          
+          
+          
+          <li><a title="Doxygen" href="/artemis/pages/documentation/other/doxygen.html">Doxygen</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="COSMOS" href="#">COSMOS</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="COSMOS" href="/artemis/pages/documentation/cosmos/cosmos.html">COSMOS</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="COSMOS Web" href="/artemis/pages/documentation/cosmos/cosmos-web.html">COSMOS Web</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Agents" href="#">Agents</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="Heater Agent" href="/artemis/pages/documentation/agents/heater-agent.html">Heater Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="PyCubed Agent" href="/artemis/pages/documentation/agents/pycubed-agent.html">PyCubed Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Raspberry Pi Agent" href="/artemis/pages/documentation/agents/raspberry-pi-agent.html">Raspberry Pi Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Sun Sensor Agent" href="/artemis/pages/documentation/agents/sun-sensor-agent.html">Sun Sensor Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Switch Agent" href="/artemis/pages/documentation/agents/switch-agent.html">Switch Agent</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Temperature Sensor Agent" href="/artemis/pages/documentation/agents/temperature-sensor-agent.html">Temperature Sensor Agent</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Utility Classes" href="#">Utility Classes</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="SimpleAgent Class" href="/artemis/pages/documentation/utility-classes/simpleagent.html">SimpleAgent Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Device Classes" href="/artemis/pages/documentation/utility-classes/simpleagent-devices.html">Device Classes</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="PyCubed Utility" href="/artemis/pages/documentation/utility-classes/pycubed.html">PyCubed Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Raspberry Pi Utility" href="/artemis/pages/documentation/utility-classes/raspi.html">Raspberry Pi Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Time Utility" href="/artemis/pages/documentation/utility-classes/time.html">Time Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Timer Utility" href="/artemis/pages/documentation/utility-classes/timer.html">Timer Utility</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="GPIO Utility" href="/artemis/pages/documentation/utility-classes/gpio.html">GPIO Utility</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Raspberry Pi Software" href="#">Raspberry Pi Software</a>
+      <ul>
+          
+          
+          
+          <li><a title="Overview" href="/artemis/pages/documentation/raspi-library/index.html">Overview</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Classes" href="#">Classes</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="CubeSat Class" href="/artemis/pages/documentation/raspi-library/cubesat-class.html">CubeSat Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="BeagleBone Class" href="/artemis/pages/documentation/raspi-library/beaglebone-class.html">BeagleBone Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Agent Class" href="/artemis/pages/documentation/raspi-library/agent-class.html">Agent Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Heater Class" href="/artemis/pages/documentation/raspi-library/heater-class.html">Heater Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="IMU Class" href="/artemis/pages/documentation/raspi-library/imu-class.html">IMU Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="GPS Class" href="/artemis/pages/documentation/raspi-library/gps-class.html">GPS Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="SunSensor Class" href="/artemis/pages/documentation/raspi-library/sunsensor-class.html">SunSensor Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="TempSensor Class" href="/artemis/pages/documentation/raspi-library/tempsensor-class.html">TempSensor Class</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="PyCubed Software" href="#">PyCubed Software</a>
+      <ul>
+          
+          
+          
+          <li><a title="Overview" href="/artemis/pages/documentation/pycubed/overview.html">Overview</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Main Script" href="/artemis/pages/documentation/pycubed/main-script.html">Main Script</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="PyCubed Communication" href="/artemis/pages/documentation/pycubed/communication-protocol.html">PyCubed Communication</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Classes" href="#">Classes</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="BeagleBone Class" href="/artemis/pages/documentation/pycubed/beaglebone-class.html">BeagleBone Class</a></li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <li><a title="Switch Class" href="/artemis/pages/documentation/pycubed/switch-class.html">Switch Class</a></li>
+                  
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Development Environment" href="#">Development Environment</a>
+      <ul>
+          
+          
+          
+          <li><a title="Development Environment" href="/artemis/pages/documentation/other/development-environment.html">Development Environment</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Utility Scripts" href="/artemis/pages/documentation/other/scripts.html">Utility Scripts</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Additional Resources" href="#">Additional Resources</a>
+      <ul>
+          
+          
+          
+          <li><a title="Programming Tutorials" href="/artemis/pages/other/programming-tutorials.html">Programming Tutorials</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Hardware Interfaces" href="/artemis/pages/other/hardware-interfaces.html">Hardware Interfaces</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Useful Tools" href="/artemis/pages/other/useful-tools.html">Useful Tools</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+      
+      <!-- if you aren't using the accordion, uncomment this block:
+         <p class="external">
+             <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
+         </p>
+         -->
+</ul>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+            </div>
+            
+        
+
+        <!-- Content Column -->
+        <div class="col-md-9" id="tg-sb-content">
+            <div class="post-header">
+   <h1 class="post-title-main">COSMOS Tutorial Part 2 - Writing Agents</h1>
+</div>
+
+
+
+<div class="post-content">
+
+   
+
+    
+
+
+    
+
+   <div style="float: left;">
+
+<a href="/artemis/pages/tutorials/cosmos/cosmos1.html">
+    <button type="button" class="btn btn-primary">
+        Previous
+    </button>
+</a>
+
+</div>
+<div style="float:right;">
+
+<a href="/artemis/pages/tutorials/cosmos/cosmos3.html">
+    <button type="button" class="btn btn-primary">
+        Next
+    </button>
+</a>
+
+</div>
+
+<div style="margin: 0 auto; width: fit-content;"><strong>Language: </strong>
+C++
+</div>
+
+
+<hr>
+
+
+
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 10);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+
+<br><br>
+
+
+<!-- ==================== Page Contents ==================== -->
+<div markdown="span" class="alert alert-success" role="alert"><i class="fa fa-check-square-o"></i> <b>Tip:</b> Before you start this tutorial, you should check out the
+<a href="/artemis/pages/documentation/cosmos/cosmos.html">COSMOS documentation</a> for an explanation on the
+concepts used here.
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>SimpleAgent is a class that encapsulates the regular <a href="/artemis/pages/documentation/cosmos/cosmos.html#agents">COSMOS agents</a>. While COSMOS agents can be difficult to use, SimpleAgent is designed with the user in mind. Here we'll be referring to SimpleAgent as an agent -- a SimpleAgent really is just a COSMOS agent; only the way you use it changes.</p>
+<h3 id="simpleagent-devices">SimpleAgent Devices</h3>
+<p>A SimpleAgent <em>device</em> is a C++ object which can hold certain properties. In this tutorial, the devices aren't real. We make them up to understand how the concepts can be used for real devices and requested for any data we need to know about the satellite.</p>
+<p>The types of properties a device can have depend on the type of device. For example, a <code>Battery</code> device has a <code>capacity</code> property, while a <code>TemperatureSensor</code> device has a <code>temperature</code> property.</p>
+<div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> A SimpleAgent device does not handle hardware directly, and only stores properties.
+Any hardware interaction with a <em>physical</em> device is up to you to code.
+</div>
+<div markdown="span" class="alert alert-success" role="alert"><i class="fa fa-check-square-o"></i> <b>Tip:</b> For a complete listing of available devices and their properties, visit the
+<a href="/artemis/pages/documentation/utility-classes/simpleagent-devices.html">Device documentation</a>. These can be used in the agent, such as <code>TemperatureSensor</code>.
+</div>
+<h2 id="using-simpleagent">Using SimpleAgent</h2>
+<p>Now that we've gotten definitions out of the way, we can start by creating a SimpleAgent.</p>
+<h3 id="creating-the-simpleagent">Creating the SimpleAgent</h3>
+<p>First, you'll need to include the header file with all of the SimpleAgent definitions (make sure to always type in code exactly as it appears here):</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include "SimpleAgent/SimpleAgent.h"
+</span></code></pre></div></div>
+<p>The above line should already be in your file. If not, add it to the very top. Next you'll see the following:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">cubesat</span><span class="p">;</span>
+
+<span class="c1">//! An agent request which returns whatever argument the user gives it</span>
+<span class="kt">double</span> <span class="nf">Request_Double</span><span class="p">(</span><span class="kt">double</span> <span class="n">arg</span><span class="p">);</span>
+
+<span class="c1">//! An agent request which returns whatever we put in. The "CapturedInput"</span>
+<span class="c1">//! type allows the user to put in any string they wish (including spaces)</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="nf">Request_Repeat</span><span class="p">(</span><span class="n">CapturedInput</span> <span class="n">input</span><span class="p">);</span>
+
+<span class="c1">//! A device request attached to a temperature sensor. Returns</span>
+<span class="c1">//! the temperature plus a given number</span>
+<span class="kt">float</span> <span class="nf">Request_GetTemperature</span><span class="p">(</span><span class="n">TemperatureSensor</span> <span class="o">*</span><span class="n">sensor</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">);</span>
+</code></pre></div></div>
+<p>The first two lines you see help the agent to be compatible with COSMOS. The line starting with <code>double</code> (and the two following it) is a function, which when called will perform the action in the comment. This will make sense when we test it out.</p>
+<p>Next, you'll need to create a new <code>SimpleAgent</code> object under the corresponding comment.</p>
+<div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> Everything you have to add to the file will have a corresponding comment. Good practice is to have plenty of comments so your code is easily readable. Type in the code on the line below the comment.
+</div>
+<p>This can go above the main function (or elsewhere, as long as you create it before you use it):</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SimpleAgent</span> <span class="o">*</span><span class="n">agent</span><span class="p">;</span>
+</code></pre></div></div>
+<p>Make sure you <em>never</em> create more than one SimpleAgent per program, as this will raise an exception.</p>
+<p>Now we can move into our <code>int main()</code> function. Ignore the <code>temperature sensor device</code> for now.</p>
+<p>We have created our agent, but now we need to define it under <code>// Create the agent</code>:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">agent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SimpleAgent</span><span class="p">(</span><span class="s">"my_agent"</span><span class="p">);</span>
+</code></pre></div></div>
+<p>Now, <code>my_agent</code> can be used to run this agent.</p>
+<p>We can then set how often our agent will perform its tasks by using the <code>SetLoopPeriod</code> function:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">agent</span><span class="o">-&gt;</span><span class="n">SetLoopPeriod</span><span class="p">(</span><span class="mf">1.5</span><span class="p">);</span>
+</code></pre></div></div>
+<p>You can add this line right below the <code>agent = new SimpleAgent...</code> line. The line of code above will set our agent to run at 1.5 second intervals. It's okay if your agent takes longer than this time to perform its tasks. This only really matters if your agent takes less than this time: the agent will wait until the appropriate time has passed before starting the next loop iteration (repeating the task).</p>
+<div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> Each task will be performed every loop period. When we call a request, we are asking for the current output of that request.
+</div>
+<h3 id="adding-devices">Adding Devices</h3>
+<p>Now that the agent is created, we can start loading it up with devices. You can have as many devices as you'd like, but in the example below we'll just add one <code>TemperatureSensor</code> device with the name <code>temp_sensor</code> (above the <code>main</code> function, right under <code>//! Our temperature sensor</code>):</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">TemperatureSensor</span> <span class="o">*</span><span class="n">temp_sensor</span><span class="p">;</span>
+</code></pre></div></div>
+<p>Back in our main function, we can define our temperature sensor device under <code>//! Add a temperature sensor device</code>:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">temp_sensor</span> <span class="o">=</span> <span class="n">agent</span><span class="o">-&gt;</span><span class="n">NewDevice</span><span class="o">&lt;</span><span class="n">TemperatureSensor</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"temp_sensor"</span><span class="p">);</span>
+</code></pre></div></div>
+<p>Here, <code>TemperatureSensor</code> is a predefined device template that we use and name <code>temp_sensor</code>.</p>
+<p>Next we can define properties we would like to post. You only need to post properties you would like to view later. We'll use these examples:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">temp_sensor</span><span class="o">-&gt;</span><span class="n">Post</span><span class="p">(</span><span class="n">my_sensor</span><span class="o">-&gt;</span><span class="n">utc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">temp_sensor</span><span class="o">-&gt;</span><span class="n">Post</span><span class="p">(</span><span class="n">my_sensor</span><span class="o">-&gt;</span><span class="n">temperature</span><span class="p">);</span>
+</code></pre></div></div>
+<p>The first line above assigns the current time to the sensor's <code>utc</code> property as 0 and posts it all in one go. You don't need to assign the value of a property immediately (although setting an initial value is recommended). The second line above demonstrates this by posting an uninitialized <code>temperature</code> property.</p>
+<h3 id="finalizing-properties">Finalizing Properties</h3>
+<p>Once you are done adding devices and device properties you should <em>finalize</em> the agent. This just means that any properties that are posted will get handled properly. You can still set, get, or add properties as usual, but you'll have to <em>finalize</em> the agent again. Finalizing the agent is just a simple function call:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Let the agent know all the devices have been set up</span>
+<span class="n">agent</span><span class="o">-&gt;</span><span class="n">Finalize</span><span class="p">();</span>
+</code></pre></div></div>
+<h3 id="viewing-cosmos-names">Viewing COSMOS Names</h3>
+<p>The names used internally by COSMOS are required for certain operations, such as for displaying properties in COSMOS Web or for making requests to other agents. You can see all of the names COSMOS uses (as well as previously-added requests) in SimpleAgent's convenient <code>DebugPrint</code> function:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">agent</span><span class="o">-&gt;</span><span class="n">DebugPrint</span><span class="p">();</span>
+</code></pre></div></div>
+<h3 id="setting-up-the-quotwhilequot-loop">Setting Up the &quot;while&quot; Loop</h3>
+<p>Next, we'll write a loop that will perform our tasks repeatedly (every loop period) until we tell them to stop. Write the following line below <code>// Start Running the Agent</code>:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="p">(</span> <span class="n">agent</span><span class="o">-&gt;</span><span class="n">StartLoop</span><span class="p">()</span> <span class="p">)</span> <span class="p">{</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Now, we can add in some repeating actions. Add in the three lines, the first above <code>while</code>, and the other lines <strong>inside the curly brackets</strong>:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// A counter which holds a dummy value for the temperature</span>
+<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="c1">// Timestamp the device</span>
+<span class="n">temp_sensor</span><span class="o">-&gt;</span><span class="n">utc</span> <span class="o">=</span> <span class="n">currentmjd</span><span class="p">();</span>
+<span class="n">temp_sensor</span><span class="o">-&gt;</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+</code></pre></div></div>
+<p>The <code>// Timestamp...</code> comment needs to be added as well. Now, the sensor will keep track of the MJD time as the agent is running, and the temperature will just increase by 1 every loop period (<code>i++</code> = <code>i+1</code>).</p>
+<p>Now, add a <code>delete agent;</code> and a <code>return 0;</code> after the <code>while</code> loop to end our main function.</p>
+<div markdown="span" class="alert alert-warning" role="alert"><i class="fa fa-warning"></i> <b>Important:</b> You should <em>never</em> delete devices returned by the agent's
+<code>NewDevice</code> function, as this will cause issues.
+</div>
+<p>We delete the agent after we're done with it, but we can get it back anytime by running <code>my_agent</code>.</p>
+<div markdown="span" class="alert alert-warning" role="alert"><i class="fa fa-warning"></i> <b>Important:</b> There should be a closing curly bracket right above <code>double Request_Double(double x)</code>. This indicates the end of the <code>main</code> function. Make sure your <code>return 0;</code> is above this.
+</div>
+<h2 id="using-requests">Using Requests</h2>
+<h3 id="adding-requests">Adding Requests</h3>
+<p>A request function can take on one of two signatures (i.e. the form of the function):</p>
+<ol>
+<li><code>string MyRequestWithNoArguments()</code></li>
+<li><code>string MyRequestWithArguments(vector&lt;string&gt; arguments)</code></li>
+</ol>
+<p>The first request takes no arguments, and returns a string indicating the response. The second request takes a vector of arguments and returns a string indicating the response. If you decide you need arguments in your request, for safety you should check that the number arguments and their types are correct.</p>
+<p>For example, on line 15 there is a request in the form of number 2 above, with one argument.</p>
+<p>You can add either type of request to the agent with the same function, and (optionally) provide a synopsis and detailed description of the request:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">agent</span><span class="o">-&gt;</span><span class="n">AddRequest</span><span class="p">(</span><span class="s">"myrequest_1"</span><span class="p">,</span> <span class="n">MyRequestWithNoArguments</span><span class="p">,</span> <span class="s">"A synopsis"</span><span class="p">,</span> <span class="s">"A detailed description"</span><span class="p">);</span>
+<span class="n">agent</span><span class="o">-&gt;</span><span class="n">AddRequest</span><span class="p">(</span><span class="s">"myrequest_2"</span><span class="p">,</span> <span class="n">MyRequestWithArguments</span><span class="p">);</span>
+</code></pre></div></div>
+<p>The first line above adds the <code>MyRequestWithNoArguments</code> request using the name <code>myrequest_1</code>, and provides a synopsis and detailed description of the request. The second line adds the <code>MyRequestWithArguments</code> request using the name <code>myrequest_2</code>, and provides no synopsis or detailed description. Although providing the synopsis and detailed description strings is optional, it is good practice to use these.</p>
+<p>You can add the same request under a variety of names (called request <em>aliases</em>) as long as one of these names isn't already taken by another request. There's actually a shorthand for this:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">agent</span><span class="o">-&gt;</span><span class="n">AddRequest</span><span class="p">({</span><span class="s">"alias_1"</span><span class="p">,</span> <span class="s">"alias_2"</span><span class="p">,</span> <span class="s">"alias_3"</span><span class="p">},</span> <span class="n">MyRequestWithArguments</span><span class="p">,</span> <span class="s">"A synopsis"</span><span class="p">,</span> <span class="s">"A detailed description"</span><span class="p">);</span>
+</code></pre></div></div>
+<p>This will add our request function with the aliases <code>alias_1</code>, <code>alias_2</code>, and <code>alias_3</code>. You can add as many aliases as you wish and, as before, you can choose to omit the synopsis and detailed description strings.</p>
+<div markdown="span" class="alert alert-warning" role="alert"><i class="fa fa-warning"></i> <b>Important:</b> The string returned from a request function should never be empty.
+An empty response string is interpreted as failure to call the request. If you don't care about the value returned,
+you can always just return a space character, or any other random non-empty string.
+</div>
+<p>To add our requests (from the functions above the main function), type in the following lines:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Add the Request_Repeat request using the name "repeat"</span>
+<span class="n">agent</span><span class="o">-&gt;</span><span class="n">AddRequest</span><span class="p">(</span><span class="s">"repeat"</span><span class="p">,</span> <span class="n">Request_Repeat</span><span class="p">);</span>
+	
+<span class="c1">// Add the "Request_Double" request using aliases "double" and "twice"</span>
+<span class="n">agent</span><span class="o">-&gt;</span><span class="n">AddRequest</span><span class="p">({</span><span class="s">"double"</span><span class="p">,</span> <span class="s">"twice"</span><span class="p">},</span> <span class="n">Request_Double</span><span class="p">,</span> <span class="s">"Doubles a number"</span><span class="p">);</span>
+
+<span class="p">...</span>
+
+<span class="c1">// Add the Request_GetTemperature request to the temperature sensor with</span>
+	<span class="c1">// aliases "gettemp" and "temp"</span>
+<span class="n">temp_sensor</span><span class="o">-&gt;</span><span class="n">AddRequest</span><span class="p">({</span><span class="s">"gettemp"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">},</span> <span class="n">Request_GetTemperature</span><span class="p">);</span>
+</code></pre></div></div>
+<p>Lastly, we need to define the functions of each request we added. Add the following line inside the curly brackets after <code>double Request_Double(double x)</code>:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span>
+</code></pre></div></div>
+<p>For <code>float Request_GetTemperature(TemperatureSensor *sensor, int x)</code>, add this line in the curly brackets:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="n">sensor</span> <span class="o">-&gt;</span><span class="n">temperature</span><span class="o">+</span><span class="n">x</span><span class="p">;</span>
+</code></pre></div></div>
+<p>Finally, add the line for <code>std::string Request_Repeat(CapturedInput input)</code>:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="n">input</span><span class="p">.</span><span class="n">input</span><span class="p">;</span>
+</code></pre></div></div>
+<h3 id="calling-a-request-from-the-terminal">Calling a Request From the Terminal</h3>
+<p>We are now ready to run the agent. First, build the project by clicking the hammer icon in the bottom left of QtCreator. It may take a minute to finish. When it does, go to the <em>Projects</em> tab and find the build directory of the <code>simpleagent_template</code> project. Open a terminal, navigate to that directory, and run the command below:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>my_agent
+</code></pre></div></div>
+<p>You should see our <code>temp_sensor</code> as an output after this command, as a result of <code>DebugPrint()</code>.</p>
+<p>Once your agent is running, you can call a previously added request from a terminal. For example, if we've added a request called <code>my_request</code> to an agent called <code>my_agent</code> running on the node <code>cubesat</code>, we can run the following command to call this request (optionally providing arguments <code>argument1</code> and <code>argument2</code>, which get redirected to the request function):</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>agent cubesat my_agent my_request argument1 argument2
+</code></pre></div></div>
+<p>This will call the request function and print the string or number returned from the request.</p>
+<p>To view a listing of all the requests available for the agent, you can run the following command:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>agent cubesat my_agent
+</code></pre></div></div>
+<p>This will display all available requests in a nicely formatted table, along with their synopses and detailed descriptions if provided. Here is an example of the output from <code>agent_cpu</code>, a built-in agent:</p>
+<pre><code>    help 
+            list of available requests for this agent
+
+    help_json 
+            list of available requests for this agent (but in json)
+
+    shutdown 
+            request to shutdown this agent
+
+    idle 
+            request to transition this agent to idle state
+
+    init 
+            request to transition this agent to init state
+
+    monitor 
+            request to transition this agent to monitor state
+
+    run 
+            request to transition this agent to run state
+
+    status 
+            request the status of this agent
+
+    (clipped)
+</code></pre>
+<div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> There are several requests used by COSMOS and SimpleAgent which are added by default.
+Any requests that you add will be listed at the <em>bottom</em> of this table.
+</div>
+<p>Type in the <code>agent cubesat my_agent</code> to see the available requests, including the ones we've added. To use the <code>gettemp</code> request, type the following command:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>agent cubesat my_agent temp_sensor:gettemp 0
+</code></pre></div></div>
+<p>The <code>temp_sensor:gettemp</code> part is the syntax for a device request. If you remember how the function was defined, it asked for both the sensor name and an <code>int x</code>, and it adds this <code>x</code> to the temperature. The output will be the current temperature plus <code>x</code> (0 in this case). You can type in any integer, but remember to subtract it to get the actual value.</p>
+<p>Call that request a few more times, and you'll get different values as time passes.</p>
+<p>Now you can try our other requests. Type in the following:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>agent cubesat my_agent double 3.14
+</code></pre></div></div>
+<p>The output will be 2 times the number you enter, so try a few more numbers to see what <code>double</code> can do. Try to figure out how to use the <code>repeat</code> request on your own (hint: a string is any set of characters and spaces).</p>
+<h3 id="device-requests">Device Requests</h3>
+<p>You can also add requests to specific devices! For example, let's say we previously created a heater device named <code>heater</code>, and we want to add a request to it that either enables or disables the heater. The code for the request
+might look like this:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">DRequest_EnableHeater</span><span class="p">(</span><span class="n">Heater</span> <span class="o">*</span><span class="n">some_heater</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">enabled</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">enabled</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Enable the heater here...</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// Disable the heater here...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Notice that device requests <em>must</em> have the first argument as a pointer to the device they are acting on. This helps
+makes your code flexible, especially if you are adding the same device request to many different devices.</p>
+<p>To actually add the device request to the <code>heater</code> device, we can call the <code>heater</code> device's <code>AddRequest</code> function
+inside of the main function:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// ...</span>
+
+    <span class="c1">// Create the heater device</span>
+    <span class="n">Heater</span> <span class="o">*</span><span class="n">heater</span> <span class="o">=</span> <span class="n">agent</span><span class="o">-&gt;</span><span class="n">NewDevice</span><span class="o">&lt;</span><span class="n">Heater</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"my_heater"</span><span class="p">);</span>
+
+    <span class="c1">// Add our device request to the heater using the name "set_state"</span>
+    <span class="n">heater</span><span class="o">-&gt;</span><span class="n">AddRequest</span><span class="p">(</span><span class="s">"set_state"</span><span class="p">,</span> <span class="n">DRequest_EnableHeater</span><span class="p">,</span> <span class="s">"Sets the state of the heater"</span><span class="p">);</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Now if we wanted to call this device request from a terminal (once the program is running), we could issue
+the following command to enable the heater:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>agent cubesat my_agent my_heater:set_state <span class="nb">true</span>
+</code></pre></div></div>
+<p>Notice that the format for calling a device request is <code>device_name:request_name &lt;arguments&gt;</code>.</p>
+<h2 id="putting-it-all-together">Putting it all together</h2>
+<h3 id="example-1">Example 1</h3>
+<p>Here is a working example of an agent program:</p>
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+</pre></td><td class="code"><pre><span class="cp">#include "SimpleAgent/SimpleAgent.h"
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">cubesat</span><span class="p">;</span>
+
+<span class="c1">//! An agent request which returns whatever argument the user gives it</span>
+<span class="kt">double</span> <span class="nf">Request_Double</span><span class="p">(</span><span class="kt">double</span> <span class="n">arg</span><span class="p">);</span>
+
+<span class="c1">//! An agent request which returns whatever we put in. The "CapturedInput"</span>
+<span class="c1">//! type allows the user to put in any string they wish (including spaces)</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="nf">Request_Repeat</span><span class="p">(</span><span class="n">CapturedInput</span> <span class="n">input</span><span class="p">);</span>
+
+<span class="c1">//! A device request attached to a temperature sensor. Returns</span>
+<span class="c1">//! the temperature plus a given number</span>
+<span class="kt">float</span> <span class="nf">Request_GetTemperature</span><span class="p">(</span><span class="n">TemperatureSensor</span> <span class="o">*</span><span class="n">sensor</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">);</span>
+
+
+
+<span class="c1">//! Our SimpleAgent object</span>
+<span class="n">SimpleAgent</span> <span class="o">*</span><span class="n">agent</span><span class="p">;</span>
+<span class="c1">//! Our temperature sensor device</span>
+<span class="n">TemperatureSensor</span> <span class="o">*</span><span class="n">temp_sensor</span><span class="p">;</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	
+	<span class="c1">// Create the agent</span>
+	<span class="n">agent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleAgent</span><span class="p">(</span><span class="s">"my_agent"</span><span class="p">);</span>
+	
+	<span class="c1">// Add the Request_Repeat request using the name "repeat"</span>
+	<span class="n">agent</span><span class="o">-&gt;</span><span class="n">AddRequest</span><span class="p">(</span><span class="s">"repeat"</span><span class="p">,</span> <span class="n">Request_Repeat</span><span class="p">);</span>
+	
+	<span class="c1">// Add the "Request_Double" request using aliases "double" and "twice"</span>
+	<span class="n">agent</span><span class="o">-&gt;</span><span class="n">AddRequest</span><span class="p">({</span><span class="s">"double"</span><span class="p">,</span> <span class="s">"twice"</span><span class="p">},</span> <span class="n">Request_Double</span><span class="p">,</span> <span class="s">"Doubles a number"</span><span class="p">);</span>
+	
+	
+	
+	<span class="c1">// Add a temperature sensor device</span>
+	<span class="n">temp_sensor</span> <span class="o">=</span> <span class="n">agent</span><span class="o">-&gt;</span><span class="n">NewDevice</span><span class="o">&lt;</span><span class="n">TemperatureSensor</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"temp_sensor"</span><span class="p">);</span>
+	
+	<span class="c1">// Set the utc and temperature properties to zero and post them</span>
+	<span class="n">temp_sensor</span><span class="o">-&gt;</span><span class="n">Post</span><span class="p">(</span><span class="n">temp_sensor</span><span class="o">-&gt;</span><span class="n">utc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="n">temp_sensor</span><span class="o">-&gt;</span><span class="n">Post</span><span class="p">(</span><span class="n">temp_sensor</span><span class="o">-&gt;</span><span class="n">temperature</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+	
+	<span class="c1">// Add the Request_GetTemperature request to the temperature sensor with</span>
+	<span class="c1">// aliases "gettemp" and "temp"</span>
+	<span class="n">temp_sensor</span><span class="o">-&gt;</span><span class="n">AddRequest</span><span class="p">({</span><span class="s">"gettemp"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">},</span> <span class="n">Request_GetTemperature</span><span class="p">);</span>
+	
+	
+	
+	<span class="c1">// Let the agent know all the devices have been set up</span>
+	<span class="n">agent</span><span class="o">-&gt;</span><span class="n">Finalize</span><span class="p">();</span>
+	
+	<span class="c1">// Show all of the properties and requests added</span>
+	<span class="n">agent</span><span class="o">-&gt;</span><span class="n">DebugPrint</span><span class="p">();</span>
+	
+	<span class="c1">// A counter which holds a dummy value for the temperature</span>
+	<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	
+	<span class="c1">// Start running the agent</span>
+	<span class="k">while</span> <span class="p">(</span> <span class="n">agent</span><span class="o">-&gt;</span><span class="n">StartLoop</span><span class="p">()</span> <span class="p">)</span> <span class="p">{</span>
+		
+		<span class="c1">// Timestamp the device</span>
+		<span class="n">temp_sensor</span><span class="o">-&gt;</span><span class="n">utc</span> <span class="o">=</span> <span class="n">currentmjd</span><span class="p">();</span>
+		<span class="n">temp_sensor</span><span class="o">-&gt;</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+	<span class="p">}</span>
+	
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+
+<span class="kt">double</span> <span class="nf">Request_Double</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">float</span> <span class="nf">Request_GetTemperature</span><span class="p">(</span><span class="n">TemperatureSensor</span> <span class="o">*</span><span class="n">sensor</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="n">sensor</span><span class="o">-&gt;</span><span class="n">temperature</span> <span class="o">+</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="nf">Request_Repeat</span><span class="p">(</span><span class="n">CapturedInput</span> <span class="n">input</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="n">input</span><span class="p">.</span><span class="n">input</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+<br>
+<p>Here is the initial output of the agent program above:</p>
+<pre><code>------------------------------------------------------
+COSMOS AGENT 'my_agent' on node 'cubesat'
+Version 0.0 built on Sep 27 2020 20:58:16
+Agent started at 2020-09-27 21:26:18
+Debug level 1
+------------------------------------------------------
+Devices
+|	| Device 'temp_sensor'
+|	|	| Posted Properties
+|	|	|	| Temperature (aka device_tsen_temp_000)
+|	|	|	| UTC (aka device_tsen_utc_000)
+|		| Requests
+	|	|	| temp: (int) -&gt; float
+	|	|	| gettemp: (int) -&gt; float
+Requests
+|	| Request 'twice': (double) -&gt; double
+|	| Request 'double': (double) -&gt; double
+|	| Request 'print': () -&gt; std::string
+|	| Request 'repeat': (CapturedInput) -&gt; std::string
+Node Properties
+
+</code></pre>
+<p>This output is all due to calling the <code>DebugPrint</code> function. All of the available COSMOS names are listed next to the property names (for example, <code>device_tsen_temp_000</code>). The <code>say_hi</code> request is also listed in this tree.</p>
+<div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> There are a couple requests, <code>getproperty</code> and <code>print</code>, that are added by default.
+</div>
+<p>We can call the <code>say_hi</code> request externally from a terminal window by running:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>agent cubesat my_agent say_hi
+</code></pre></div></div>
+<p>After running this command, the SimpleAgent will output <code>Hey there! (inside agent)</code>, and the output from the terminal window is</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span><span class="s2">"output"</span>: <span class="s2">"Hey there! (outside agent)"</span>,<span class="s2">"status"</span>: <span class="s2">"OK"</span><span class="o">}</span>
+</code></pre></div></div>
+<p>This is a JSON-formatted string, and the actual output from the request is located under the <code>&quot;output&quot;</code> field.</p>
+<h2 id="advanced">Advanced</h2>
+<h3 id="custom-properties-work-in-progress">Custom Properties (Work-in-Progress)</h3>
+<p>You can also set custom properties if your device doesn't already have the properties you want, as shown in the example below. Unfortunately due to limitations of COSMOS, these custom properties cannot currently be posted.</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_sensor</span><span class="o">-&gt;</span><span class="n">SetCustomProperty</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"is_initialized"</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+<span class="c1">// ...</span>
+<span class="kt">bool</span> <span class="n">is_initialized</span> <span class="o">=</span> <span class="n">my_sensor</span><span class="o">-&gt;</span><span class="n">GetCustomProperty</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"is_initialized"</span><span class="p">);</span>
+</code></pre></div></div>
+<div markdown="span" class="alert alert-warning" role="alert"><i class="fa fa-warning"></i> <b>Important:</b> it is <em>very important</em> that you retrieve the custom property
+using the same type (<code>bool</code> in this case) you used to set it. If you don't do this,
+then an exception <em>will</em> be thrown.
+</div>
+<h3 id="custom-devices">Custom Devices</h3>
+<p>If you find that a device you'd like to use isn't supported, you can always use the <a href="/artemis/pages/documentation/utility-classes/simpleagent-devices.html#customdevice">CustomDevice</a> device type. This device only supports a few post-able properties, but you can use as many custom properties as you wish.</p>
+<h3 id="setting-node-properties">Setting Node Properties</h3>
+<p>For properties about the COSMOS node that don't fit into a device, you can use node properties:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">agent</span><span class="o">-&gt;</span><span class="n">SetNodeProperty</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">::</span><span class="n">UTC</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Time</span><span class="o">::</span><span class="n">Now</span><span class="p">());</span>
+<span class="n">Time</span> <span class="n">utc</span> <span class="o">=</span> <span class="n">agent</span><span class="o">-&gt;</span><span class="n">GetNodeProperty</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">::</span><span class="n">UTC</span><span class="o">&gt;</span><span class="p">();</span>
+</code></pre></div></div>
+<h2 id="communicating-with-other-agents">Communicating With Other Agents</h2>
+<p>When working with many agents, you will often need to send requests back and forth between agents running in separate programs. SimpleAgent provides a friendly way of doing this using the class <code>RemoteAgent</code>.</p>
+<p>To find another agent you can use SimpleAgent's <code>FindAgent</code> function:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="n">RemoteAgent</span> <span class="n">other_agent</span> <span class="o">=</span> <span class="n">agent</span><span class="o">-&gt;</span><span class="n">FindAgent</span><span class="p">(</span><span class="s">"other_agent"</span><span class="p">,</span> <span class="s">"cubesat"</span><span class="p">)</span>
+</code></pre></div></div>
+<p>In the code above, we attempt to find the agent named <code>other_agent</code> running on the node <code>cubesat</code>. You don't need to provide the node name; if the node name is omitted, then the node that our <code>agent</code> is running on will be used by default.</p>
+<div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> The <code>static</code> keyword is used here. This means that the variable <code>other_agent</code>
+will be initialized <em>only once</em> when the function containing this variable is called. If this keyword was not
+included, the <code>FindAgent</code> function would be executed every time this code runs, and could possibly hang up your
+program (the default timeout is 2 seconds). Unless you know what you're doing, the <code>static</code> keyword should
+probably be used.
+</div>
+<p>Here's an example for connecting to <code>propagator_simple</code>, an orbital simulation that outputs time, position, velocity, and magnetic field of a satellite in orbit:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">// other agents</span>
+    <span class="k">static</span> <span class="n">RemoteAgent</span> <span class="n">propagator_simple</span> <span class="o">=</span> <span class="n">agent</span><span class="o">-&gt;</span><span class="n">FindAgent</span><span class="p">(</span><span class="s">"propagator_simple"</span><span class="p">,</span><span class="s">"cubesat1"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">propagator_simple</span><span class="p">.</span><span class="n">Connect</span><span class="p">()</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"propagator_simple is connected!"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+
+
+	
+	<span class="c1">// Let the agent know all the devices have been set up</span>
+	<span class="n">agent</span><span class="o">-&gt;</span><span class="n">Finalize</span><span class="p">();</span>
+</code></pre></div></div>
+<p>The node <code>cubesat1</code> is one used in COSMOS core. Now, save your file, build your project, and open 2 terminals. In the first, write the following command:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>propagator_simple cubesat1 0
+</code></pre></div></div>
+<p>The program should boot up, and every second a new line will show up as the output. With this terminal running, start <code>my_agent</code> in the other terminal. If you see <code>&quot;propagator_simple is connected!&quot;</code> then you have successfully linked with another agent! Go ahead and explore this more, trying it with other agents as you like.</p>
+<p>For safety, you should place any code that depends on the other agent existing inside of the <code>if</code> block as shown above.</p>
+<h3 id="getting-properties-from-another-agent">Getting Properties from Another Agent</h3>
+<p>After connecting to another agent, you can get retrieve its properties. To do this, you will need to know the unique COSMOS name of the property (we're working on making this easier). You can get the COSMOS name using the agent's <code>DebugPrint</code> function or built-in <code>print</code> request. In the example below, we retrieve the properties with COSMOS names <code>device_batt_temp_000</code> and <code>device_imu_temp_000</code> from another agent:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="n">values</span> <span class="o">=</span> <span class="n">other_agent</span><span class="p">.</span><span class="n">GetCOSMOSValues</span><span class="p">({</span><span class="s">"device_batt_temp_000"</span><span class="p">,</span> <span class="s">"device_imu_temp_000"</span><span class="p">});</span>
+</code></pre></div></div>
+<p>This function returns an <code>unordered_map&lt;string, Json::Value&gt;</code> object, but we don't really care about this, so we can use the <code>auto</code> keyword to let the compiler infer which datatype we're using. We can get the actual values from the <code>values</code> variable using the COSMOS names:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">batt_temp</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="s">"device_batt_temp_000"</span><span class="p">].</span><span class="n">nvalue</span><span class="p">;</span>
+<span class="kt">float</span> <span class="n">imu_temp</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="s">"device_imu_temp_000"</span><span class="p">].</span><span class="n">nvalue</span><span class="p">;</span>
+</code></pre></div></div>
+<p>The <code>nvalue</code> member stands for <em>number value</em>, which is actually a <code>double</code> type. You can also use the <code>svalue</code> member for string values.</p>
+<p>It's also a good idea to check whether the properties you want were actually returned by the <code>GetCOSMOSValues</code> function:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">batt_temp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// Set a fallback value in case the property isn't present</span>
+<span class="k">if</span> <span class="p">(</span> <span class="n">values</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">"device_batt_temp_000"</span><span class="p">)</span> <span class="o">!=</span> <span class="n">values</span><span class="p">.</span><span class="n">end</span><span class="p">()</span> <span class="p">)</span>
+    <span class="n">batt_temp</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="s">"device_batt_temp_000"</span><span class="p">].</span><span class="n">nvalue</span><span class="p">;</span>
+
+<span class="c1">// Do something with batt_temp...</span>
+</code></pre></div></div>
+<p>Then, you can request the value of <code>batt_temp</code> while the agents are running, and if you still get a 0 you'll know something went wrong.</p>
+<h3 id="sending-requests">Sending Requests</h3>
+<p>After connecting to another agent, you can also send requests to it. Besides being able to call SimpleAgent requests, you can also call the default COSMOS requests. In the example below we send a request to another agent:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">string</span> <span class="n">response</span> <span class="o">=</span> <span class="n">other_agent</span><span class="p">.</span><span class="n">SendRequest</span><span class="p">(</span><span class="s">"request_name"</span><span class="p">,</span> <span class="s">"argument_1"</span><span class="p">,</span> <span class="s">"argument_2"</span><span class="p">);</span>
+</code></pre></div></div>
+<p>The code above asks <code>other_agent</code> to execute a request with the name <code>request_name</code>, providing it with arguments <code>argument_1</code> and <code>argument_2</code>. The response of the request is stored into the variable <code>response</code>. You can provide as many arguments as you'd like, but you should make sure that they are string values (we're working on adding support for more types).</p>
+<p>After calling a request, you should check whether the request was performed successfully by checking if the response string is empty:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Check if an error occurred</span>
+<span class="k">if</span> <span class="p">(</span> <span class="n">response</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Handle the error</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"An error occured!"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// Do something with the response string</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Got a response from the other agent: "</span> <span class="o">&lt;&lt;</span> <span class="n">response</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="/artemis/pages/documentation/utility-classes/simpleagent.html">SimpleAgent Documentation</a></li>
+<li><a href="/artemis/pages/documentation/utility-classes/simpleagent-devices.html">Device Documentation</a></li>
+<li><a href="/artemis/pages/documentation/cosmos/cosmos.html">COSMOS Documentation</a></li>
+</ul>
+
+
+
+<hr>
+
+<div style="float: left;">
+
+<a href="/artemis/pages/tutorials/cosmos/cosmos1.html">
+    <button type="button" class="btn btn-primary">
+        Previous
+    </button>
+</a>
+
+</div>
+<div style="float:right;">
+
+<a href="/artemis/pages/tutorials/cosmos/cosmos3.html">
+    <button type="button" class="btn btn-primary">
+        Next
+    </button>
+</a>
+
+</div>
+
+<div style="margin: 0 auto; width: fit-content;">
+    &nbsp;
+</div>
+
+
+<br><br>
+
+
+    <div class="tags">
+        
+        <b>Tags: </b>
+        
+        
+        
+        
+        
+    </div>
+
+
+
+
+</div>
+
+<hr class="shaded"/>
+
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+               &copy;2021 Hawaii Space Flight Laboratory. All rights reserved. <br />
+ Site last generated: Jan 28, 2021 <br />
+<p><img src="/artemis/resources/logos/hsfl.png" width="100px" alt="HSFL Logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
+        </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+</div>
+<!-- /#main -->
+    </div>
+
+</body>
+
+</html>

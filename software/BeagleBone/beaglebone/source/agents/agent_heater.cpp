@@ -104,10 +104,10 @@ int main(int argc, char** argv) {
 	// Create the agent
 	agent = new SimpleAgent(CUBESAT_AGENT_HEATER_NAME, CUBESAT_NODE_NAME, true);
 	agent->SetLoopPeriod(SLEEP_TIME);
-	agent->AddRequest({"on", "enable"}, Request_Enable, "Enables the heater");
-	agent->AddRequest({"off", "disable"}, Request_Disable, "Disables the heater");
-	agent->AddRequest("get", Request_Get, "Returns the state of the heater");
-	agent->AddRequest("config", Request_Config, "Returns the heater configuration");
+    agent->AddRequest({"on", "enable"}, Request_Enable, "\n\t\tEnables the heater");
+    agent->AddRequest({"off", "disable"}, Request_Disable, "\n\t\tDisables the heater");
+    agent->AddRequest("get", Request_Get, "\n\t\tReturns the state of the heater");
+    agent->AddRequest("config", Request_Config, "\n\t\tReturns the heater configuration");
 	
 	
 	// Parse the configuration
