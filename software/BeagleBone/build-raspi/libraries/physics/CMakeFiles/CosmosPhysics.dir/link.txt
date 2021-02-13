@@ -1,2 +1,0 @@
-/usr/bin/ar qc libCosmosPhysics.a  CMakeFiles/CosmosPhysics.dir/constants.cpp.o CMakeFiles/CosmosPhysics.dir/physicslib.cpp.o
-/usr/bin/ranlib libCosmosPhysics.a
