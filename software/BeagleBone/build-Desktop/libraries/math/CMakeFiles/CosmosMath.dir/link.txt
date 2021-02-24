@@ -1,2 +1,0 @@
-/usr/bin/ar qc libCosmosMath.a  CMakeFiles/CosmosMath.dir/lsfit.cpp.o CMakeFiles/CosmosMath.dir/mathlib.cpp.o CMakeFiles/CosmosMath.dir/matrix.cpp.o CMakeFiles/CosmosMath.dir/rotation.cpp.o CMakeFiles/CosmosMath.dir/vector.cpp.o
-/usr/bin/ranlib libCosmosMath.a

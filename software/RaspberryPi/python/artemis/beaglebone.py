@@ -10,7 +10,7 @@ BEAGLEBONE_INCOMING_FOLDER = '/home/debian/raspi/incoming/'
 BEAGLEBONE_RADIO_OUTGOING_FOLDER = '/home/debian/pycubed/outgoing/'
 BEAGLEBONE_RADIO_INCOMING_FOLDER = '/home/debian/pycubed/incoming/'
 BEAGLEBONE_TRANSMIT_FOLDER = '/home/debian/pycubed/transmit/'
-BEAGLEBONE_HOST_NAME = 'debian@192.168.6.2'
+BEAGLEBONE_HOST_NAME = 'debian@192.168.0.170'
 
 
 class BeagleBone:

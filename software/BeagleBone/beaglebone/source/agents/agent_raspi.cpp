@@ -414,7 +414,7 @@ void GrabSOHData() {
 	
 	// Get values from agent_pycubed
 	if ( agent_pycubed.Connect() ) {
-		auto values = agent_switch.GetCOSMOSValues({"device_imu_mag_x_000", "device_imu_mag_y_000", "device_imu_mag_z_000",
+        auto values = agent_pycubed.GetCOSMOSValues({"device_imu_mag_x_000", "device_imu_mag_y_000", "device_imu_mag_z_000",
 											  "device_imu_accel_x_000", "device_imu_accel_y_000", "device_imu_accel_z_000",
 											  "device_imu_omega_x_000", "device_imu_omega_y_000", "device_imu_omega_z_000", "device_imu_utc_000",
 											  "device_cpu_volt_000", "device_cpu_amp_000", "device_cpu_utc_000",
@@ -543,7 +543,7 @@ string Request_GetData() {
 	ss <<		"\"enabled\": [";
 	ss <<			(switches->GetCustomProperty<bool>("sw_temp") ? "true" : "false") << ", ";
 	ss <<			(switches->GetCustomProperty<bool>("sw_sunsensor") ? "true" : "false") << ", ";
-	ss <<			(switches->GetCustomProperty<bool>("sw_heater") ? "true" : "false") << ", ";
+    ss <<			(switches->GetCustomProperty<bool>("sw_heater") ? "true" : "false");
 	ss <<		"]";
 	ss <<	"}, ";
 	
