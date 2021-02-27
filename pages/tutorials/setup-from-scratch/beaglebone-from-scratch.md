@@ -35,6 +35,10 @@ Open up a file explorer and select the USB storage device folder, which should a
 
 {% include image.html file="/resources/tutorials/from scratch/bbb/usb_device.png" width="70%" %}
 
+There may be issues with booting your BeagleBone from the image on the SD card. Follow the link [here](https://stackoverflow.com/questions/31725206/unable-to-flash-emmc-from-sd-card-beaglebone-black) for help with this.
+
+{% include note.html content="You will know the correct image has booted when you see a correct date for the new image in the terminal when you log in (the factory operating system will be signified by 'BeagleBoard.org Debian Image 2016-01-24')." %}
+
 This site will tell you to open up `http://192.168.7.2/ ` or `http://192.168.6.2 ` for Linux/MacOS. This leads to the Cloud9 Integrated Development Environment, a graphical interface which makes developing with the BeagleBone easier. Go ahead and open the link. If it works, then you can skip the next section! The Cloud9 IDE has been known to malfunction in some cases upon the first startup, and in this case, follow the steps in the next subsection.
 
 ### Establishing a Serial Connection
@@ -66,6 +70,7 @@ $ passwd
 And just follow the steps with the new password of your choice! Remember that you will have to use this password every time you access the BeagleBone in the future, so be sure to choose something you can remember.
 
 ## Remote Access to the BeagleBone
+
 For this section, you can continue to provide power to your board using the USB cable. It is, however, good practice to set up a remote connection between your systems while providing power to the BeagleBone with a 5V power supply like [this one](https://www.trcelectronics.com/View/Mean-Well/GSM12U05-P1J.shtml). This is for safety purposes, as you can plug in your board to power and your network away from your workspace and avoid any accidental damage to the board or its sensitive components.
 
 Whatever method of power you choose, plug in an ethernet cable into your board, and apply power. The BeagleBone should come with SSH (method of remote access) and ethernet access enabled already. Give the board a minute to boot up, and the next step is to find the IP address of your BeagleBone.
@@ -97,6 +102,7 @@ $ ssh debian@192.168.1.xxx
 ```
 
 ## Cloud9 Integrated Development Environment
+
 Try opening up the Cloud9 IDE again with the IP addresses above. If you are using a Windows host machine, you may need to eject this device before proceeding.
 
 Open up a web browser and navigate to:
@@ -135,4 +141,87 @@ Open up your virtual machine containing COSMOS software. Log in and open up Qt C
 >
 > 6. Follow the same steps for the Artemis software project. It is recommended to have COSMOS core agents and Artemis agents loaded on your BeagleBone.
 
+## Preparing BBIO Pins for Serial Communication
 
+After looking through the Artemis agent programs, you may notice that some of the devices require serial communication to keep track of data. For testing, the BeagelBone must be prepared for these UART, SPI, and I2C connections. 
+
+These steps will help you set up UART on the BeagelBone. 
+
+First, you will need to install the __Adafruit-BBIO__ module. (It is good practice to always run `sudo apt update`, and `sudo apt upgrade` if necessary, before installing new modules.)
+
+In the BeagleBone terminal (PuTTY), type in the commands:
+
+```bash
+$ sudo apt install python-dev python3-pip -y
+$ sudo pip3 install Adafruit_BBIO
+```
+
+This will install the BeagleBone pin library to your device. After this step, each UART line must be configured before it can be used.
+
+```bash
+$ python
+>>> import Adafruit_BBIO.UART as UART
+>>> UART.setup("UART1")
+>>> quit()
+```
+
+Now UART1 on the BeagleBone is ready for communication. You can test this out with a program called __minicom__.
+
+```bash
+$ sudo apt install minicom
+```
+
+Once this is installed, run the `python` and `UART.setup` commands again, but this time, with "UART2".
+
+For communication to occur, there must be a physical connection. Turn off your BeagleBone and use jumper cables to connect UART1 to UART2 on the BeagleBone, following the picture below.
+
+{% include image.html file="/resources/tutorials/cosmos/part2/beaglebone_rx_tx_feedback.png" width="100%" %}
+
+Note that for each cable, __TX__ is connected to __RX__ and vice versa. The pin connections are P9_22<===>P9_24 and P9_21<===>P9_26.
+
+Now boot your device back up and open two terminals. Log in on both and type in the following commands:
+
+```bash
+# first terminal
+$ minicom -b 9600 -D /dev/ttyO1
+
+# second terminal
+$ minicom -b 9600 -D /dev/ttyO2
+```
+
+In both terminals, type in <kbd>Ctrl</kbd> + <kbd>A</kbd> and then <kbd>Z</kbd>, and when the menu pops up, type in <kbd>E</kbd>. This will activate the `echo` setting, which will print anything that is received by the given UART line. Type in one of the windows, and you should see the same text appear in the other window. Then try the reverse. If the text appears in each window, then you have successfully configured UART! 
+
+For a normal connection, you will only need one UART line on the BeagleBone, and the other will be on the peripheral device you are connecting. For example, The PyCubed board is connected to UART1 on the BeagleBone.
+
+An issue that may occur with the BeagleBone is that the UART line will have to be reconfigured every time the BeagleBone is turned off and on. To make the configuration easier, we can write a script that reduces the commands needed to one. The lines below are an example of a script that would do this for us. to create a new file, type in `nano init_uart.py` or whatever name you would like for the file, and add the lines.
+
+```python
+import Adafruit_BBIO.UART as UART
+
+UART.setup("UART1")
+UART.setup("UART2")
+UART.setup("UART3")
+UART.setup("UART4")
+```
+
+Hit <kbd>Ctrl</kbd> + <kbd>S</kbd> to save and <kbd>Ctrl</kbd> + <kbd>X</kbd> to exit. Reboot the BeagleBone and run the script with `python init_uart.py`, and the UART lines should be configured and ready to communicate.
+
+To have this script run on its own each time the BeagleBone is powered, run the command below.
+
+```bash
+$ sudo cp -i {insert path}/init_uart.py /bin
+```
+
+Now that the script is in the `bin` folder, run the command:
+
+```bash
+$ sudo crontab -e
+```
+
+and select `nano` if prompted. Scroll all the way to the bottom of the file and add the line below:
+
+```
+@reboot python /bin/init_uart.py &
+```
+
+Save and exit the file. Now, reboot your BeagleBone, and UART should be configured automatically!
