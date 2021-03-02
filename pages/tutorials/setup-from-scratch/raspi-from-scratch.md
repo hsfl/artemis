@@ -14,7 +14,7 @@ site.baseurl | append: "/pages/safety-procedures.html#raspberry-pi) for working 
 
 *****************
 
-> What you will need:
+> What You Will Need:
 >
 >   * Raspberry Pi Zero W
 >

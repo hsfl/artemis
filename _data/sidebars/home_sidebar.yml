@@ -93,6 +93,17 @@ entries:
           url: /pages/tutorials/setup-from-scratch/raspi-from-scratch.html
           output: web
 
+      - title: Board Interfacing
+        output: web
+        subfolderitems:
+        - title: "BBB + Raspi"
+          url: /pages/tutorials/connections/bbb+raspi.html
+          output: web
+        - title: "BBB + PyCubed"
+          url: /pages/tutorials/connections/bbb+pycubed.html
+          output: web
+
+
 
 # =================================================================================
 
