@@ -37,7 +37,7 @@ SSH into your BeagleBone.  Check to if UART lines are open.  In ttyO*, it is the
 $ ls -l /dev/ttyO*
 ```
 
-If the following results do not show up, then follow this [link.](https://sites.google.com/from scratch/bbb/usb_device.png
+If the following results do not show up, then follow this [link.](https://sites.google.com/a/cameon.net/beaglebone/home/serial-ports-uart)
 
 {% include image.html file="/resources/tutorials/board interfacing/testuart.png" width="70%" %}
 
