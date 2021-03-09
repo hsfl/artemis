@@ -9,17 +9,17 @@ keywords: software
 
 *****************
 
-> What you will need:
->
->   * Raspberry Pi Zero W
->
->   * Micro USB Cable
->
->   * BeagleBone Black
->
->   * Micro SD card
->
->   * Micro SD card adapter
+## What you will need:
+
+   * Raspberry Pi Zero W
+
+   * Micro USB Cable
+
+   * BeagleBone Black
+
+   * Micro SD card
+
+   * Micro SD card adapter
 
 
 ******************

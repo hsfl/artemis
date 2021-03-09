@@ -9,17 +9,17 @@ keywords: software
 
 *****************
 
-> What you will need:
->
->   * BeagleBone Black Industrial
->
->   * PyCubed Main Board
->
->   * USB-C cable
->
->   * Mini USB cable
->
->   * 3 Jumper Cables
+## What you will need:
+
+   * BeagleBone Black Industrial
+
+   * PyCubed Main Board
+
+   * USB-C cable
+
+   * Mini USB cable
+
+   * 3 Jumper Cables
 
 *****************
 
@@ -61,11 +61,7 @@ SSH into your BeagleBone.  Check to if UART lines are open.  In ttyO*, it is the
 $ ls -l /dev/ttyO*
 ```
 
-<<<<<<< HEAD
-You should see the five UART lines, UART0-UART4. If not, you may need to go back to installing and setting up `Adafruit_BBIO`.
-=======
 If the following results do not show up, then follow this [link.](https://sites.google.com/a/cameon.net/beaglebone/home/serial-ports-uart)
->>>>>>> b02dafcd07c9fa2c52b7ad195810a6e572459dfe
 
 {% include image.html file="/resources/tutorials/board interfacing/testuart.png" width="70%" %}
 
