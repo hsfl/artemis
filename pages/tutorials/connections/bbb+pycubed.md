@@ -45,7 +45,6 @@ Use the following commands to install the necessary tools.
 
 ```bash
 $ Sudo apt-get update && apt-get instafrom scratch/bbb/usb_device.png
-```bash
 $ minicom -b 9600 -D /dev/ttyO1
 ```
 

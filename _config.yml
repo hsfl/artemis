@@ -46,6 +46,7 @@ folder_tutorials_scripts: "/artemis/pages/tutorials/scripts"
 folder_tutorials_setup: "/artemis/pages/tutorials/setup"
 folder_tutorials_from_scratch: "/artemis/pages/tutorials/setup-from-scratch"
 folder_tutorials_connections: "/artemis/pages/tutorials/connections"
+folder_tutorials_sensors: "/artemis/pages/tutorials/testing"
 
 # ===================================== GitHub Folders =====================================
 

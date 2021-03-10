@@ -103,6 +103,14 @@ entries:
           url: /pages/tutorials/connections/bbb+pycubed.html
           output: web
 
+      - title: Sensors
+        output: web
+        subfolderitems:
+        - title: "Temperature Sensor"
+          url: /pages/tutorials/testing/temp_sensor_test.html
+          output: web
+        
+
 
 
 # =================================================================================
