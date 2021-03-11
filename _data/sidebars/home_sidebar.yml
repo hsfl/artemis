@@ -92,6 +92,9 @@ entries:
         - title: "Raspberry Pi from Scratch"
           url: /pages/tutorials/setup-from-scratch/raspi-from-scratch.html
           output: web
+        - title: "PyCubed from Scratch"
+          url: /pages/tutorials/setup-from-scratch/pycubed-from-scratch.html
+          output: web
 
       - title: Board Interfacing
         output: web

@@ -50,9 +50,27 @@ Paste the following code into your tmp36.cpp file:
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include <unistd.h>
+#include <unistd.h>title: "Interfacing the BeagleBone and PyCubed Mainboard"
+layout: page
+permalink: /pages/tutorials/connections/bbb+pycubed.html
 
-using namespace std;
+tags: [software]
+keywords: software
+---
+
+*****************
+
+## What you will need:
+
+   * BeagleBone Black Industrial
+
+   * PyCubed Main Board
+
+   * USB-C cable
+
+   * Mini USB cable
+
+   * 3 Jumper Cables
 
 #define ADC_PATH "/sys/bus/iio/devices/iio:device0/in_voltage"
 #define ADC 1

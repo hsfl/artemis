@@ -68,10 +68,6 @@ If the following results do not show up, then follow this [link.](https://sites.
 In two different terminals, log in to the BeagleBone open up minicom for both UART lines.
 
 ```bash
-<<<<<<< HEAD
-$ Sudo apt-get update && apt-get instafrom scratch/bbb/usb_device.png
-=======
->>>>>>> 5f9bc33f72188ab1dbceff1e79f0c351af83dae7
 $ minicom -b 9600 -D /dev/ttyO1
 $ minicom -b 9600 -D /dev/ttyO2
 ```
