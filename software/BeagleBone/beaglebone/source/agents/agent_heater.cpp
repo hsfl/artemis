@@ -81,7 +81,7 @@ string Request_Config(int32_t &error);
 SimpleAgent *agent;
 
 //! The heater device
-Heater *heater;
+devicestruc *heater;
 
 //! The switch which controls the heater
 string heater_switch;
@@ -148,7 +148,6 @@ int main(int argc, char** argv) {
 	
     agent->append_soh_list(devname_heater, soh_props);
     agent->set_soh();
-	agent->DebugPrint();
 	
 	// Make sure the heater is disabled
 	SetHeaterState(false);
@@ -204,11 +203,12 @@ int32_t GetTemperatures() {
     }
     cout << "Sending request to agent_temp: getvalue" << endl;
     // Send a request to enable or disable the heater
-    std::unordered_map<std::string, Json::Value> values = send_request_getvalue(agent_temp, agent_temp_keys);
+    int32_t error = 0;
+    auto values = agent->send_request_getvalue(agent_temp, agent_temp_keys, error);
 	
 	// Check if the values were not retrieved
-    if ( values.size() > 0  ) {
-        printf("Failed to get temperatures from agent_temp [%s]\n", cosmos_error_string(error));
+    if ( values.empty()  ) {
+        printf("Failed to get temperatures from agent_temp [%s]\n", cosmos_error_string(error).c_str());
         return error;
 	}
 	
@@ -229,11 +229,12 @@ int32_t SetHeaterState(bool enabled) {
         return ErrorNumbers::COSMOS_GENERAL_ERROR_NO_ANSWER;
     }
 
-    string request = heater_switch + ":" + enabled ? "on" : "off";
+    string request =  enabled ? "on" : "off";
+    request += " " + heater_switch;
     string response;
     cout << "Sending request to agent_switch: " << request << endl;
     // Send a request to enable or disable the heater
-    int32_t error = send_request(agent_switch, request, response);
+    int32_t error = agent->send_request(agent_switch, request, response);
 
 	// Check if an error occurred
     if ( error < 0 ) {

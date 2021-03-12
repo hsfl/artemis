@@ -69,7 +69,7 @@ std::unordered_map<std::string, GPIO*> gpios;
 // |                 Main Function                |
 // |----------------------------------------------|
 
-int main(int argc, char** argv) {
+int main() {
     int32_t error;
 	// Create the agent
 	agent = new SimpleAgent(CUBESAT_AGENT_SWITCH_NAME);
@@ -108,31 +108,21 @@ int main(int argc, char** argv) {
 		gpio->DigitalWrite(default_state ? GPIOValue::High : GPIOValue::Low);
 		
 		// Create the switch device
-//		sw = agent->NewDevice<Switch>(switch_name);
         sw = agent->add_device(switch_name, DeviceType::SWCH, error);
 		
-		// Store the switch configuration
-        //sw->SetCustomProperty<std::string>("pin", switch_pin);
-        //sw->SetCustomProperty<GPIO*>("handler", gpio);
+
 		
 		// Post some properties
         sw->utc = Time::Now();
         sw->volt = default_state ? 3.3 : 0.0;
         sw->enabled = false;
-//		sw->Post(sw->utc = Time::Now());
-//		sw->Post(sw->volt = default_state ? 3.3 : 0.0);
-//		sw->Post(sw->enabled = false);
-		
-//		// Add device requests
-//        sw->AddRequest("on", Request_Switch_On, "\n\t\tTurns on the switch");
-//        sw->AddRequest("off", Request_Switch_Off, "\n\t\tTurns off the switch");
-//        sw->AddRequest("state", Request_Switch_State, "\n\t\tReturns the state of the switch");
-		
+
+
 		// Store the switch device by name
 		switches[switch_name] = sw;
         gpios[switch_name] = gpio;
 		
-        error = append_soh_list(switch_name, soh_props);
+        error = agent->append_soh_list(switch_name, soh_props);
         if(error < 0){
             printf("Error creating SOH List\n");
         }
@@ -147,7 +137,6 @@ int main(int argc, char** argv) {
 	
 	// Finish up the initialization
     agent->set_soh();
-	agent->DebugPrint();
 	
 	// Run the main loop for this agent
 	while ( agent->StartLoop() ) {

@@ -28,10 +28,10 @@ void UpdateSensor(const std::string &name);
 
 
 //! Request for displaying temperatures
-float Request_Temperature(TemperatureSensor *sensor);
+string Request_Temperature(vector<string> &args, int32_t &error);
 
 //! Request for checking a sensor is connected
-bool Request_Connected(TemperatureSensor *sensor);
+string Request_Connected(vector<string> &args, int32_t &error);
 
 //! Request for listing sensors
 string Request_List(int32_t &error);
@@ -58,6 +58,7 @@ ADT7311::Configuration default_sensor_config;
 //! A map of sensor names to TemperatureSensor devices
 unordered_map<string, devicestruc*> sensor_data;
 unordered_map<string, ADT7311*> sensor_interface;
+unordered_map<string, string> sensor_source;
 
 
 // |----------------------------------------------|
@@ -92,7 +93,7 @@ int main() {
 	int bus, cs;
     devicestruc *sensor;
     ADT7311* handler;
-    vector<string> soh_props = {"utc","enabled","volt","amp","power"};
+    vector<string> soh_props = {"utc","temp","enabled"};
 	// Initialize the temperature sensor devices using the JSON
 	for (auto &sensor_obj : sensor_config.GetArray()) {
 		
@@ -113,22 +114,30 @@ int main() {
             handler = new ADT7311(bus, cs);
             sensor_interface[name] = handler;
 		}
+        else {
+            sensor_source[name] = sensor_obj["key"].GetString();
+        }
 
         sensor->utc = Time::Now();
         sensor->enabled = false;
         sensor->temp = 0;
 
-        error = append_soh_list(name, soh_props);
+        error = agent->append_soh_list(name, soh_props);
         if(error < 0){
             printf("Error creating SOH List\n");
         }
-		
-		
+        string cosmos_name = agent->get_soh_name(name, "temp", error);
+        string temp_alias = "temp_"+name;
+        error = agent->create_alias(cosmos_name, temp_alias);
+        if(error < 0){
+            printf("Error creating alias temp_%s\n", name.c_str());
+        }
+        agent->append_soh_list(temp_alias);
+
 	}
 	
 	// Finish up
     agent->set_soh();
-	agent->DebugPrint();
 	
 	// Start executing the agent
 	while ( agent->StartLoop() ) {
@@ -143,7 +152,7 @@ int main() {
 	
 	// Free sensor devices
     for (auto it : sensor_interface) {
-        ADT7311 *handler = it->second;
+        ADT7311 *handler = it.second;
         handler->Close();
         delete handler;
 	}
@@ -158,7 +167,7 @@ int main() {
 void UpdateSensor(const std::string &name) {
 	
 	// Fetch some information
-    devicestruc *sensor = sensors[name];
+    devicestruc *sensor = sensor_data[name];
 	
 	// Update the timestamp
 	sensor->utc = Time::Now();
@@ -222,10 +231,11 @@ void UpdateSensor(const std::string &name) {
         static RemoteAgent agent_pycubed = agent->find_agent(CUBESAT_NODE_NAME, CUBESAT_AGENT_PYCUBED_NAME);
 		
 		
-		if ( agent_pycubed.Connect() ) {
+        if ( agent_pycubed.exists ) {
 			
-			string source_id = sensor->GetCustomProperty<string>("source");
-            auto values = agent->send_request_getvalue(agent_pycubed, {source_id});
+            string source_id = sensor_source[name];
+            int32_t error = 0;
+            auto values = agent->send_request_getvalue(agent_pycubed, {source_id}, error);
 			
 			// Check if the request failed
 			if ( values.empty() )
@@ -254,12 +264,31 @@ void UpdateSensor(const std::string &name) {
 
 
 
-float Request_Sensor_Temperature(TemperatureSensor *sensor) {
-    return sensor->temp;
+string Request_Sensor_Temperature(vector<string> &args, int32_t &error) {
+    if(args.size() == 0) {
+        error = ErrorNumbers::COSMOS_GENERAL_ERROR_ARGS;
+        return "incorrect usage";
+    }
+    string sensor_name = args[0];
+    if(sensor_data.find(sensor_name) == sensor_data.end()){
+        error = ErrorNumbers::COSMOS_GENERAL_ERROR_ARGS;
+        return "unknown sensor";
+    }
+    return std::to_string(sensor_data[sensor_name]->temp );
+
 }
 
-bool Request_Connected(TemperatureSensor *sensor) {
-	return sensor->enabled;
+string Request_Connected(vector<string> &args, int32_t &error) {
+    if(args.size() == 0) {
+        error = ErrorNumbers::COSMOS_GENERAL_ERROR_ARGS;
+        return "incorrect usage";
+    }
+    string sensor_name = args[0];
+    if(sensor_data.find(sensor_name) == sensor_data.end()){
+        error = ErrorNumbers::COSMOS_GENERAL_ERROR_ARGS;
+        return "unknown sensor";
+    }
+    return sensor_data[sensor_name]->enabled ? "true" : "false";
 }
 
 string Request_List(int32_t &error) {
@@ -268,7 +297,7 @@ string Request_List(int32_t &error) {
 	
 	// Generate a JSON list of sensor info
 	ss << "{";
-	for (auto it : sensors) {
+    for (auto it : sensor_data) {
 		ss <<	"\"" << it.first << "\": {";
 		ss <<		"\"utc\": " << it.second->utc << ", ";
         ss <<		"\"temp\": " << it.second->temp << ",";

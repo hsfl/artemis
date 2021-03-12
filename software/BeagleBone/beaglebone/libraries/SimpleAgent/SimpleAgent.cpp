@@ -23,9 +23,9 @@ SimpleAgent::SimpleAgent(const std::string &name, std::string node,
 		if ( crash_if_not_open )
 			exit(1);
 	}
-	else {
-        this->add_request("print", _Request_DebugPrint,"", "Prints all added devices and requests");
-	}
+//	else {
+//        this->add_request("print", _Request_DebugPrint,"", "Prints all added devices and requests");
+//	}
 	
 	// Reset the telemetry log
 //	telem_log.Purge();

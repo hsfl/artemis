@@ -30,7 +30,6 @@ int main() {
 	
 	// Finish setting up the SimpleAgent
 	agent->Finalize(); // Let the agent know we're done posting properties
-	agent->DebugPrint(); // Print out all of the properties and requests
 	
 	int counter = 0;
 	

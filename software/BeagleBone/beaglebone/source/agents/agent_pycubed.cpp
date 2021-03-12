@@ -535,7 +535,7 @@ string Request_GetTemperatureData(int32_t &error) {
     string jstring =  agent->get_values(props, error);
     return jstring;
 }
-string Request_KillRadio() {
+string Request_KillRadio(int32_t &error) {
 	if ( !handler->IsOpen() ) {
 		cout << "[Error] Attempted to kill the radio, but no PyCubed is connected." << endl;
         return "false";

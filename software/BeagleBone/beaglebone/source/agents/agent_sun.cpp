@@ -139,7 +139,6 @@ int main() {
 	}
 	
     agent->set_soh();
-	agent->DebugPrint();
 	
 	// Run the main loop for this agent
 	while ( agent->StartLoop() ) {
