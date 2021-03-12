@@ -225,13 +225,13 @@ void UpdateSensor(const std::string &name) {
 	}
 	// Handle a remote sensor
 	else {
-		static RemoteAgent agent_pycubed = agent->FindAgent(CUBESAT_AGENT_PYCUBED_NAME);
+        static RemoteAgent agent_pycubed = agent->find_agent(CUBESAT_NODE_NAME, CUBESAT_AGENT_PYCUBED_NAME);
 		
 		
 		if ( agent_pycubed.Connect() ) {
 			
 			string source_id = sensor->GetCustomProperty<string>("source");
-			auto values = agent_pycubed.GetCOSMOSValues({source_id});
+            auto values = agent->send_request_getvalue(agent_pycubed, {source_id});
 			
 			// Check if the request failed
 			if ( values.empty() )

@@ -311,15 +311,16 @@ void SetDefaultSOHData() {
 }
 
 void GrabSOHData() {
-	static RemoteAgent agent_temp = agent->FindAgent(CUBESAT_AGENT_TEMP_NAME);
-	static RemoteAgent agent_sunsensor = agent->FindAgent(CUBESAT_AGENT_SUNSENSOR_NAME);
-	static RemoteAgent agent_heater = agent->FindAgent(CUBESAT_AGENT_HEATER_NAME);
-	static RemoteAgent agent_switch = agent->FindAgent(CUBESAT_AGENT_SWITCH_NAME);
-	static RemoteAgent agent_pycubed = agent->FindAgent(CUBESAT_AGENT_PYCUBED_NAME);
+    static RemoteAgent agent_temp = agent->find_agent(CUBESAT_NODE_NAME, CUBESAT_AGENT_TEMP_NAME);
+    static RemoteAgent agent_sunsensor = agent->find_agent(CUBESAT_NODE_NAME, CUBESAT_AGENT_TEMP_NAME);
+    static RemoteAgent agent_heater = agent->find_agent(CUBESAT_NODE_NAME, CUBESAT_AGENT_TEMP_NAME);
+    static RemoteAgent agent_switch = agent->find_agent(CUBESAT_NODE_NAME, CUBESAT_AGENT_TEMP_NAME);
+    static RemoteAgent agent_pycubed = agent->find_agent(CUBESAT_NODE_NAME, CUBESAT_AGENT_TEMP_NAME);
+
 	
 	// Get values from agent_temp
-	if ( agent_temp.Connect() ) {
-		auto values = agent_temp.GetCOSMOSValues({"device_tsen_temp_000", "device_tsen_utc_000",
+    if ( agent_temp.exists ) {
+        auto values = agent->send_request_getvalue(agent_temp, {"device_tsen_temp_000", "device_tsen_utc_000",
 											"device_tsen_temp_001", "device_tsen_utc_001",
 											"device_tsen_temp_002", "device_tsen_utc_002",
 											"device_tsen_temp_003", "device_tsen_utc_003",
@@ -348,8 +349,8 @@ void GrabSOHData() {
 		tempsensors->SetCustomProperty<bool>("active", false);
 	
 	// Get values from agent_sunsensor
-	if ( agent_sunsensor.Connect() ) {
-		auto values = agent_sunsensor.GetCOSMOSValues({"device_ssen_temp_000", "device_ssen_utc_000",
+    if ( agent_sunsensor.exists ) {
+        auto values = agent->send_request_getvalue(agent_sunsensor, {"device_ssen_temp_000", "device_ssen_utc_000",
 												 "device_ssen_temp_001", "device_ssen_utc_001",
 												 "device_ssen_temp_002", "device_ssen_utc_002",
 												 "device_ssen_temp_003", "device_ssen_utc_003",
@@ -379,8 +380,8 @@ void GrabSOHData() {
 		sunsensors->SetCustomProperty<bool>("active", false);
 	
 	// Get values from agent_heater
-	if ( agent_heater.Connect() ) {
-		auto values = agent_heater.GetCOSMOSValues({"device_htr_volt_000", "device_htr_utc_000"});
+    if ( agent_heater.exists ) {
+        auto values = agent->send_request_getvalue(agent_heater ,{"device_htr_volt_000", "device_htr_utc_000"});
 		
 		if ( !values.empty() ) {
 			heater->SetCustomProperty<bool>("active", true);
@@ -391,8 +392,8 @@ void GrabSOHData() {
 	}
 	
 	// Get values from agent_switch
-	if ( agent_switch.Connect() ) {
-		auto values = agent_switch.GetCOSMOSValues({"device_swch_volt_000", "device_swch_utc_000",
+    if ( agent_switch.exists ) {
+        auto values = agent->send_request_getvalue(agent_switch, {"device_swch_volt_000", "device_swch_utc_000",
 											  "device_swch_volt_001", "device_swch_utc_001",
 											  "device_swch_volt_002", "device_swch_utc_002"});
 		if ( !values.empty() ) {
@@ -413,8 +414,8 @@ void GrabSOHData() {
 		switches->SetCustomProperty<bool>("active", false);
 	
 	// Get values from agent_pycubed
-	if ( agent_pycubed.Connect() ) {
-        auto values = agent_pycubed.GetCOSMOSValues({"device_imu_mag_x_000", "device_imu_mag_y_000", "device_imu_mag_z_000",
+    if ( agent_pycubed.exists ) {
+        auto values = agent->send_request_getvalue(agent_pycubed, {"device_imu_mag_x_000", "device_imu_mag_y_000", "device_imu_mag_z_000",
 											  "device_imu_accel_x_000", "device_imu_accel_y_000", "device_imu_accel_z_000",
 											  "device_imu_omega_x_000", "device_imu_omega_y_000", "device_imu_omega_z_000", "device_imu_utc_000",
 											  "device_cpu_volt_000", "device_cpu_amp_000", "device_cpu_utc_000",
