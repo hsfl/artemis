@@ -121,10 +121,16 @@ namespace artemis {
             int32_t error = 0;
             string soh_entry;
             for(string p: props){
-                soh_entry = this->get_soh_name(devicename, p, error);
-                if(error < 0){
-                    return error;
+                if(devicename == "node") {
+                    soh_entry = "node_" + p;
                 }
+                else {
+                    soh_entry = this->get_soh_name(devicename, p, error);
+                    if(error < 0){
+                        return error;
+                    }
+                }
+
                 soh_list.push_back(soh_entry);
             }
             return 0;

@@ -1,7 +1,7 @@
 
 // Internal headers
 #include "SimpleAgent/SimpleAgent.h"
-#include "SimpleAgent/DeviceJSON.h"
+//#include "SimpleAgent/DeviceJSON.h"
 #include "device/OPT3001.h"
 
 #include "utility/Configuration.h"
@@ -130,6 +130,11 @@ int main() {
         agent->append_soh_list(sensor_name, soh_props);
         // TODO create alias from temp to lux
         // add device_ssen_lux_000 to soh string
+        string lux_alias = agent->create_device_value_alias(sensor_name, "temp", "lux", error);
+        if(error < 0){
+            printf("Error creating alias: lux\n");
+        }
+        agent->append_soh_list(lux_alias);
 
 	}
 	

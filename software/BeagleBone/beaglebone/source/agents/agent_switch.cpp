@@ -146,7 +146,6 @@ int main(int argc, char** argv) {
 	
 	
 	// Finish up the initialization
-    //agent->Finalize();
     agent->set_soh();
 	agent->DebugPrint();
 	
