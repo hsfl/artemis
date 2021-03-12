@@ -1,7 +1,7 @@
 
 #include "CubeSat.h"
 #include "SimpleAgent/SimpleAgent.h"
-#include "SimpleAgent/DeviceJSON.h"
+//#include "SimpleAgent/DeviceJSON.h"
 #include "device/PyCubed.h"
 #include "utility/Configuration.h"
 
@@ -173,15 +173,15 @@ int main(int argc, char** argv) {
 	agent->AddNodeProperty<Node::BatteryCapacity>(3.5f * 4);
 	agent->AddNodeProperty<Node::BatteryCharge>(0);
 	
-    agent->AddRequest("is_up", Request_IsUp, "", "Checks if the PyCubed is reachable");
-    agent->AddRequest("send", Request_SendMessage, "", "Sends a message to the PyCubed", "Usage: send msgtype arg1 arg2 ...");
-    agent->AddRequest("cpu", Request_GetCPUData, "", "Returns the latest CPU data received");
-    agent->AddRequest("imu", Request_GetIMUData, "", "Returns the latest IMU data received");
-    agent->AddRequest("gps", Request_GetGPSData, "", "Returns the latest GPS data received");
-    agent->AddRequest("temperature", Request_GetTemperatureData, "", "Returns the latest temperature data received");
-    agent->AddRequest("power", Request_GetPowerData, "", "Returns the latest power data received");
-    agent->AddRequest("kill_radio", Request_KillRadio, "", "Sends a message to the PyCubed to kill the radio");
-    agent->AddRequest("spoof", Request_Spoof, "", "Spoofs the given string as input from the PyCubed. Do not include checksum or syncword", "Usage: spoof msgtype arg1 arg2 ...");
+    agent->add_request("is_up", Request_IsUp, "", "Checks if the PyCubed is reachable");
+    agent->add_request("send", Request_SendMessage, "", "Sends a message to the PyCubed", "Usage: send msgtype arg1 arg2 ...");
+    agent->add_request("cpu", Request_GetCPUData, "", "Returns the latest CPU data received");
+    agent->add_request("imu", Request_GetIMUData, "", "Returns the latest IMU data received");
+    agent->add_request("gps", Request_GetGPSData, "", "Returns the latest GPS data received");
+    agent->add_request("temperature", Request_GetTemperatureData, "", "Returns the latest temperature data received");
+    agent->add_request("power", Request_GetPowerData, "", "Returns the latest power data received");
+    agent->add_request("kill_radio", Request_KillRadio, "", "Sends a message to the PyCubed to kill the radio");
+    agent->add_request("spoof", Request_Spoof, "", "Spoofs the given string as input from the PyCubed. Do not include checksum or syncword", "Usage: spoof msgtype arg1 arg2 ...");
 	
 	// Initialize the PyCubed
 	InitPyCubed();
@@ -252,7 +252,7 @@ void InitPyCubed() {
 	battery->Post(battery->percentage = 100);
 	battery->Post(battery->voltage = 0);
 	battery->Post(battery->current = 0);
-	battery->AddRequest("charge", +[](Battery *battery) -> float { return battery->charge; }, "Returns the battery charge");
+    battery->add_request("charge", +[](Battery *battery) -> float { return battery->charge; }, "Returns the battery charge");
 	
 	agent->GetLog().RegisterDevice("battery", battery)
 			.RegisterProperty("utc", battery->utc)

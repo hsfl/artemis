@@ -138,12 +138,12 @@ int main(int argc, char** argv) {
 	
 		
 	// Add requests
-    agent->AddRequest("agent_data", Request_GetData, "", "Prints data collected from other agents");
-    agent->AddRequest("command", Request_SSH, "", "Runs a command on the Raspberry Pi (an ssh \n\t\tkeygen pair MUST be established before this \n\t\trequest can work)");
-    agent->AddRequest("capture", Request_Picture, "", "Takes a picture with the Raspberry Pi camera (an ssh \n\t\tkeygen pair MUST be established before this \n\t\trequest can work)");
-    agent->AddRequest("is_up", Request_Ping, "","Checks if the Raspberry Pi is up");
-    agent->AddRequest("shutdown_raspi", Request_Shutdown, "", "Attempts to shut down the Raspberry Pi");
-    agent->AddRequest("set_soh", Request_SetSOH, "", "Sets the state of health for a payload script");
+    agent->add_request("agent_data", Request_GetData, "", "Prints data collected from other agents");
+    agent->add_request("command", Request_SSH, "", "Runs a command on the Raspberry Pi (an ssh \n\t\tkeygen pair MUST be established before this \n\t\trequest can work)");
+    agent->add_request("capture", Request_Picture, "", "Takes a picture with the Raspberry Pi camera (an ssh \n\t\tkeygen pair MUST be established before this \n\t\trequest can work)");
+    agent->add_request("is_up", Request_Ping, "","Checks if the Raspberry Pi is up");
+    agent->add_request("shutdown_raspi", Request_Shutdown, "", "Attempts to shut down the Raspberry Pi");
+    agent->add_request("set_soh", Request_SetSOH, "", "Sets the state of health for a payload script");
 	agent->DebugPrint();
 	
 	
