@@ -27,6 +27,8 @@ The TMP36 is an analog temperature sensor that provides a voltage output directl
 
 {% include image.html file="/resources/tutorials/sensor/File_001.png" width="70%" %}
 
+In the image above, the teal wire connects the 3.3V voltage source, the blue wire corresponds to the ADC connection, and the orange wire connects the ground.
+
 ## Getting the Raw Voltage
 
 To get the raw voltage outputted by the temp sensor, use the following commands:
@@ -50,27 +52,7 @@ Paste the following code into your tmp36.cpp file:
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include <unistd.h>title: "Interfacing the BeagleBone and PyCubed Mainboard"
-layout: page
-permalink: /pages/tutorials/connections/bbb+pycubed.html
-
-tags: [software]
-keywords: software
----
-
-*****************
-
-## What you will need:
-
-   * BeagleBone Black Industrial
-
-   * PyCubed Main Board
-
-   * USB-C cable
-
-   * Mini USB cable
-
-   * 3 Jumper Cables
+#include <unistd.h>
 
 #define ADC_PATH "/sys/bus/iio/devices/iio:device0/in_voltage"
 #define ADC 1
@@ -111,6 +93,8 @@ When using more than one temperature sensor, you can use the same pins to power 
 In this part we will be setting up two temperature sensors on the BBB. Connect the source voltage pins on both temp sensors to the same BBB 3.3V pin (P9.3) and the same GNDA_ADC (P9.34). Keep one sensor connected to AIN1 (P9.40) and connect the second sensor to AIN2 (P9.37).
 
 {% include image.html file="/resources/tutorials/sensor/File_000.png" width="70%" %}
+
+In the picture above, the teal, blue, and orange wires are connected to the same things as before while the yellow wire corresponds to the second ADC connection.
 
 To allow a user to choose which temp sensor they'd like to receive a reading from, we have to redefine the ADC variable based on what the user wants. 
 
