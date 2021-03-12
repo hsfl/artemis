@@ -43,18 +43,18 @@ void SetSensorPower(bool enabled);
 // |                   Requests                   |
 // |----------------------------------------------|
 //! Returns the lux read by a sensor
-float Request_Sensor_Lux(SunSensor *sensor);
+string Request_Sensor_Lux(vector<string> &args, int32_t &error);
 //! Returns whether or not a sensor can be reached
-bool Request_Sensor_Connected(SunSensor *sensor);
+string Request_Sensor_Connected(vector<string> &args, int32_t &error);
 //! Returns the latest telemetry for a sensor
-string Request_Sensor(string sensor_name);
+string Request_Sensor(vector<string> &args, int32_t &error);
 //! Returns a list of sensors
-string Request_List();
+string Request_List(int32_t &error);
 /**
  * @brief Returns the sun sensor configuration JSON
  * @return The configuration JSON string
  */
-string Request_Config();
+string Request_Config(int32_t &error);
 
 // |----------------------------------------------|
 // |                   Variables                  |
@@ -70,7 +70,8 @@ OPT3001::Configuration default_sensor_config;
 OPT3001::Configuration active_config;
 
 //! A map of sensor names to SunSensor devices
-unordered_map<string, SunSensor*> sensors;
+unordered_map<string, devicestruc*> sensor_data;
+unordered_map<string, OPT3001*> sensor_interface;
 
 
 // |----------------------------------------------|
@@ -78,13 +79,15 @@ unordered_map<string, SunSensor*> sensors;
 // |----------------------------------------------|
 
 int main() {
-	
+    int32_t error = 0;
 	// Create the agent
 	agent = new SimpleAgent(CUBESAT_AGENT_SUNSENSOR_NAME);
 	agent->set_activity_period(SLEEP_TIME);
-    agent->AddRequest("sensor", Request_Sensor, "", "Returns the status of a sensor");
-    agent->AddRequest("list", Request_List, "", "Returns a list of sensors");
-    agent->AddRequest("config", Request_Config, "", "Returns the sun sensor configuration");
+    agent->add_request("sensor_status", Request_Sensor, "sensor_name", "Returns the status of a sensor");
+    agent->add_request("list", Request_List, "", "Returns a list of sensors");
+    agent->add_request("config", Request_Config, "", "Returns the sun sensor configuration");
+    agent->add_request("connected", Request_Sensor_Connected, "sensor_name","Returns true if the sun sensor is connected");
+    agent->add_request("lux", Request_Sensor_Lux,"sensor_name", "Returns the lux of the sun sensor");
 	
 	// Parse the sensor configuration
 	if ( !GetConfigDocument("sun_sensors", sensor_config) ) {
@@ -92,67 +95,61 @@ int main() {
 		return 1;
 	}
 	
-	string name;
+    string sensor_name;
 	int bus, address;
-	Vec3 orientation;
-	SunSensor *sensor;
+//	Vec3 orientation;
+    devicestruc *sensor;
+    OPT3001* interface;
+    vector<string> soh_props = {"utc","enabled","volt","amp","power"};
 	
 	// Initialize the sun sensor devices using the parsed JSON
 	for (auto &sensor_obj : sensor_config.GetArray()) {
 		
 		// Grab the JSON fields for this sun sensor
-		name = sensor_obj["name"].GetString();
+        sensor_name = sensor_obj["name"].GetString();
 		bus = sensor_obj["bus"].GetInt();
 		address = sensor_obj["address"].GetInt();
-		orientation = Vec3(sensor_obj["orientation"].GetArray()[0].GetInt(),
-						   sensor_obj["orientation"].GetArray()[1].GetInt(),
-						   sensor_obj["orientation"].GetArray()[2].GetInt());
+//		orientation = Vec3(sensor_obj["orientation"].GetArray()[0].GetInt(),
+//						   sensor_obj["orientation"].GetArray()[1].GetInt(),
+//						   sensor_obj["orientation"].GetArray()[2].GetInt());
 		
 		// Create a new sun sensor device
-		sensor = agent->NewDevice<SunSensor>(name);
-		sensor->SetCustomProperty<OPT3001*>("handler", new OPT3001(bus, address));
-		sensor->SetCustomProperty<Vec3>("orientation", orientation);
+        sensor = agent->add_device(sensor_name, DeviceType::SSEN, error);
+        interface = new OPT3001(bus, address);
 		
-		sensor->Post(sensor->utc = Time::Now());
-		sensor->Post(sensor->enabled = false); // true = connected, false = not connected
-		sensor->Post(sensor->temperature = 0); // Represents the lux readings
-		
-		// Add device requests
-		sensor->AddRequest("connected", Request_Sensor_Connected, "Returns true if the sun sensor is connected");
-		sensor->AddRequest("lux", Request_Sensor_Lux, "Returns the lux of the sun sensor");
-		
+
+        sensor->utc = Time::Now();
+        sensor->enabled = false; // true = connected, false = not connected
+        sensor->temp = 0; // Represents the lux readings
+
 		// Store sensor
-		sensors[name] = sensor;
-		
-		
-		// Add the sun sensor to the telemetry log
-		agent->GetLog().RegisterDevice(name, sensor)
-				.RegisterProperty("utc", sensor->utc)
-				.RegisterProperty("lux", sensor->temperature)
-				.RegisterProperty("enabled", sensor->enabled)
-				.RegisterProperty("voltage", sensor->voltage)
-				.RegisterProperty("current", sensor->current)
-				.RegisterProperty("power", sensor->power);
+        sensor_data[sensor_name] = sensor;
+        sensor_interface[sensor_name] = interface;
+
+        // Add the sun sensor to the soh
+        agent->append_soh_list(sensor_name, soh_props);
+        // TODO create alias from temp to lux
+        // add device_ssen_lux_000 to soh string
+
 	}
 	
-	agent->Finalize();
+    agent->set_soh();
 	agent->DebugPrint();
 	
 	// Run the main loop for this agent
 	while ( agent->StartLoop() ) {
 		
 		// Update the sensors
-		for (auto pair : sensors) {
+        for (auto pair : sensor_data) {
 			UpdateSensor(pair.first);
 		}
 		
 	}
 	
 	// Finish up with the sensors
-	for (auto pair : sensors) {
-		OPT3001 *handler = pair.second->GetCustomProperty<OPT3001*>("handler");
-		handler->Close();
-		delete handler;
+    for (auto pair : sensor_interface) {
+        pair.second->Close();
+        delete pair.second;
 	}
 	
 	// Delete the agent
@@ -163,8 +160,8 @@ int main() {
 
 
 void UpdateSensor(const std::string &name) {
-	SunSensor *sensor = sensors[name];
-	OPT3001 *opt3001 = sensor->GetCustomProperty<OPT3001*>("handler");
+    devicestruc *sensor = sensor_data[name];
+    OPT3001 *opt3001 = sensor_interface[name];
 	
 	sensor->utc = Time::Now();
 	
@@ -173,7 +170,7 @@ void UpdateSensor(const std::string &name) {
 		printf("Opening sensor '%s' on I2C-%d at address 0x%02x... ",
 			   name.c_str(), opt3001->GetBusAddr(), opt3001->GetDeviceAddr());
 		
-		if ( opt3001->Open() < 0 ) {
+        if ( !opt3001->Open() ) {
 			opt3001->Close();
 			sensor->enabled = false;
 			printf(" failed.\n");
@@ -196,9 +193,9 @@ void UpdateSensor(const std::string &name) {
 	if ( config.ConversionReady == 1 ) {
 		
 		// Use the temperature field since there's no built-in lux field
-		sensor->temperature = opt3001->GetLux();
+        sensor->temp = opt3001->GetLux();
 		
-		printf("Sensor '%s' finished converting: %.2f lx\n", name.c_str(), (float)sensor->voltage);
+        printf("Sensor '%s' finished converting: %.2f lx\n", name.c_str(), (float)sensor->volt);
 	}
 	
 	
@@ -218,42 +215,73 @@ void UpdateSensor(const std::string &name) {
 // |                    Requests                  |
 // |----------------------------------------------|
 
-float Request_Sensor_Lux(SunSensor *sensor) {
-	return sensor->temperature;
+string Request_Sensor_Lux(vector<string> &args, int32_t &error) {
+    if(args.size() == 0) {
+        error = ErrorNumbers::COSMOS_GENERAL_ERROR_EMPTY;
+        return "\"usage: sensor_name\"";
+    }
+    string sensor_name = args[0];
+    if(sensor_data.find(sensor_name) == sensor_data.end()) {
+        error = ErrorNumbers::COSMOS_GENERAL_ERROR_NAME;
+        return "\"unknown sensor\"";
+    }
+    return to_string(sensor_data[sensor_name]->temp);
+
 }
-bool Request_Sensor_Connected(SunSensor *sensor) {
-	OPT3001 *handler = sensor->GetCustomProperty<OPT3001*>("handler");
-	return handler != nullptr && handler->IsOpen();
+string Request_Sensor_Connected(vector<string> &args, int32_t &error) {
+    if(args.size() == 0) {
+        error = ErrorNumbers::COSMOS_GENERAL_ERROR_EMPTY;
+        return "\"usage: sensor_name\"";
+    }
+    string sensor_name = args[0];
+    if(sensor_interface.find(sensor_name) == sensor_interface.end()) {
+        error = ErrorNumbers::COSMOS_GENERAL_ERROR_NAME;
+        return "\"unknown sensor\"";
+    }
+    if(sensor_interface[sensor_name] != nullptr && sensor_interface[sensor_name]->IsOpen() ){
+        return "true";
+    }
+    return "false";
+
 }
 
-string Request_Sensor(string sensor_name) {
-	SunSensor *sensor = sensors[sensor_name];
+string Request_Sensor(vector<string> &args, int32_t &error){
+    if(args.size() == 0) {
+        error = ErrorNumbers::COSMOS_GENERAL_ERROR_EMPTY;
+        return "\"usage: sensor_name\"";
+    }
+    string sensor_name = args[0];
+    if(sensor_data.find(sensor_name) == sensor_data.end()) {
+        error = ErrorNumbers::COSMOS_GENERAL_ERROR_NAME;
+        return "\"unknown sensor\"";
+    }
+    devicestruc *sensor = sensor_data[sensor_name];
 	
 	// Generate the response
 	stringstream ss;
 	ss << "{" << std::endl;
 	ss << "\t\"name\": \"" << sensor_name << "\", " << std::endl;
 	ss << "\t\"utc\": " << (double)sensor->utc << ", " << std::endl;
-	ss << "\t\"lux\": " << (float)sensor->temperature << ", " << std::endl;
+    ss << "\t\"lux\": " << (float)sensor->temp << ", " << std::endl;
 	ss << "\t\"connected\": " << (sensor->enabled ? "true" : "false") << std::endl;
 	ss << "}" << std::endl;
 	
 	return ss.str();
 }
 
-string Request_List() {
+string Request_List(int32_t &error) {
 	
-	SunSensor *sensor;
+    devicestruc *sensor;
 	
 	stringstream ss;
 	ss << "[";
 	
-	for (auto pair : sensors) {
+    for (auto pair : sensor_data) {
 		sensor = pair.second;
 		ss << "\t{" << std::endl;
 		ss << "\t\t\"name\": \"" << pair.first << "\", " << std::endl;
 		ss << "\t\t\"utc\": " << (double)sensor->utc << ", " << std::endl;
-		ss << "\t\t\"lux\": " << (float)sensor->temperature << ", " << std::endl;
+        ss << "\t\t\"lux\": " << (float)sensor->temp << ", " << std::endl;
 		ss << "\t\t\"connected\": " << (sensor->enabled ? "true" : "false") << std::endl;
 		ss << "\t}," << std::endl;
 	}
@@ -262,7 +290,7 @@ string Request_List() {
 	
 	return ss.str();
 }
-string Request_Config() {
+string Request_Config(int32_t &error) {
 	string config;
 	GetConfigString("sun_sensors", config);
 	return config;
