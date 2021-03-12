@@ -34,13 +34,13 @@ float Request_Temperature(TemperatureSensor *sensor);
 bool Request_Connected(TemperatureSensor *sensor);
 
 //! Request for listing sensors
-string Request_List();
+string Request_List(int32_t &error);
 
 /**
  * @brief Returns the temperature sensor configuration JSON
  * @return The configuration JSON string
  */
-string Request_Config();
+string Request_Config(int32_t &error);
 
 
 // |----------------------------------------------|
@@ -56,7 +56,8 @@ Document sensor_config;
 ADT7311::Configuration default_sensor_config;
 
 //! A map of sensor names to TemperatureSensor devices
-unordered_map<string, TemperatureSensor*> sensors;
+unordered_map<string, devicestruc*> sensor_data;
+unordered_map<string, ADT7311*> sensor_interface;
 
 
 // |----------------------------------------------|
@@ -64,12 +65,13 @@ unordered_map<string, TemperatureSensor*> sensors;
 // |----------------------------------------------|
 
 int main() {
+    int32_t error = 0;
 	
 	// Create the agent
 	agent = new SimpleAgent(CUBESAT_AGENT_TEMP_NAME);
 	agent->set_activity_period(SLEEP_TIME);
-    agent->AddRequest("list", Request_List, "", "Returns a list of sensors");
-    agent->AddRequest("config", Request_Config, "", "Returns the temperature sensor configuration");
+    agent->add_request("list", Request_List, "", "Returns a list of sensors");
+    agent->add_request("config", Request_Config, "", "Returns the temperature sensor configuration");
 	
 	// Parse the sensor configuration
 	if ( !GetConfigDocument("temp_sensors", sensor_config) ) {
@@ -88,7 +90,9 @@ int main() {
 	
 	string name, type;
 	int bus, cs;
-	TemperatureSensor *sensor;
+    devicestruc *sensor;
+    ADT7311* handler;
+    vector<string> soh_props = {"utc","enabled","volt","amp","power"};
 	// Initialize the temperature sensor devices using the JSON
 	for (auto &sensor_obj : sensor_config.GetArray()) {
 		
@@ -96,8 +100,8 @@ int main() {
 		type = sensor_obj["type"].GetString();
 		
 		// Create a new temperature sensor device
-		sensor = agent->NewDevice<TemperatureSensor>(name);
-		sensors[name] = sensor;
+        sensor = agent->add_device(name, DeviceType::TSEN, error);
+        sensor_data[name] = sensor;
 		
 		
 		// Initialize the device as a sensor
@@ -106,38 +110,31 @@ int main() {
 			bus = sensor_obj["bus"].GetInt();
 			cs = sensor_obj["cs"].GetInt();
 			
-			sensor->SetCustomProperty<ADT7311*>("handler", new ADT7311(bus, cs));
-			sensor->SetCustomProperty<bool>("physical", true);
+            handler = new ADT7311(bus, cs);
+            sensor_interface[name] = handler;
 		}
-		// Initialize the device as remote
-		else {
-			//sensor->SetCustomProperty<std::string>("source", sensor_obj["key"].GetString());
-			sensor->SetCustomProperty<bool>("physical", false);
-		}
-		sensor->Post(sensor->utc = Time::Now());
-		sensor->Post(sensor->enabled = false);
-		sensor->Post(sensor->temperature = 0);
+
+        sensor->utc = Time::Now();
+        sensor->enabled = false;
+        sensor->temp = 0;
+
+        error = append_soh_list(name, soh_props);
+        if(error < 0){
+            printf("Error creating SOH List\n");
+        }
 		
-		// Add the temperature sensor to the telemetry log
-		agent->GetLog().RegisterDevice(name, sensor)
-				.RegisterProperty("utc", sensor->utc)
-				.RegisterProperty("enabled", sensor->enabled)
-				.RegisterProperty("temperature", sensor->temperature)
-				.RegisterProperty("voltage", sensor->voltage)
-				.RegisterProperty("current", sensor->current)
-				.RegisterProperty("power", sensor->power);
 		
 	}
 	
 	// Finish up
-	agent->Finalize();
+    agent->set_soh();
 	agent->DebugPrint();
 	
 	// Start executing the agent
 	while ( agent->StartLoop() ) {
 		
 		// Update sensor readings
-		for (auto it : sensors) {
+        for (auto it : sensor_data) {
 			UpdateSensor(it.first);
 		}
 	}
@@ -145,12 +142,10 @@ int main() {
 	
 	
 	// Free sensor devices
-	for (auto it : sensors) {
-		if ( sensor->GetCustomProperty<bool>("physical") ) {
-			ADT7311 *handler = sensor->GetCustomProperty<ADT7311*>("handler");
-			handler->Close();
-			delete handler;
-		}
+    for (auto it : sensor_interface) {
+        ADT7311 *handler = it->second;
+        handler->Close();
+        delete handler;
 	}
 	
 	// Free the agent
@@ -163,16 +158,15 @@ int main() {
 void UpdateSensor(const std::string &name) {
 	
 	// Fetch some information
-	TemperatureSensor *sensor = sensors[name];
-	bool is_physical = sensor->GetCustomProperty<bool>("physical");;
+    devicestruc *sensor = sensors[name];
 	
 	// Update the timestamp
 	sensor->utc = Time::Now();
 	
 	// Check whether the device is physical
-	if ( is_physical ) {
+    if ( sensor_interface.find(name) != sensor_interface.end() ) {
 		
-		ADT7311 *handler = sensor->GetCustomProperty<ADT7311*>("handler");
+        ADT7311 *handler = sensor_interface[name];
 		
 		// We compare against the manufacturer ID to see if the sensors are connected
 		const int kManufacturerID = 0b11000;
@@ -210,9 +204,9 @@ void UpdateSensor(const std::string &name) {
 		// 2. Check if the sensor is finished reading the temperature
 		// (11 = ready, otherwise not ready)
 		if ( config.operation_mode == 0b11 ) {
-			sensor->temperature = handler->GetTemperature();
+            sensor->temp = handler->GetTemperature();
 			
-			printf("Sensor '%s' finished converting: %.2f C\n", name.c_str(), (float)sensor->temperature);
+            printf("Sensor '%s' finished converting: %.2f C\n", name.c_str(), (float)sensor->temp);
 		}
 		// Wake up the sensor if it is idling
 		else {
@@ -237,7 +231,7 @@ void UpdateSensor(const std::string &name) {
 			if ( values.empty() )
 				return;
 			
-			sensor->temperature = values[source_id].nvalue;
+            sensor->temp = values[source_id].nvalue;
 			sensor->enabled = true;
 		}
 		else {
@@ -261,14 +255,14 @@ void UpdateSensor(const std::string &name) {
 
 
 float Request_Sensor_Temperature(TemperatureSensor *sensor) {
-	return sensor->temperature;
+    return sensor->temp;
 }
 
 bool Request_Connected(TemperatureSensor *sensor) {
 	return sensor->enabled;
 }
 
-string Request_List() {
+string Request_List(int32_t &error) {
 	stringstream ss;
 	
 	
@@ -277,7 +271,7 @@ string Request_List() {
 	for (auto it : sensors) {
 		ss <<	"\"" << it.first << "\": {";
 		ss <<		"\"utc\": " << it.second->utc << ", ";
-		ss <<		"\"temp\": " << it.second->temperature << ",";
+        ss <<		"\"temp\": " << it.second->temp << ",";
 		ss <<		"\"enabled\": " << (it.second->enabled ? "true" : "false");
 		ss <<	"},";
 	}
@@ -285,7 +279,7 @@ string Request_List() {
 	
 	return ss.str();
 }
-string Request_Config() {
+string Request_Config(int32_t &error) {
 	string config;
 	GetConfigString("temp_sensors", config);
 	return config;
