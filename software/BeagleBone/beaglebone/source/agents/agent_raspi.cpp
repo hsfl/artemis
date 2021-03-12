@@ -91,7 +91,7 @@ int main(int argc, char** argv) {
 	
 	// Create the agent
 	agent = new SimpleAgent(CUBESAT_AGENT_RASPI_NAME);
-	agent->SetLoopPeriod(SLEEP_TIME);
+    agent->set_activity_period(SLEEP_TIME);
 	
 	// Add the camera device
 	camera = agent->NewDevice<Camera>("camera");

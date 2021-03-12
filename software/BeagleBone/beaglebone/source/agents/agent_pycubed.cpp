@@ -166,7 +166,7 @@ int main(int argc, char** argv) {
 	
 	// Initialize the Agent
 	agent = new SimpleAgent(CUBESAT_AGENT_PYCUBED_NAME);
-	agent->SetLoopPeriod(SLEEP_TIME);
+	agent->set_activity_period(SLEEP_TIME);
 	
 	agent->AddNodeProperty<Node::PowerUse>(0);
 	agent->AddNodeProperty<Node::PowerGeneration>(0);

@@ -33,7 +33,7 @@ SimpleAgent::SimpleAgent(const std::string &name, std::string node,
 	
 	// Set some initial loop properties
 	this->loop_started = false;
-	SetLoopPeriod(1);
+    set_activity_period(1);
 }
 
 //===============================================================

@@ -14,7 +14,7 @@ int main() {
 	
 	
 	SimpleAgent *agent = new SimpleAgent("my_agent"); // Create the SimpleAgent
-	agent->SetLoopPeriod(2); // Set the agent to run at 2 second intervals
+	agent->set_activity_period(2); // Set the agent to run at 2 second intervals
 	
 	// Create a temperature sensor
 	TemperatureSensor *my_sensor = agent->NewDevice<TemperatureSensor>("my_sensor");

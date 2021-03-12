@@ -67,7 +67,7 @@ int main() {
 	
 	// Create the agent
 	agent = new SimpleAgent(CUBESAT_AGENT_TEMP_NAME);
-	agent->SetLoopPeriod(SLEEP_TIME);
+	agent->set_activity_period(SLEEP_TIME);
     agent->AddRequest("list", Request_List, "", "Returns a list of sensors");
     agent->AddRequest("config", Request_Config, "", "Returns the temperature sensor configuration");
 	

@@ -42,7 +42,7 @@ int main(int argc, char ** argv) {
 	
 	// Set up the agent
 	agent = new SimpleAgent("pycubed");
-	agent->SetLoopPeriod(0.5);
+	agent->set_activity_period(0.5);
 	agent->AddRequest("send", SendMessage, "Send a message to the PyCubed", "Usage: send <message type> <arg1> <arg2...>");
 	agent->Finalize();
 	

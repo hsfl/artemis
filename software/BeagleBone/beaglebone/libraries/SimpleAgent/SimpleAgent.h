@@ -177,15 +177,6 @@ namespace artemis {
 		void CrashIfNotOpen();
 		
 		/**
-		 * @brief Sets how long the agent should wait between iterations of the main loop (the period).
-		 * If this method is not called, the period defaults to 1 second.
-		 * @param period The period in seconds
-		 */
-		inline void SetLoopPeriod(double period) {
-			this->cinfo->agent[0].aprd = period;
-		}
-		
-		/**
 		 * @brief Signals the beginning of an iteration of the main loop.
 		 * @return True if the agent is running
 		 */

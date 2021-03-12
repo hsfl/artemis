@@ -81,7 +81,7 @@ int main() {
 	
 	// Create the agent
 	agent = new SimpleAgent(CUBESAT_AGENT_SUNSENSOR_NAME);
-	agent->SetLoopPeriod(SLEEP_TIME);
+	agent->set_activity_period(SLEEP_TIME);
     agent->AddRequest("sensor", Request_Sensor, "", "Returns the status of a sensor");
     agent->AddRequest("list", Request_List, "", "Returns a list of sensors");
     agent->AddRequest("config", Request_Config, "", "Returns the sun sensor configuration");

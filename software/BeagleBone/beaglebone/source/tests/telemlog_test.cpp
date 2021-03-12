@@ -25,7 +25,7 @@ int main(int argc, char ** argv) {
 	SimpleAgent *agent = new SimpleAgent("telemlog", "cubesat");
 	agent->AddRequest("purge", Request_Purge);
 	agent->AddRequest("finalize", Request_Finalize);
-	agent->SetLoopPeriod(1);
+	agent->set_activity_period(1);
 	
 	
 	TemperatureSensor *tsen = agent->NewDevice<TemperatureSensor>("tsen");
