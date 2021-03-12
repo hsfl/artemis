@@ -1,7 +1,6 @@
 
 #include "CubeSat.h"
 #include "SimpleAgent/SimpleAgent.h"
-//#include "SimpleAgent/DeviceJSON.h"
 #include "device/PyCubed.h"
 #include "utility/Configuration.h"
 
@@ -35,15 +34,20 @@ Document config;
 
 
 //! The CPU device representing the PyCubed
-CPU *pycubed;
+devicestruc *pycubed;
 //! The IMU device located on the PyCubed
-IMU *imu;
+devicestruc *imu;
 //! The GPS device located on the PyCubed
-GPS *gps;
+devicestruc *gps;
 //! The radio device located on the PyCubed
-RadioTransceiver *radio;
+devicestruc *radio;
 //! The battery device located on the battery board
-Battery *battery;
+devicestruc *battery;
+
+string PowerUse = "powuse";
+string PowerGeneration = "powgen";
+string BatteryCapacity = "battcap";
+string BatteryCharge = "battlev";
 
 //! A timer
 Timer connection_timer;
@@ -51,6 +55,7 @@ Timer connection_timer;
 //! Timer used for radio kill requests
 Timer kill_timer;
 bool first_kill_received = false;
+bool sent_startup_confirmation = false;
 
 
 
@@ -60,7 +65,7 @@ bool first_kill_received = false;
 
 
 //! Sets up the PyCubed
-void InitPyCubed();
+int32_t InitPyCubed();
 //! Tries to connect to the PyCubed
 bool ConnectPyCubed();
 //! Handles operations with the PyCubed
@@ -82,7 +87,7 @@ void RunCommand(const std::string &cmd);
  * @brief Checks if the PyCubed can be reached
  * @return True if the PyCubed is connected
  */
-bool Request_IsUp();
+string Request_IsUp(int32_t &error);
 
 /**
  * @brief Sends a message to the PyCubed
@@ -90,49 +95,54 @@ bool Request_IsUp();
  * @param message_args A comma-separated list of arguments, not including the checksum
  * @return True if the message was sent successfullly
  */
-bool Request_SendMessage(string message_type, string message_args);
+string Request_SendMessage(vector<string> &args, int32_t &error);
 
 /**
  * @brief Returns the latest CPU data received
  * @return The CPU data as a JSON string
  */
-string Request_GetCPUData();
+string Request_GetCPUData(int32_t &error);
 
 /**
  * @brief Returns the latest IMU data received
  * @return The IMU data as a JSON string
  */
-string Request_GetIMUData();
+string Request_GetIMUData(int32_t &error);
 
 /**
  * @brief Returns the latest GPS data received
  * @return The GPS data as a JSON string
  */
-string Request_GetGPSData();
+string RequestGetBatteryCharge(int32_t &error);
+/**
+ * @brief Returns the latest GPS data received
+ * @return The GPS data as a JSON string
+ */
+string Request_GetGPSData(int32_t &error);
 
 /**
  * @brief Returns the latest power use data received
  * @return The power data as a JSON string
  */
-string Request_GetPowerData();
+string Request_GetPowerData(int32_t &error);
 
 /**
  * @brief Returns the latest temperature data received
  * @return The temperature data as a JSON string
  */
-string Request_GetTemperatureData();
+string Request_GetTemperatureData(int32_t &error);
 
 /**
  * @brief Sends a message to the PyCubed to kill the radio
  * @return True if the message was sent successfully
  */
-bool Request_KillRadio();
+string Request_KillRadio(int32_t &error);
 
 /**
  * @brief Spoofs the given string as input from the PyCubed.
  * @param input The input string
  */
-void Request_Spoof(string input);
+string Request_Spoof(vector<string> &args, int32_t &error);
 
 
 // |----------------------------------------------|
@@ -140,6 +150,7 @@ void Request_Spoof(string input);
 // |----------------------------------------------|
 
 int main(int argc, char** argv) {
+    int32_t error = 0;
 	
 	if ( GetConfigDocument("pycubed", config) ) {
 		uart = config["uart"].GetInt();
@@ -167,31 +178,32 @@ int main(int argc, char** argv) {
 	// Initialize the Agent
 	agent = new SimpleAgent(CUBESAT_AGENT_PYCUBED_NAME);
 	agent->set_activity_period(SLEEP_TIME);
-	
-	agent->AddNodeProperty<Node::PowerUse>(0);
-	agent->AddNodeProperty<Node::PowerGeneration>(0);
-	agent->AddNodeProperty<Node::BatteryCapacity>(3.5f * 4);
-	agent->AddNodeProperty<Node::BatteryCharge>(0);
+
+    agent->set_value(PowerUse, 0.);
+    agent->set_value(PowerGeneration, 0.);
+    agent->set_value(BatteryCapacity, 3.5f * 4);
+    agent->set_value(BatteryCharge, 0.);
+    agent->append_soh_list("node",{PowerUse, PowerGeneration, BatteryCapacity, BatteryCharge});
+
 	
     agent->add_request("is_up", Request_IsUp, "", "Checks if the PyCubed is reachable");
-    agent->add_request("send", Request_SendMessage, "", "Sends a message to the PyCubed", "Usage: send msgtype arg1 arg2 ...");
+    agent->add_request("send", Request_SendMessage, "msgtype arg1 arg2 ...", "Sends a message to the PyCubed");
     agent->add_request("cpu", Request_GetCPUData, "", "Returns the latest CPU data received");
     agent->add_request("imu", Request_GetIMUData, "", "Returns the latest IMU data received");
     agent->add_request("gps", Request_GetGPSData, "", "Returns the latest GPS data received");
     agent->add_request("temperature", Request_GetTemperatureData, "", "Returns the latest temperature data received");
     agent->add_request("power", Request_GetPowerData, "", "Returns the latest power data received");
     agent->add_request("kill_radio", Request_KillRadio, "", "Sends a message to the PyCubed to kill the radio");
-    agent->add_request("spoof", Request_Spoof, "", "Spoofs the given string as input from the PyCubed. Do not include checksum or syncword", "Usage: spoof msgtype arg1 arg2 ...");
+    agent->add_request("spoof", Request_Spoof, "msgtype arg1 arg2 ...", "Spoofs the given string as input from the PyCubed. Do not include checksum or syncword");
 	
 	// Initialize the PyCubed
-	InitPyCubed();
+    error = InitPyCubed();
+    if(error < 0){
+        exit(error);
+    }
 	
 	// Finish adding properties
-	agent->Finalize();
-	
-	// Debug print
-	agent->DebugPrint(true);
-	
+    agent->set_soh();
 	
 	// Run the main loop for this agent
 	while ( agent->StartLoop() ) {
@@ -214,88 +226,112 @@ int main(int argc, char** argv) {
 }
 
 
-void InitPyCubed() {
-	
+int32_t InitPyCubed() {
+    int32_t error = 0;
 	// Create a new PyCubed device
 	handler = new PyCubed(uart, baud);
 	handler->SetShutdownCallback(Shutdown);
 	handler->SetCommandCallback(RunCommand);
 	
 	// Add the PyCubed CPU device
-	pycubed = agent->NewDevice<CPU>("pycubed");
-	pycubed->Post(pycubed->utc = Time::Now());
-	pycubed->Post(pycubed->memory_usage = 0);
-	pycubed->Post(pycubed->max_memory = 0.0037252903); // MR25H40MDF RAM
-	pycubed->Post(pycubed->voltage = 0);
-	pycubed->Post(pycubed->current = 0);
-	pycubed->Post(pycubed->up_time = 0);
-	pycubed->Post(pycubed->temperature = 273.15);
-	pycubed->SetCustomProperty<bool>("sent_startup_confirmation", false);
-	pycubed->SetCustomProperty<PyCubed*>("handler", handler);
-	
-	agent->GetLog().RegisterDevice("cpu", pycubed)
-			.RegisterProperty("utc", pycubed->utc)
-			.RegisterProperty("memory_use", pycubed->memory_usage)
-			.RegisterProperty("voltage", pycubed->voltage)
-			.RegisterProperty("current", pycubed->current)
-			.RegisterProperty("power", pycubed->power)
-			.RegisterProperty("up_time", pycubed->up_time)
-			.RegisterProperty("temperature", pycubed->temperature);
-	
+    pycubed = agent->add_device("pycubed", DeviceType::CPU, error);
+    if(error < 0){
+        printf("Error adding device CPU\n");
+    }
+    pycubed->utc = Time::Now();
+    pycubed->cpu.gib = 0;
+    pycubed->cpu.maxgib = 0.0037252903; // MR25H40MDF RAM
+    pycubed->volt = 0;
+    pycubed->amp = 0;
+    pycubed->cpu.uptime = 0;
+    pycubed->temp = 273.15;
+
+    string memory_alias = agent->create_device_value_alias("pycubed", "gib","memory_usage", error);
+    if(error < 0){
+        printf("Error creating alias: memory_usage\n");
+    }
+    string maxmemory_alias = agent->create_device_value_alias("pycubed", "maxgib","max_memory", error);
+    if(error < 0){
+        printf("Error creating alias: max_memory\n");
+    }
+
+    agent->append_soh_list("pycubed",{"utc","volt","amp","uptime","temp", memory_alias, maxmemory_alias});
+    if(error < 0){
+        printf("Error creating SOH list (pycubed)\n");
+    }
+
 	// Add the battery pack
-	battery = agent->NewDevice<Battery>("battery");
-	battery->Post(battery->utc = Time::Now());
-	battery->Post(battery->temperature = 273.15);
-	battery->Post(battery->capacity = 3.5f * 4);
-	battery->Post(battery->charge = 3.5f * 4);
-	battery->Post(battery->efficiency = 0.85f);
-	battery->Post(battery->percentage = 100);
-	battery->Post(battery->voltage = 0);
-	battery->Post(battery->current = 0);
-    battery->add_request("charge", +[](Battery *battery) -> float { return battery->charge; }, "Returns the battery charge");
+    battery = agent->add_device("battery", DeviceType::BATT, error);
+    if(error < 0){
+        printf("Error adding device BATT\n");
+    }
+    battery->utc = Time::Now();
+    battery->temp = 273.15;
+    battery->batt.capacity = 3.5f * 4;
+    battery->batt.charge = 3.5f * 4;
+    battery->batt.efficiency = 0.85f;
+    battery->batt.percentage = 100;
+    battery->volt = 0;
+    battery->amp = 0;
+
+    agent->add_request("battery_charge", RequestGetBatteryCharge, "","battery level");
 	
-	agent->GetLog().RegisterDevice("battery", battery)
-			.RegisterProperty("utc", battery->utc)
-			.RegisterProperty("voltage", battery->voltage)
-			.RegisterProperty("current", battery->current)
-			.RegisterProperty("power", battery->power)
-			.RegisterProperty("temperature", battery->temperature)
-			.RegisterProperty("charge", battery->charge)
-			.RegisterProperty("percentage", battery->percentage)
-			.RegisterProperty("capacity", battery->capacity);
-	
+    agent->append_soh_list("battery",{"utc","capacity","efficiency","volt","amp","charge","percentage","temp"});
+    if(error < 0){
+        printf("Error creating SOH list (battery)\n");
+    }
 	
 	// Add the IMU
-	imu = agent->NewDevice<IMU>("imu");
-	imu->Post(imu->utc = Time::Now());
-	imu->Post(imu->temperature = 273.15);
-	imu->Post(imu->acceleration = Vec3());
-	imu->Post(imu->magnetic_field = Vec3());
-	imu->Post(imu->angular_velocity	= Vec3());
-	agent->GetLog().RegisterDevice("imu", imu)
-			.RegisterProperty("utc", imu->utc)
-			.RegisterProperty("voltage", imu->voltage)
-			.RegisterProperty("current", imu->current)
-			.RegisterProperty("power", imu->power)
-			.RegisterProperty("temperature", imu->temperature)
-			.RegisterProperty("acceleration", imu->acceleration)
-			.RegisterProperty("magnetic_field", imu->magnetic_field)
-			.RegisterProperty("angular_velocity", imu->angular_velocity);
+    imu = agent->add_device("imu", DeviceType::IMU, error);
+    if(error < 0){
+        printf("Error adding device BATT\n");
+    }
+
+    imu->utc = Time::Now();
+    battery->temp = 273.15;
+    string magnetic_field_alias = agent->create_device_value_alias("imu", "mag","magnetic_field", error);
+    if(error < 0){
+        printf("Error creating alias: magnetic_field\n");
+    }
+    string angular_velocity_alias = agent->create_device_value_alias("imu", "omega","angular_velocity", error);
+    if(error < 0){
+        printf("Error creating alias: memory_use\n");
+    }
+    string acceleration_alias = agent->create_device_value_alias("imu", "alpha","acceleration", error);
+    if(error < 0){
+        printf("Error creating alias: memory_use\n");
+    }
+
+    agent->append_soh_list("pycubed",{"utc","volt","amp","power","temp", magnetic_field_alias, angular_velocity_alias, acceleration_alias});
+    if(error < 0){
+        printf("Error creating SOH list (imu)\n");
+    }
 	
 	// Add the GPS
-	gps = agent->NewDevice<GPS>("gps");
-	gps->Post(gps->utc = Time::Now());
-	gps->Post(gps->location = Location());
-	gps->Post(gps->velocity = Vec3());
-	gps->Post(gps->satellites_used = 0);
-	agent->GetLog().RegisterDevice("gps", gps)
-			.RegisterProperty("utc", gps->utc)
-			.RegisterProperty("voltage", gps->voltage)
-			.RegisterProperty("current", gps->current)
-			.RegisterProperty("power", gps->power)
-			.RegisterProperty("location", gps->location)
-			.RegisterProperty("velocity", gps->velocity)
-			.RegisterProperty("satellites_used", gps->satellites_used);
+    gps = agent->add_device("gps", DeviceType::GPS, error);
+    if(error < 0){
+        printf("Error adding device (GPS)\n");
+    }
+    gps->utc = Time::Now();
+
+    string satellites_used_alias = agent->create_device_value_alias("gps", "sats_used","satellites_used", error);
+    if(error < 0){
+        printf("Error creating alias: satellites_used\n");
+    }
+    string velocity_alias = agent->create_device_value_alias("gps", "geocv","velocity", error);
+    if(error < 0){
+        printf("Error creating alias: velocity\n");
+    }
+    string location_alias = agent->create_device_value_alias("gps", "geods","location", error);
+    if(error < 0){
+        printf("Error creating alias: location\n");
+    }
+
+    agent->append_soh_list("pycubed",{"utc","volt","amp","power","temp",velocity_alias, location_alias, satellites_used_alias});
+    if(error < 0){
+        printf("Error creating SOH list (imu)\n");
+    }
+    return error;
 }
 
 bool ConnectPyCubed() {
@@ -332,21 +368,22 @@ void UpdatePyCubed() {
 		
 		// Set the PyCubed connection status
 		pycubed->enabled = false;
-		pycubed->up_time = 0;
+        pycubed->cpu.uptime = 0;
 		
 		// Update timestamps
 		pycubed->utc = Time::Now();
 		battery->utc = Time::Now();
 		imu->utc = Time::Now();
 		gps->utc = Time::Now();
+        agent->set_value("node_utc", Time::Now());
 		
 		return;
 	}
 	
 	// Send startup confirmation
-	if ( !pycubed->GetCustomProperty<bool>("sent_startup_confirmation") ) {
+    if ( !sent_startup_confirmation ) {
 		handler->StartupConfirmation();
-		pycubed->SetCustomProperty<bool>("sent_startup_confirmation", true);
+        sent_startup_confirmation = true;
 	}
 	
 	// Receive messages from pycubed
@@ -360,33 +397,35 @@ void UpdatePyCubed() {
 	
 	// Store CPU info
 	pycubed->utc = Time::Now();
-	pycubed->voltage = power_info.sys_voltage;
-	pycubed->current = power_info.sys_current;
-	pycubed->temperature = temp_info.cpu_temp;
-	pycubed->up_time = (int)connection_timer.Seconds();
+    pycubed->volt = power_info.sys_voltage;
+    pycubed->amp = power_info.sys_current;
+    pycubed->temp = temp_info.cpu_temp;
+    pycubed->cpu.uptime = (int)connection_timer.Seconds();
 	
 	// Store battery info
 	battery->utc = Time::Now();
-	battery->voltage = power_info.batt_voltage;
-	battery->current = power_info.batt_current;
-	battery->temperature = temp_info.batt_temp;
+    battery->volt = power_info.batt_voltage;
+    battery->amp = power_info.batt_current;
+    battery->temp = temp_info.batt_temp;
 	
 	// Store IMU info
 	imu->utc = Time::Now();
-	imu->temperature = temp_info.cpu_temp;
-	imu->magnetic_field = imu_info.magnetometer;
-	imu->acceleration = imu_info.acceleration;
-	imu->angular_velocity = imu_info.gyroscope;
+    imu->temp = temp_info.cpu_temp;
+    imu->imu.mag = imu_info.magnetometer;
+    imu->imu.alpha = imu_info.acceleration;
+    imu->imu.omega = imu_info.gyroscope;
 	
 	// Store GPS info
 	gps->utc = Time::Now();
-	gps->location = Location(gps_info.latitude, gps_info.longitude, gps_info.altitude);
-	gps->velocity = Vec3(gps_info.speed, 0, 0);
-	gps->satellites_used = gps_info.sats_used;
+    gps->gps.geods.lat = gps_info.latitude;
+    gps->gps.geods.lon = gps_info.longitude;
+    gps->gps.geods.h = gps_info.altitude;
+    gps->gps.geocv.col[0] = gps_info.speed;
+    gps->gps.sats_used = gps_info.sats_used;
 	
 	// Store node info
-	agent->SetNodeProperty<Node::PowerUse>(power_info.batt_current * power_info.batt_voltage);
-	agent->SetNodeProperty<Node::BatteryCharge>(0); // ?
+    agent->set_value(PowerUse, power_info.batt_current * power_info.batt_voltage);
+    agent->set_value(BatteryCharge, 0); // ?
 }
 
 
@@ -420,34 +459,37 @@ void RunCommand(const std::string &cmd) {
 //========================== REQUESTS ===========================
 //===============================================================
 
-bool Request_IsUp() {
-	return handler->IsOpen();
+string Request_IsUp(int32_t &error) {
+    return handler->IsOpen() ? "true" : "false";
 }
 
-bool Request_SendMessage(string message_type, string message_args) {
+string Request_SendMessage(vector<string> &args, int32_t &error) {
 	
 	// Make sure the PyCubed is connected first
 	if ( !handler->IsOpen() )
-		return false;
+        return "false";
 	
 	// Parse the string into a vector of arguments
-	vector<string> args;
-	stringstream ss(message_args);
-	string arg;
-	
-	while ( ss.good() ) {
-		getline(ss, arg, ',');
-		args.push_back(arg);
-	}
+    if(args.size() == 0) {
+        error = ErrorNumbers::COSMOS_GENERAL_ERROR_EMPTY;
+        return "incorrect usage";
+    }
+    string message_type = args[0];
+    args.erase(args.begin());
 	
 	// Send the message
-	return handler->SendMessage(message_type, args);
+    return handler->SendMessage(message_type, args) ? "true" : "false";
 }
 
-void Request_Spoof(string input) {
+string Request_Spoof(vector<string> &args, int32_t &error) {
+    if(args.size() == 0) {
+        error = ErrorNumbers::COSMOS_GENERAL_ERROR_EMPTY;
+        return "incorrect usage";
+    }
 	stringstream spoofed;
 	
 	// Compute the checksum of the message
+    string input = args[0];
 	int checksum = 0;
 	for (char c : input)
 		checksum ^= c;
@@ -458,71 +500,45 @@ void Request_Spoof(string input) {
 	
 	// Pass the message to the PyCubed
 	handler->SpoofInput((uint8_t*)spoofed.str().c_str(), spoofed.str().size());
+    return "";
 }
 
 
-string Request_GetCPUData() {
-	
-	DeviceSerializer serializer;
-	serializer.AddProperty("utc", pycubed->utc);
-	serializer.AddProperty("memory_usage", pycubed->memory_usage);
-	serializer.AddProperty("max_memory", pycubed->max_memory);
-	serializer.AddProperty("voltage", pycubed->voltage);
-	serializer.AddProperty("current", pycubed->current);
-	serializer.AddProperty("up_time", pycubed->up_time);
-	serializer.AddProperty("temperature", pycubed->temperature);
-	
-	return serializer.GetJSON();
+string Request_GetCPUData(int32_t &error) {
+    vector<string> props ={"utc","memory_usage","max_memory", "volt","current","uptime","temp"};
+    string jstring =  agent->get_device_values("pycubed", props, error);
+    return jstring;
 }
 
-string Request_GetIMUData() {
-	
-	DeviceSerializer serializer;
-	serializer.AddProperty("utc", imu->utc);
-	serializer.AddProperty("temperature", imu->temperature);
-	serializer.AddProperty("magentic_field", imu->magnetic_field);
-	serializer.AddProperty("acceleration", imu->acceleration);
-	serializer.AddProperty("angular_velocity", imu->angular_velocity);
-	
-	return serializer.GetJSON();
+string Request_GetIMUData(int32_t &error) {
+    vector<string> props = {"utc","magnetic_field","acceleration", "angular_velocity","temp"};
+    string jstring =  agent->get_device_values("imu", props, error);
+    return jstring;
 }
 
-string Request_GetGPSData() {
-	
-	DeviceSerializer serializer;
-	serializer.AddProperty("utc", gps->utc);
-	serializer.AddProperty("location", gps->location);
-	serializer.AddProperty("satellites_used", gps->satellites_used);
-	
-	return serializer.GetJSON();
+string Request_GetGPSData(int32_t &error) {
+    vector<string> props = {"utc","location","satellites_used"};
+    string jstring =  agent->get_device_values("gps", props, error);
+    return jstring;
 }
 
-string Request_GetPowerData() {
-	
-	DeviceSerializer serializer;
-	serializer.AddProperty("utc", battery->utc);
-	serializer.AddProperty("temperature", battery->temperature);
-	serializer.AddProperty("capacity", battery->capacity);
-	serializer.AddProperty("charge", battery->charge);
-	serializer.AddProperty("efficiency", battery->efficiency);
-	serializer.AddProperty("percentage", battery->percentage);
-	serializer.AddProperty("voltage", battery->voltage);
-	serializer.AddProperty("current", battery->current);
-	
-	return serializer.GetJSON();
+string Request_GetPowerData(int32_t &error) {
+    vector<string> props = {"utc","capacity","charge", "efficiency","percentage","volt","amp","temp"};
+    string jstring =  agent->get_device_values("battery", props, error);
+    return jstring;
 }
-string Request_GetTemperatureData() {
-	DeviceSerializer serializer;
-	serializer.AddProperty("utc", pycubed->utc);
-	serializer.AddProperty("cpu_temperature", pycubed->temperature);
-	serializer.AddProperty("battery_temperature", battery->temperature);
-	
-	return serializer.GetJSON();
+string Request_GetTemperatureData(int32_t &error) {
+    string pycubed_temp = agent->get_soh_name("pycubed","temp", error);
+    string pycubed_utc = agent->get_soh_name("pycubed","utc", error);
+    string battery_temp = agent->get_soh_name("battery","temp", error);
+    vector<string> props = {pycubed_utc, pycubed_temp, battery_temp};
+    string jstring =  agent->get_values(props, error);
+    return jstring;
 }
-bool Request_KillRadio() {
+string Request_KillRadio() {
 	if ( !handler->IsOpen() ) {
 		cout << "[Error] Attempted to kill the radio, but no PyCubed is connected." << endl;
-		return false;
+        return "false";
 	}
 	
 	if ( first_kill_received ) {
@@ -530,15 +546,21 @@ bool Request_KillRadio() {
 		
 		if ( kill_timer.Seconds() < 5 ) {
 			cout << "Second kill request received. Killing the radio..." << endl;
-			return handler->KillRadio();
+            return handler->KillRadio() ? "true" : "false";
 		}
 		else {
-			return false;
+            return "false";
 		}
 	}
 	else {
 		first_kill_received = true;
 	}
+    return "true";
+}
+
+string RequestGetBatteryCharge(int32_t &error){
+
+    return agent->get_device_values("battery",{"charge"}, error);
 }
 
 
