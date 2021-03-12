@@ -29,13 +29,13 @@
 
 #include "cubesat_defs.h"
 #include "Exceptions.h"
-#include "RemoteAgent.h"
-#include "Device.h"
+//#include "RemoteAgent.h"
+//#include "Device.h"
 #include "StringTools.h"
 #include "TimeTools.h"
-#include "AgentRequest.h"
-#include "DeviceRequest.h"
-#include "Telemetry.h"
+//#include "AgentRequest.h"
+//#include "DeviceRequest.h"
+//#include "Telemetry.h"
 
 #include <functional>
 #include <unordered_map>
@@ -46,7 +46,7 @@
 
 
 namespace artemis {
-	
+    typedef beatstruc RemoteAgent;
 	//===============================================================
 	//=========================== SUPPORT ===========================
 	//===============================================================
@@ -58,34 +58,34 @@ namespace artemis {
 	 * @param agent_ The (complex) agent calling this request
 	 * @return 0 upon success, or a negative value on failure
 	 */
-	int32_t RequestProxy(std::string &request, std::string &response, Agent *agent_);
+    //int32_t RequestProxy(std::string &request, std::string &response, Agent *agent_);
 	
 	
 	
 	//! A SimpleAgent request (added by default) which prints device properties
-	std::string _Request_DebugPrint();
+    std::string _Request_DebugPrint(int32_t& error);
 	
 	
 	//! You guessed it -- it's a simple agent
-	class SimpleAgent : protected Agent {
+    class SimpleAgent : public Agent {
 	protected:
 		
 		//! Represents a COSMOS node property
-		struct NodeProperty {
-			//! The COSMOS name of the property (e.g. node_battcap)
-			std::string cosmos_name;
-			//! The readable name of the property (e.g. Battery Capacity)
-			std::string readable_name;
-			//! The value of the property represented as a string
-			std::string value_string;
-			//! Whether or not the property should be posted in the state of health string
-			bool post;
+//		struct NodeProperty {
+//			//! The COSMOS name of the property (e.g. node_battcap)
+//			std::string cosmos_name;
+//			//! The readable name of the property (e.g. Battery Capacity)
+//			std::string readable_name;
+//			//! The value of the property represented as a string
+//			std::string value_string;
+//			//! Whether or not the property should be posted in the state of health string
+//			bool post;
 			
-			//! A default constructor is required for std::unordered_map
-			NodeProperty() {}
-			NodeProperty(const std::string &value_string, const std::string &cosmos_name, const std::string &readable_name, bool post)
-				: cosmos_name(cosmos_name), readable_name(readable_name), value_string(value_string), post(post) {}
-		};
+//			//! A default constructor is required for std::unordered_map
+//			NodeProperty() {}
+//			NodeProperty(const std::string &value_string, const std::string &cosmos_name, const std::string &readable_name, bool post)
+//				: cosmos_name(cosmos_name), readable_name(readable_name), value_string(value_string), post(post) {}
+//		};
 		
 	public:
 		
@@ -103,18 +103,36 @@ namespace artemis {
 		
 		virtual ~SimpleAgent() {
 			
-			// Delete devices
-			for (auto device_pair : devices)
-				delete device_pair.second;
+//			// Delete devices
+//			for (auto device_pair : devices)
+//				delete device_pair.second;
 			
-			devices.clear();
+//			devices.clear();
 		}
 		
 		
 		//===============================================================
 		//======================== MISCELLANEOUS ========================
 		//===============================================================
-		
+        void append_soh_list(string prop){
+            soh_list.push_back(prop);
+        }
+        int32_t append_soh_list(string devicename, vector<string> props){
+            int32_t error = 0;
+            string soh_entry;
+            for(string p: props){
+                soh_entry = this->get_soh_name(devicename, p, error);
+                if(error < 0){
+                    return error;
+                }
+                soh_list.push_back(soh_entry);
+            }
+            return 0;
+        }
+
+        int32_t set_soh(){
+            return Agent::set_sohstring(soh_list);
+        }
 		
 		/**
 		 * @brief Returns the original (more complex) version of this agent
@@ -196,7 +214,7 @@ namespace artemis {
 		 * the list of posted properties. Call this once you are done
 		 * adding devices and properties
 		 */
-		void Finalize();
+//		void Finalize();
 		
 		//===============================================================
 		//======================== REMOTE AGENTS ========================
@@ -210,7 +228,7 @@ namespace artemis {
 		 * @param crash_if_failed If true, the program will crash if the agent cannot be found
 		 * @return A cubesat::RemoteAgent object corresponding to the remote agent
 		 */
-		RemoteAgent FindAgent(const std::string &name, const std::string &node, float wait_sec = 2.0f, bool crash_if_failed = false);
+//		RemoteAgent FindAgent(const std::string &name, const std::string &node, float wait_sec = 2.0f, bool crash_if_failed = false);
 		
 		/**
 		 * @brief Attempts to connect to an agent running in a different process on the same node
@@ -219,26 +237,26 @@ namespace artemis {
 		 * @param crash_if_failed If true, the program will crash if the agent cannot be found
 		 * @return A cubesat::RemoteAgent object corresponding to the remote agent
 		 */
-		inline RemoteAgent FindAgent(const std::string &name, float wait_sec = 2.0f, bool crash_if_failed = false) {
-			return FindAgent(name, this->nodeName, wait_sec, crash_if_failed);
-		}
+//		inline RemoteAgent FindAgent(const std::string &name, float wait_sec = 2.0f, bool crash_if_failed = false) {
+//			return FindAgent(name, this->nodeName, wait_sec, crash_if_failed);
+//		}
 		
 		
-		/**
-		 * @brief Returns the telemetry log for this agent
-		 * @return The telemetry log
-		 */
-		inline TelemetryLog& GetLog() {
-			return telem_log;
-		}
+//		/**
+//		 * @brief Returns the telemetry log for this agent
+//		 * @return The telemetry log
+//		 */
+//		inline TelemetryLog& GetLog() {
+//			return telem_log;
+//		}
 		
-		/**
-		 * @brief Returns the telemetry log for this agent
-		 * @return The telemetry log
-		 */
-		inline const TelemetryLog& GetLog() const {
-			return telem_log;
-		}
+//		/**
+//		 * @brief Returns the telemetry log for this agent
+//		 * @return The telemetry log
+//		 */
+//		inline const TelemetryLog& GetLog() const {
+//			return telem_log;
+//		}
 		
 		//===============================================================
 		//========================== REQUESTS ===========================
@@ -252,40 +270,40 @@ namespace artemis {
 		 * @param crash_on_error If true, the program will crash if an error occurs
 		 * @return True if successful
 		 */
-		template <typename R, typename... Args>
-		bool AddRequest(const std::string &request_name, R(*request_callback)(Args...),
-						std::string synopsis = "", std::string description = "", bool crash_on_error = SIMPLEAGENT_STRICT_MODE) {
+//		template <typename R, typename... Args>
+//		bool AddRequest(const std::string &request_name, R(*request_callback)(Args...),
+//						std::string synopsis = "", std::string description = "", bool crash_on_error = SIMPLEAGENT_STRICT_MODE) {
 			
-			// Check if a request with the same name was already added
-			if ( requests.find(request_name) != requests.end() ) {
-				printf("Failed to add request '%s': another request with this name already exists.\n", request_name.c_str());
+//			// Check if a request with the same name was already added
+//			if ( requests.find(request_name) != requests.end() ) {
+//				printf("Failed to add request '%s': another request with this name already exists.\n", request_name.c_str());
 				
-				if ( crash_on_error )
-					exit(1);
+//				if ( crash_on_error )
+//					exit(1);
 				
-				return false;
-			}
+//				return false;
+//			}
 			
 			
-			// Add the request proxy to the agent instead, using the given request name
-			int status = this->add_request(request_name, RequestProxy, synopsis, description);
+//			// Add the request proxy to the agent instead, using the given request name
+//			int status = this->add_request(request_name, RequestProxy, synopsis, description);
 			
-			// Check for errors
-			if ( status < 0 ) {
-				printf("Failed to add request '%s': %s\n", request_name.c_str(), cosmos_error_string(status).c_str());
+//			// Check for errors
+//			if ( status < 0 ) {
+//				printf("Failed to add request '%s': %s\n", request_name.c_str(), cosmos_error_string(status).c_str());
 				
-				if ( crash_on_error )
-					exit(status);
+//				if ( crash_on_error )
+//					exit(status);
 				
-				return false;
-			}
-			else {
-				// Store the request
-				requests[request_name] = new AgentRequest(request_callback);
+//				return false;
+//			}
+//			else {
+//				// Store the request
+//				requests[request_name] = new AgentRequest(request_callback);
 				
-				return true;
-			}
-		}
+//				return true;
+//			}
+//		}
 		
 		/**
 		 * @brief Adds a request to this agent using alias names
@@ -296,53 +314,53 @@ namespace artemis {
 		 * @param crash_on_error If true, the program will crash if an error occurs
 		 * @return True if successful
 		 */
-		template <typename R, typename... Args>
-		bool AddRequest(std::initializer_list<std::string> request_names, R(*request_callback)(Args...),
-						std::string synopsis = "", std::string description = "", bool crash_on_error = SIMPLEAGENT_STRICT_MODE) {
-			// Add aliases for the request
-			bool success = true;
+//		template <typename R, typename... Args>
+//		bool AddRequest(std::initializer_list<std::string> request_names, R(*request_callback)(Args...),
+//						std::string synopsis = "", std::string description = "", bool crash_on_error = SIMPLEAGENT_STRICT_MODE) {
+//			// Add aliases for the request
+//			bool success = true;
 			
-			// Add the requests
-			// Agh why doesn't std::initializer_list have a subscript operator??
-			int i = 0;
-			std::string first_name;
-			for (const std::string &name : request_names) {
-				// After the first request, set the synopsis as 'Alias of ...'
-				if ( i == 0 ) {
-					success = success && AddRequest(name, request_callback, synopsis, description, crash_on_error);
-					first_name = name;
-				}
-				else
-					success = success && AddRequest(name, request_callback, "Alias of " + first_name, "", crash_on_error);
+//			// Add the requests
+//			// Agh why doesn't std::initializer_list have a subscript operator??
+//			int i = 0;
+//			std::string first_name;
+//			for (const std::string &name : request_names) {
+//				// After the first request, set the synopsis as 'Alias of ...'
+//				if ( i == 0 ) {
+//					success = success && AddRequest(name, request_callback, synopsis, description, crash_on_error);
+//					first_name = name;
+//				}
+//				else
+//					success = success && AddRequest(name, request_callback, "Alias of " + first_name, "", crash_on_error);
 				
-				++i;
-			}
+//				++i;
+//			}
 			
-			return success;
-		}
+//			return success;
+//		}
 		
 		/**
 		 * @brief Retrieves a previously-added request
 		 * @param request_name The name of the request
 		 * @return The AgentRequest object, or nullptr if it does not exist
 		 */
-		inline AgentRequest* GetRequest(const std::string &request_name) {
-			auto it = requests.find(request_name);
+//		inline AgentRequest* GetRequest(const std::string &request_name) {
+//			auto it = requests.find(request_name);
 			
-			if ( it == requests.end() )
-				return nullptr;
-			else
-				return requests[request_name];
-		}
+//			if ( it == requests.end() )
+//				return nullptr;
+//			else
+//				return requests[request_name];
+//		}
 		
-		/**
-		 * @brief Checks if a request with the given name already exists
-		 * @param request_name The request name
-		 * @return True if the request already exists
-		 */
-		inline bool RequestExists(const std::string &request_name) const {
-			return requests.find(request_name) != requests.end();
-		}
+//		/**
+//		 * @brief Checks if a request with the given name already exists
+//		 * @param request_name The request name
+//		 * @return True if the request already exists
+//		 */
+//		inline bool RequestExists(const std::string &request_name) const {
+//			return requests.find(request_name) != requests.end();
+//		}
 		
 		
 		
@@ -356,61 +374,65 @@ namespace artemis {
 		 * @param crash_on_error If true, the program will crash if an error occurs
 		 * @return The new device. Don't delete this! Do you want undefined behavior? Because that's how you get undefined behavior
 		 */
-		template <typename DeviceType>
-		DeviceType* NewDevice(const std::string &name, bool crash_on_error = SIMPLEAGENT_STRICT_MODE) {
-			
-			// Check if a device with the given name already exists
-			if ( DeviceExists(name) ) {
-				printf("The device '%s' already exists\n", name.c_str());
-				throw DeviceAlreadyExistsException(name);
-			}
-			else {
+//        template <typename DevType>
+//        devicestruc* NewDevice(const std::string &name, DeviceType type) {
+//            int32_t error = 0;
+//            devicestruc* dev = add_device(name, type, error);
+//            if(error < 0) return nullptr;
+//            return dev;
+//        }
+//			// Check if a device with the given name already exists
+//			if ( DeviceExists(name) ) {
+//				printf("The device '%s' already exists\n", name.c_str());
+//				throw DeviceAlreadyExistsException(name);
+//			}
+//			else {
 				
-				// Create the piece
-				int pindex = json_createpiece(this->cinfo, name, DeviceType::type);
+//				// Create the piece
+//				int pindex = json_createpiece(this->cinfo, name, DeviceType::type);
 				
-				// Check if the piece was succesfully created
-				if ( pindex < 0 ) {
+//				// Check if the piece was succesfully created
+//				if ( pindex < 0 ) {
 					
-					printf("Failed to add %s device named '%s': %s\n", GetDeviceTypeString(DeviceType::type),
-						   name.c_str(), cosmos_error_string(pindex).c_str());
-					if ( crash_on_error )
-						exit(pindex);
+//					printf("Failed to add %s device named '%s': %s\n", GetDeviceTypeString(DeviceType::type),
+//						   name.c_str(), cosmos_error_string(pindex).c_str());
+//					if ( crash_on_error )
+//						exit(pindex);
 					
-					return nullptr;
-				}
+//					return nullptr;
+//				}
 				
-				// Get COSMOS indices
-				int cindex = this->cinfo->pieces[pindex].cidx;
-				int dindex = this->cinfo->device[cindex].all.didx;
+//				// Get COSMOS indices
+//				int cindex = this->cinfo->pieces[pindex].cidx;
+//				int dindex = this->cinfo->device[cindex].all.didx;
 				
-				// Create the new device
-				DeviceType *device = new DeviceType(GetComplexAgent(), cindex, dindex);
-				device->SetName(name);
-				devices[name] = device;
+//				// Create the new device
+//				DeviceType *device = new DeviceType(GetComplexAgent(), cindex, dindex);
+//				device->SetName(name);
+//				devices[name] = device;
 				
-				return device;
-			}
-		}
+//				return device;
+//			}
+//		}
 		
 		
-		/**
-		 * @brief Checks if a device with the given name exists
-		 * @param name The device name
-		 * @return True if the device already exists
-		 */
-		inline bool DeviceExists(const std::string &name) const {
-			return devices.find(name) != devices.end();
-		}
+//		/**
+//		 * @brief Checks if a device with the given name exists
+//		 * @param name The device name
+//		 * @return True if the device already exists
+//		 */
+//		inline bool DeviceExists(const std::string &name) const {
+//			return devices.find(name) != devices.end();
+//		}
 		
-		template <typename DeviceType>
-		inline DeviceType* GetDevice(const std::string &name) {
-			for (auto device_pair : devices) {
-				if ( name == device_pair.first )
-					return dynamic_cast<DeviceType*>(device_pair.second);
-			}
-			return nullptr;
-		}
+//		template <typename DeviceType>
+//		inline DeviceType* GetDevice(const std::string &name) {
+//			for (auto device_pair : devices) {
+//				if ( name == device_pair.first )
+//					return dynamic_cast<DeviceType*>(device_pair.second);
+//			}
+//			return nullptr;
+//		}
 		
 		//===============================================================
 		//======================= NODE PROPERTIES =======================
@@ -421,53 +443,53 @@ namespace artemis {
 		 * @tparam _NodeProperty The node property to set (e.g. Node::BatteryCapacity)
 		 * @param value The value to store. If not supplied, a default-constructed value is used
 		 */
-		template <typename _NodeProperty>
-		void AddNodeProperty(typename _NodeProperty::ValueType value = _NodeProperty::ValueType()) {
-			SetNodeProperty<_NodeProperty>(value, true);
-		}
+//		template <typename _NodeProperty>
+//		void AddNodeProperty(typename _NodeProperty::ValueType value = _NodeProperty::ValueType()) {
+//			SetNodeProperty<_NodeProperty>(value, true);
+//		}
 		
-		/**
-		 * @brief Sets a node property
-		 * @tparam _NodeProperty The node property to set (e.g. Node::BatteryCapacity)
-		 * @param value The value to store. If not supplied, a default-constructed value is used
-		 * @param post If true, this property will be posted in the state of health message. If set to true, subsequent calls will not 'un-post' the property
-		 */
-		template <typename _NodeProperty>
-		void SetNodeProperty(typename _NodeProperty::ValueType value, bool post = false) {
+//		/**
+//		 * @brief Sets a node property
+//		 * @tparam _NodeProperty The node property to set (e.g. Node::BatteryCapacity)
+//		 * @param value The value to store. If not supplied, a default-constructed value is used
+//		 * @param post If true, this property will be posted in the state of health message. If set to true, subsequent calls will not 'un-post' the property
+//		 */
+//		template <typename _NodeProperty>
+//		void SetNodeProperty(typename _NodeProperty::ValueType value, bool post = false) {
 			
-			// Check if there's an old value set, and if so, steal its 'post' value
-			if ( node_properties.find(GetPropertyID<_NodeProperty>()) != node_properties.end() ) {
-				post = node_properties[GetPropertyID<_NodeProperty>()].post;
-			}
+//			// Check if there's an old value set, and if so, steal its 'post' value
+//			if ( node_properties.find(GetPropertyID<_NodeProperty>()) != node_properties.end() ) {
+//				post = node_properties[GetPropertyID<_NodeProperty>()].post;
+//			}
 			
-			// Create the property
-			NodeProperty new_property(ToString<typename _NodeProperty::ValueType>(value), _NodeProperty::key, _NodeProperty::name, post);
+//			// Create the property
+//			NodeProperty new_property(ToString<typename _NodeProperty::ValueType>(value), _NodeProperty::key, _NodeProperty::name, post);
 			
-			// Store the device property
-			node_properties[GetPropertyID<_NodeProperty>()] = new_property;
+//			// Store the device property
+//			node_properties[GetPropertyID<_NodeProperty>()] = new_property;
 			
-			// Set the property value using the NodeProperty offset
-			// Beware: pointer magic ahead!
-			*(typename _NodeProperty::ValueType*)((void*)&this->cinfo->node + _NodeProperty::offset) = value;
-		}
+//			// Set the property value using the NodeProperty offset
+//			// Beware: pointer magic ahead!
+//			*(typename _NodeProperty::ValueType*)((void*)&this->cinfo->node + _NodeProperty::offset) = value;
+//		}
 		
-		/**
-		 * @brief Retrieves the value of a node property
-		 * @param _NodeProperty The node property to set (e.g. Node::BatteryCapacity)
-		 * @return The value of the property, or a default-construct value if the property was not set
-		 */
-		template <typename _NodeProperty>
-		typename _NodeProperty::ValueType GetNodeProperty() {
+//		/**
+//		 * @brief Retrieves the value of a node property
+//		 * @param _NodeProperty The node property to set (e.g. Node::BatteryCapacity)
+//		 * @return The value of the property, or a default-construct value if the property was not set
+//		 */
+//		template <typename _NodeProperty>
+//		typename _NodeProperty::ValueType GetNodeProperty() {
 			
-			if ( node_properties.find(GetPropertyID<_NodeProperty>()) == node_properties.end() ) {
-				printf("Attempted to retrieve nonexistent node property '%s'\n", _NodeProperty::name);
-				return _NodeProperty::ValueType();
-			}
+//			if ( node_properties.find(GetPropertyID<_NodeProperty>()) == node_properties.end() ) {
+//				printf("Attempted to retrieve nonexistent node property '%s'\n", _NodeProperty::name);
+//				return _NodeProperty::ValueType();
+//			}
 			
-			// Get the property value using the NodeProperty offset
-			// Beware: pointer magic ahead!
-			return *(typename _NodeProperty::ValueType*)((void*)&this->cinfo->node + _NodeProperty::offset);
-		}
+//			// Get the property value using the NodeProperty offset
+//			// Beware: pointer magic ahead!
+//			return *(typename _NodeProperty::ValueType*)((void*)&this->cinfo->node + _NodeProperty::offset);
+//		}
 		
 		//===============================================================
 		//============================ DEBUG ============================
@@ -505,13 +527,13 @@ namespace artemis {
 		
 	protected:
 		//! A table of user-defined request callbacks (those with vector arguments)
-		std::unordered_map<std::string, AgentRequest*> requests;
-		
-		std::unordered_map<std::string, DeviceRequest*> device_requests;
-		//! A table of user-defined devices
-		std::unordered_map<std::string, Device*> devices;
-		//! A table of user-defined node properties
-		std::unordered_map<PropertyID, NodeProperty> node_properties;
+//        std::unordered_map<std::string, AgentRequest*> requests;
+
+//		std::unordered_map<std::string, DeviceRequest*> device_requests;
+//		//! A table of user-defined devices
+//		std::unordered_map<std::string, Device*> devices;
+//		//! A table of user-defined node properties
+//		std::unordered_map<PropertyID, NodeProperty> node_properties;
 		//! Indicates whether the first iteration of the main loop has occurred
 		bool loop_started;
 		
@@ -519,10 +541,11 @@ namespace artemis {
 		std::string last_request_error;
 		
 		//! The telemetry log for this agent
-		TelemetryLog telem_log;
+//		TelemetryLog telem_log;
 		
 		//! The singleton instance of the SimpleAgent class
 		static SimpleAgent *instance;
+        vector<string> soh_list;
 		
 	};
 	

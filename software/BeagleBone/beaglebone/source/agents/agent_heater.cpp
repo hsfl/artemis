@@ -143,20 +143,11 @@ int main(int argc, char** argv) {
 		// Store the dependency key
 		agent_temp_keys.push_back(dependency.source);
 	}
-    vector<string> soh_list;
-    string soh = agent->get_soh_name(devname_heater, "utc", error);
-    soh_list.push_back(soh);
-    soh = get_soh_name(devname_heater, "enabled", error);
-    soh_list.push_back(soh);
-    soh = get_soh_name(devname_heater, "volt", error);
-    soh_list.push_back(soh);
-    soh = get_soh_name(devname_heater, "amp", error);
-    soh_list.push_back(soh);
-    soh = get_soh_name(devname_heater, "power", error);
-    soh_list.push_back(soh);
+    vector<string> soh_props = {"utc","enabled","volt","amp","power"};
 
 	
-    agent->set_sohstring(soh_list);
+    agent->append_soh_list(devname_heater, soh_props);
+    agent->set_soh();
 	agent->DebugPrint();
 	
 	// Make sure the heater is disabled

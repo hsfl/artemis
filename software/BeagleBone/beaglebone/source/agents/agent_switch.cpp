@@ -92,8 +92,8 @@ int main(int argc, char** argv) {
 	GPIO *gpio;
 	string switch_name, switch_pin;
 	bool default_state;
-    vector<string> soh_list;
-	
+
+    vector<string> soh_props = {"utc","enabled","volt","amp","power"};
 	// Loop over the JSON array of switch configurations
 	for (auto &switch_obj : switch_config.GetArray()) {
 		
@@ -132,19 +132,10 @@ int main(int argc, char** argv) {
 		switches[switch_name] = sw;
         gpios[switch_name] = gpio;
 		
-		
-		// Add the switch to the telemetry log
-        string soh;
-        soh = agent->get_soh_name(switch_name, "utc", error);
-        soh_list.push_back(soh);
-        soh = agent->get_soh_name(switch_name, "enabled", error);
-        soh_list.push_back(soh);
-        soh = agent->get_soh_name(switch_name, "volt", error);
-        soh_list.push_back(soh);
-        soh = agent->get_soh_name(switch_name, "amp", error);
-        soh_list.push_back(soh);
-        soh = agent->get_soh_name(switch_name, "power", error);
-        soh_list.push_back(soh);
+        error = append_soh_list(switch_name, soh_props);
+        if(error < 0){
+            printf("Error creating SOH List\n");
+        }
 //		agent->GetLog().RegisterDevice(switch_name, sw)
 //				.RegisterProperty("utc", sw->utc)
 //				.RegisterProperty("enabled", sw->enabled)
@@ -156,7 +147,7 @@ int main(int argc, char** argv) {
 	
 	// Finish up the initialization
     //agent->Finalize();
-    agent->set_sohstring(soh_list);
+    agent->set_soh();
 	agent->DebugPrint();
 	
 	// Run the main loop for this agent
