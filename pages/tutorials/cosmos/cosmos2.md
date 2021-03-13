@@ -158,11 +158,14 @@ agent->set_soh();
 ```
 
 ### Updating Properties 
+
 Ok, we've added our devices, we've added our device properties to the SOH. Now I'll demonstrate how to set the value of these properties: 
+
 ```cpp
 temp_sensor->utc = 0; 
 temp_sensor->temp = 273.15;
 ```
+
 Assigning values to your device automatically updates the agent's data that will show up in the SOH. We previously defined `temp_sensor` as a `devicestruc*` when we made the call to `add_device()` so the values are linked to the agent. 
 
 ### Setting Up the "while" Loop
@@ -220,11 +223,13 @@ You can add either type of request to the agent with the same function `add_requ
 agent->add_request("myrequest_1", MyRequestWithNoArguments, "", "A detailed description");
 agent->add_request("myrequest_2", MyRequestWithArguments, "arg1 arg2", "Description of my request");
 ```
+
 The `add_request()` function takes 4 arguments:
 1. name of the request, how the request will be called 
 2. the function that is run when the request is called 
 3. a list of the argument format
 4. a description of what the request does. 
+
 The first line above adds the `MyRequestWithNoArguments` request using the name `myrequest_1`, and provides an empty string and detailed description of the request. The second line adds the `MyRequestWithArguments` request using the name `myrequest_2`, and provides usage showing two arguments, and a description. 
 
 Here is a more detailed example of a request function with arguments. Say we have a request `request_add` that will take two arguments and return the sum of the two arguments. We define the request function as follows: 
@@ -241,6 +246,7 @@ string request_add(vector<string> &args, int32_t &error) {
 }
 ```
 Notice at the beginning of the function we check that the correct arguments are passed. In this case, to indicate error, `error` must be set to a negative value. We must be careful to check the arguments before accessing them, to prevent a segmentation fault, which will end up crashing your whole agent program! More about Cosmos Error Numbers [Here](https://hsfl.github.io/cosmos-docs/pages/4-tutorials/concepts/errors.html)
+
 Since the arguments come in as strings, we need to parse them as `int`, which can be done by using `stoi()` (which is just short for 'string to integer'). And the return value, we cast back to a string with the `to_string()` function. 
 
 Adding our `request_add` request to our agent within the main() of the agent:
