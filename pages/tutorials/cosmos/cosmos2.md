@@ -240,7 +240,7 @@ string request_add(vector<string> &args, int32_t &error) {
      return to_string(sum); 
 }
 ```
-Notice at the beginning of the function we check that the correct arguments are passed. In this case, to indicate error, `error` must be set to a negative value. We must be careful to check the arguments before accessing them, to prevent a segmentation fault, which will end up crashing your whole agent program! 
+Notice at the beginning of the function we check that the correct arguments are passed. In this case, to indicate error, `error` must be set to a negative value. We must be careful to check the arguments before accessing them, to prevent a segmentation fault, which will end up crashing your whole agent program! More about Cosmos Error Numbers [Here]{https://hsfl.github.io/cosmos-docs/pages/4-tutorials/concepts/errors.html}
 Since the arguments come in as strings, we need to parse them as `int`, which can be done by using `stoi()` (which is just short for 'string to integer'). And the return value, we cast back to a string with the `to_string()` function. 
 
 Adding our `request_add` request to our agent within the main() of the agent:
