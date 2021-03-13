@@ -125,6 +125,7 @@ Here, `devicestruc` is a COSMOS device struct that we use and name `temp_sensor`
 We define an `error` value for error checking throughout the program and pass it by reference to `add_device()` as the third argument. After the function call we ensure the device was properly added by verifying the value of `error`. If `error` is not negative, then we know everything is running smoothly. 
 
 The second argument to `add_device()` is the type of device we will be monitoring. Some of supported devices are: 
+
 | Device Type | Description               |
 |-------------|---------------------------|
 | PLOAD       | Payload                   |
@@ -135,6 +136,7 @@ The second argument to `add_device()` is the type of device we will be monitorin
 | HTR         | Heater                    |
 | SWCH        | Switch                    |
 | TSEN        | Temperature Sensor        |
+
 For more documentation and supported device types, see COSMOS Docs. [insert link]
 
 Next we can define properties we would like to post to the agent's state of health (SOH) messages. Adding properties to the SOH allows us to monitor the specified data the agent is monitoring. 
