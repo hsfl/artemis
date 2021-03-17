@@ -121,8 +121,8 @@ Here, `TemperatureSensor` is a predefined device template that we use and name `
 Next we can define properties we would like to post. You only need to post properties you would like to view later. We'll use these examples:
 
 ```cpp
-temp_sensor->Post(my_sensor->utc = 0);
-temp_sensor->Post(my_sensor->temperature);
+temp_sensor->Post(temp_sensor->utc = 0);
+temp_sensor->Post(temp_sensor->temperature);
 ```
 
 The first line above assigns the current time to the sensor's `utc` property as 0 and posts it all in one go. You don't need to assign the value of a property immediately (although setting an initial value is recommended). The second line above demonstrates this by posting an uninitialized `temperature` property.
@@ -406,6 +406,7 @@ int main() {
 	
 	// Create the agent
 	agent = new SimpleAgent("my_agent");
+	agent->SetLoopPeriod(1.5);
 	
 	// Add the Request_Repeat request using the name "repeat"
 	agent->AddRequest("repeat", Request_Repeat);
@@ -420,7 +421,7 @@ int main() {
 	
 	// Set the utc and temperature properties to zero and post them
 	temp_sensor->Post(temp_sensor->utc = 0);
-	temp_sensor->Post(temp_sensor->temperature = 0);
+	temp_sensor->Post(temp_sensor->temperature);
 	
 	// Add the Request_GetTemperature request to the temperature sensor with
 	// aliases "gettemp" and "temp"
@@ -445,6 +446,7 @@ int main() {
 		temp_sensor->temperature = i++;
 	}
 	
+	delete agent;
 	return 0;
 }
 
