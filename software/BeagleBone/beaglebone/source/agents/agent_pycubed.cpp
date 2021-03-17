@@ -246,18 +246,31 @@ int32_t InitPyCubed() {
     pycubed->cpu.uptime = 0;
     pycubed->temp = 273.15;
 
-    string memory_alias = agent->create_device_value_alias("pycubed", "gib","memory_usage", error);
-    if(error < 0){
-        printf("Error creating alias: memory_usage\n");
-    }
-    string maxmemory_alias = agent->create_device_value_alias("pycubed", "maxgib","max_memory", error);
-    if(error < 0){
-        printf("Error creating alias: max_memory\n");
-    }
-
-    agent->append_soh_list("pycubed",{"utc","volt","amp","uptime","temp", memory_alias, maxmemory_alias});
+    agent->append_soh_list("pycubed",{"utc","volt","amp","uptime","temp"});
     if(error < 0){
         printf("Error creating SOH list (pycubed)\n");
+    }
+
+    // create alias: device_cpu_gib_xxx -> pycubed_memory_usage
+    string soh_memory = agent->get_soh_name("pycubed", "gib", error);
+    if(error < 0){
+        printf("Error getting soh name: pycubed gib [%s]\n", cosmos_error_string(error).c_str());
+    }
+
+    error = agent->create_and_add_alias(soh_memory, "pycubed_memory_usage");
+    if(error < 0){
+        printf("Error creating alias for: %s [%s]\n", soh_memory.c_str(), cosmos_error_string(error).c_str());
+    }
+
+    // create alias: device_cpu_maxgib_xxx -> pycubed_max_memory
+    string soh_max_memory = agent->get_soh_name("pycubed", "maxgib", error);
+    if(error < 0){
+        printf("Error getting soh name: pycubed maxgib [%s]\n", cosmos_error_string(error).c_str());
+    }
+
+    error = agent->create_and_add_alias(soh_max_memory, "pycubed_max_memory");
+    if(error < 0){
+        printf("Error creating alias for: %s [%s]\n", soh_max_memory.c_str(), cosmos_error_string(error).c_str());
     }
 
 	// Add the battery pack
@@ -288,49 +301,91 @@ int32_t InitPyCubed() {
     }
 
     imu->utc = Time::Now();
-    battery->temp = 273.15;
-    string magnetic_field_alias = agent->create_device_value_alias("imu", "mag","magnetic_field", error);
-    if(error < 0){
-        printf("Error creating alias: magnetic_field\n");
-    }
-    string angular_velocity_alias = agent->create_device_value_alias("imu", "omega","angular_velocity", error);
-    if(error < 0){
-        printf("Error creating alias: memory_use\n");
-    }
-    string acceleration_alias = agent->create_device_value_alias("imu", "alpha","acceleration", error);
-    if(error < 0){
-        printf("Error creating alias: memory_use\n");
-    }
+    imu->temp = 273.15;
 
-    agent->append_soh_list("pycubed",{"utc","volt","amp","power","temp", magnetic_field_alias, angular_velocity_alias, acceleration_alias});
+    agent->append_soh_list("imu",{"utc","volt","amp","power","temp"});
     if(error < 0){
         printf("Error creating SOH list (imu)\n");
     }
-	
+
+    // create alias: device_imu_mag_000 -> imu_magnetic_field
+    string soh_magnetic_field = agent->get_soh_name("imu", "mag", error);
+    if(error < 0){
+        printf("Error getting soh name: imu mag [%s]\n", cosmos_error_string(error).c_str());
+    }
+
+    error = agent->create_and_add_alias(soh_magnetic_field, "imu_magnetic_field");
+    if(error < 0){
+        printf("Error creating alias for: %s [%s]\n", soh_magnetic_field.c_str(), cosmos_error_string(error).c_str());
+    }
+
+    // create alias: device_imu_omega_000 -> imu_angular_velocity
+    string soh_angular_velocity = agent->get_soh_name("imu", "omega", error);
+    if(error < 0){
+        printf("Error getting soh name: imu omega [%s]\n", cosmos_error_string(error).c_str());
+    }
+
+    error = agent->create_and_add_alias(soh_angular_velocity, "imu_angular_velocity");
+    if(error < 0){
+        printf("Error creating alias for: %s [%s]\n", soh_angular_velocity.c_str(), cosmos_error_string(error).c_str());
+    }
+
+    // create alias: device_imu_alpha_000 -> imu_acceleration
+    string soh_acceleration = agent->get_soh_name("imu", "alpha", error);
+    if(error < 0){
+        printf("Error getting soh name: imu alpha [%s]\n", cosmos_error_string(error).c_str());
+    }
+
+    error = agent->create_and_add_alias(soh_acceleration, "imu_angular_velocity");
+    if(error < 0){
+        printf("Error creating alias for: %s [%s]\n", soh_acceleration.c_str(), cosmos_error_string(error).c_str());
+    }
+
 	// Add the GPS
     gps = agent->add_device("gps", DeviceType::GPS, error);
     if(error < 0){
         printf("Error adding device (GPS)\n");
     }
     gps->utc = Time::Now();
-
-    string satellites_used_alias = agent->create_device_value_alias("gps", "sats_used","satellites_used", error);
-    if(error < 0){
-        printf("Error creating alias: satellites_used\n");
-    }
-    string velocity_alias = agent->create_device_value_alias("gps", "geocv","velocity", error);
-    if(error < 0){
-        printf("Error creating alias: velocity\n");
-    }
-    string location_alias = agent->create_device_value_alias("gps", "geods","location", error);
-    if(error < 0){
-        printf("Error creating alias: location\n");
-    }
-
-    agent->append_soh_list("pycubed",{"utc","volt","amp","power","temp",velocity_alias, location_alias, satellites_used_alias});
+    agent->append_soh_list("gps", {"utc","volt","amp","power","temp"});
     if(error < 0){
         printf("Error creating SOH list (imu)\n");
     }
+
+    // create alias: device_gps_sats_used_000 -> gps_satellites_used
+    //! soh_satellites_used is the cosmos name for the sats_used variable in the default SOH
+    string soh_satellites_used = agent->get_soh_name("gps", "sats_used", error);
+    if(error < 0){
+        printf("Error getting soh name: gps sats_used [%s]\n", cosmos_error_string(error).c_str());
+    }
+
+    error = agent->create_and_add_alias(soh_satellites_used, "gps_satellites_used");
+    if(error < 0){
+        printf("Error creating alias for: %s [%s]\n", soh_satellites_used.c_str(), cosmos_error_string(error).c_str());
+    }
+
+    // create alias: device_gps_geocv_000 -> gps_velocity
+    string soh_velocity = agent->get_soh_name("gps", "geocv", error);
+    if(error < 0){
+        printf("Error getting soh name: gps geocv [%s]\n", cosmos_error_string(error).c_str());
+    }
+
+    error = agent->create_and_add_alias(soh_velocity, "gps_velocity");
+    if(error < 0){
+        printf("Error creating alias for: %s [%s]\n", soh_velocity.c_str(), cosmos_error_string(error).c_str());
+    }
+
+    // create alias: device_gps_geods_000 -> gps_location
+    string soh_location = agent->get_soh_name("gps", "geods", error);
+    if(error < 0){
+        printf("Error getting soh name: gps geods [%s]\n", cosmos_error_string(error).c_str());
+    }
+
+    error = agent->create_and_add_alias(soh_location, "gps_location");
+    if(error < 0){
+        printf("Error creating alias for: %s [%s]\n", soh_location.c_str(), cosmos_error_string(error).c_str());
+    }
+
     return error;
 }
 

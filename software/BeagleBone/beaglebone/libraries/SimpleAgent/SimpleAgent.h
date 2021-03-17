@@ -136,6 +136,19 @@ namespace artemis {
             return 0;
         }
 
+        /**
+         * @brief Creates an alias and adds it to the SOH list
+         * @param cosmos_name default name for the variable in the default SOH (find using agent->get_soh_name())
+         * @param alias_name unique name that will replace the default name in the SOH
+         * @return error if there is an error creating the alias
+         */
+        int32_t create_and_add_alias(string cosmos_name, string alias_name){
+            int32_t error = this->create_alias(cosmos_name, alias_name);
+            if(error < 0) return error;
+            soh_list.push_back(alias_name);
+
+        }
+
         int32_t set_soh(){
             return Agent::set_sohstring(soh_list);
         }
