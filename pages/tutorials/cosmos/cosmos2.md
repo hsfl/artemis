@@ -92,10 +92,10 @@ agent = new SimpleAgent("my_agent");
 
 Now, `my_agent` can be used to run this agent. 
 
-We can then set how often our agent will perform its tasks by using the `SetLoopPeriod` function:
+We can then set how often our agent will perform its tasks by using the `set_activity_period` function:
 
 ```cpp
-agent->SetLoopPeriod(1.5);
+agent->set_activity_period(1.5);
 ```
 
 You can add this line right below the `agent = new SimpleAgent...` line. The line of code above will set our agent to run at 1.5 second intervals. It's okay if your agent takes longer than this time to perform its tasks. This only really matters if your agent takes less than this time: the agent will wait until the appropriate time has passed before starting the next loop iteration (repeating the task).
@@ -104,43 +104,69 @@ You can add this line right below the `agent = new SimpleAgent...` line. The lin
 
 
 ### Adding Devices
-Now that the agent is created, we can start loading it up with devices. You can have as many devices as you'd like, but in the example below we'll just add one `TemperatureSensor` device with the name `temp_sensor` (above the `main` function, right under `//! Our temperature sensor`):
+Now that the agent is created, we can start loading it up with devices. You want to add a device to your agent for the type of data that the agent will be monitoring. In this example below, we are monitoring temperature so we want to add a temperature sensor device to our agent. 
+You can have as many devices as you'd like, but in the example below we'll just add one `devicestruc` device with the name `temp_sensor` (above the `main` function, right under `//! Our temperature sensor`):
 
 ```cpp
-TemperatureSensor *temp_sensor;
+devicestruc *temp_sensor;
 ```
 
 Back in our main function, we can define our temperature sensor device under `//! Add a temperature sensor device`:
 
 ```cpp
-temp_sensor = agent->NewDevice<TemperatureSensor>("temp_sensor");
+int32_t error = 0; 
+temp_sensor = agent->add_device("temp_sensor", DeviceType::TSEN, error);
+if(error < 0) {
+    printf("Error adding device temp_sensor\n"); 
+}
 ```
+Here, `devicestruc` is a COSMOS device struct that we use and name `temp_sensor`.
 
-Here, `TemperatureSensor` is a predefined device template that we use and name `temp_sensor`.
+We define an `error` value for error checking throughout the program and pass it by reference to `add_device()` as the third argument. After the function call we ensure the device was properly added by verifying the value of `error`. If `error` is not negative, then we know everything is running smoothly. 
 
-Next we can define properties we would like to post. You only need to post properties you would like to view later. We'll use these examples:
+The second argument to `add_device()` is the type of device we will be monitoring. Some of supported devices are: 
+
+| Device Type | Description               |
+|-------------|---------------------------|
+| PLOAD       | Payload                   |
+| SSEN        | Sun Sensor                |
+| IMU         | Inertial Measurement Unit |
+| CPU         | Processing Unit           |
+| BATT        | Battery                   |
+| HTR         | Heater                    |
+| SWCH        | Switch                    |
+| TSEN        | Temperature Sensor        |
+
+For more documentation and supported device types, see COSMOS Docs. [insert link]
+
+Next we can define properties we would like to post to the agent's state of health (SOH) messages. Adding properties to the SOH allows us to monitor the specified data the agent is monitoring. 
+In the following example, we use the `append_soh_list()` to add our device properties to the SOH. Here, we want to add the temperature value and a timestamp (UTC) for this device to our SOH. 
 
 ```cpp
-temp_sensor->Post(temp_sensor->utc = 0);
-temp_sensor->Post(temp_sensor->temperature);
+agent->append_soh_list("temp_sensor", {"utc","temp"}); 
 ```
 
-The first line above assigns the current time to the sensor's `utc` property as 0 and posts it all in one go. You don't need to assign the value of a property immediately (although setting an initial value is recommended). The second line above demonstrates this by posting an uninitialized `temperature` property.
+The first argument to `append_soh_list` is name of the device, here it is `"temp_sensor"`.
+The second argument takes a `vector<string>` which represents a list of device property names. All device types support the properties: `utc, volt, amp, power, temp`. Each specific `DeviceType` supports specific properties to that device. For more specific device properties, see COSMOS Docs. [insert link]
 
 ### Finalizing Properties
-Once you are done adding devices and device properties you should _finalize_ the agent. This just means that any properties that are posted will get handled properly. You can still set, get, or add properties as usual, but you'll have to _finalize_ the agent again. Finalizing the agent is just a simple function call:
+Once you are done adding devices and device properties you should _finalize_ the agent with `set_soh()`. This just means that any properties that are posted will get handled properly and added to your agent's SOH. You can still set, get, or add properties as usual, but you'll have to _finalize_ the agent again. Finalizing the agent is just a simple function call:
 
 ```cpp
 // Let the agent know all the devices have been set up
-agent->Finalize();
+agent->set_soh();
 ```
 
-### Viewing COSMOS Names
-The names used internally by COSMOS are required for certain operations, such as for displaying properties in COSMOS Web or for making requests to other agents. You can see all of the names COSMOS uses (as well as previously-added requests) in SimpleAgent's convenient `DebugPrint` function:
+### Updating Properties 
+
+Ok, we've added our devices, we've added our device properties to the SOH. Now I'll demonstrate how to set the value of these properties: 
 
 ```cpp
-agent->DebugPrint();
+temp_sensor->utc = 0; 
+temp_sensor->temp = 273.15;
 ```
+
+Assigning values to your device automatically updates the agent's data that will show up in the SOH. We previously defined `temp_sensor` as a `devicestruc*` when we made the call to `add_device()` so the values are linked to the agent. 
 
 ### Setting Up the "while" Loop
 
@@ -165,7 +191,7 @@ temp_sensor->utc = currentmjd();
 temp_sensor->temperature = i++;
 ```
 
-The `// Timestamp...` comment needs to be added as well. Now, the sensor will keep track of the MJD time as the agent is running, and the temperature will just increase by 1 every loop period (`i++` = `i+1`).
+Now, the sensor will keep track of the MJD time as the agent is running, and the temperature will just increase by 1 every loop period (`i++` = `i+1`).
 
 Now, add a `delete agent;` and a `return 0;` after the `while` loop to end our main function. 
 
@@ -183,68 +209,55 @@ We delete the agent after we're done with it, but we can get it back anytime by 
 
 A request function can take on one of two signatures (i.e. the form of the function):
 
-1. `string MyRequestWithNoArguments()`
-2. `string MyRequestWithArguments(vector<string> arguments)`
+1. `string MyRequestWithNoArguments(int32_t &error)`
+2. `string MyRequestWithArguments(vector<string> &arguments, int32_t &error)`
 
-The first request takes no arguments, and returns a string indicating the response. The second request takes a vector of arguments and returns a string indicating the response. If you decide you need arguments in your request, for safety you should check that the number arguments and their types are correct.
+Notice both forms take in an argument that is a reference to an `error` value. Error checking is necessary to keep anyone from crashing your agent through a request. Both forms also return a string, which is the response of that request. 
+The first request form is for a request that takes no arguments. The second request takes a vector of arguments. If you decide you need arguments in your request, for safety you should check that the number arguments and their types are correct.
 
 For example, on line 15 there is a request in the form of number 2 above, with one argument. 
 
-You can add either type of request to the agent with the same function, and (optionally) provide a synopsis and detailed description of the request:
+You can add either type of request to the agent with the same function `add_request`, and provide a usage string and detailed description of the request:
 
 ```cpp
-agent->AddRequest("myrequest_1", MyRequestWithNoArguments, "A synopsis", "A detailed description");
-agent->AddRequest("myrequest_2", MyRequestWithArguments);
+agent->add_request("myrequest_1", MyRequestWithNoArguments, "", "A detailed description");
+agent->add_request("myrequest_2", MyRequestWithArguments, "arg1 arg2", "Description of my request");
 ```
 
-The first line above adds the `MyRequestWithNoArguments` request using the name `myrequest_1`, and provides a synopsis and detailed description of the request. The second line adds the `MyRequestWithArguments` request using the name `myrequest_2`, and provides no synopsis or detailed description. Although providing the synopsis and detailed description strings is optional, it is good practice to use these.
+The `add_request()` function takes 4 arguments:
+1. name of the request, how the request will be called 
+2. the function that is run when the request is called 
+3. a list of the argument format
+4. a description of what the request does. 
 
-You can add the same request under a variety of names (called request _aliases_) as long as one of these names isn't already taken by another request. There's actually a shorthand for this:
+The first line above adds the `MyRequestWithNoArguments` request using the name `myrequest_1`, and provides an empty string and detailed description of the request. The second line adds the `MyRequestWithArguments` request using the name `myrequest_2`, and provides usage showing two arguments, and a description. 
+
+Here is a more detailed example of a request function with arguments. Say we have a request `request_add` that will take two arguments and return the sum of the two arguments. We define the request function as follows: 
+```cpp
+string request_add(vector<string> &args, int32_t &error) {
+     if(args.size() < 2){
+     	error = ErrorNumbers::COSMOS_GENERAL_ERROR_ARGS; 
+	return "usage arg1 arg2"; 
+     }
+     int arg1 = stoi(args[0]); 
+     int arg2 = stoi(args[1]); 
+     int sum = arg1 + arg2;
+     return to_string(sum); 
+}
+```
+Notice at the beginning of the function we check that the correct arguments are passed. In this case, to indicate error, `error` must be set to a negative value. We must be careful to check the arguments before accessing them, to prevent a segmentation fault, which will end up crashing your whole agent program! More about Cosmos Error Numbers [Here](https://hsfl.github.io/cosmos-docs/pages/4-tutorials/concepts/errors.html)
+
+Since the arguments come in as strings, we need to parse them as `int`, which can be done by using `stoi()` (which is just short for 'string to integer'). And the return value, we cast back to a string with the `to_string()` function. 
+
+Adding our `request_add` request to our agent within the main() of the agent:
 
 ```cpp
-agent->AddRequest({"alias_1", "alias_2", "alias_3"}, MyRequestWithArguments, "A synopsis", "A detailed description");
+
+agent->add_request("add", request_add, "num1 num2", "returns the sum of two numbers");
+
 ```
 
-This will add our request function with the aliases `alias_1`, `alias_2`, and `alias_3`. You can add as many aliases as you wish and, as before, you can choose to omit the synopsis and detailed description strings.
-
-
-{% include important.html content="The string returned from a request function should never be empty.
-An empty response string is interpreted as failure to call the request. If you don't care about the value returned,
-you can always just return a space character, or any other random non-empty string." %}
-
-To add our requests (from the functions above the main function), type in the following lines:
-
-```cpp
-// Add the Request_Repeat request using the name "repeat"
-agent->AddRequest("repeat", Request_Repeat);
-	
-// Add the "Request_Double" request using aliases "double" and "twice"
-agent->AddRequest({"double", "twice"}, Request_Double, "Doubles a number");
-
-...
-
-// Add the Request_GetTemperature request to the temperature sensor with
-	// aliases "gettemp" and "temp"
-temp_sensor->AddRequest({"gettemp", "temp"}, Request_GetTemperature);
-```
-
-Lastly, we need to define the functions of each request we added. Add the following line inside the curly brackets after `double Request_Double(double x)`:
-
-```cpp
-return x*2;
-```
-
-For `float Request_GetTemperature(TemperatureSensor *sensor, int x)`, add this line in the curly brackets:
-
-```cpp
-return sensor ->temperature+x;
-```
-
-Finally, add the line for `std::string Request_Repeat(CapturedInput input)`:
-
-```cpp
-return input.input;
-```
+Notice the third argument `"num1 num2"` tells our user that the request will take in two numbers as arguments 
 
 ### Calling a Request From the Terminal
 
@@ -254,12 +267,11 @@ We are now ready to run the agent. First, build the project by clicking the hamm
 $ my_agent
 ```
 
-You should see our `temp_sensor` as an output after this command, as a result of `DebugPrint()`.
 
 Once your agent is running, you can call a previously added request from a terminal. For example, if we've added a request called `my_request` to an agent called `my_agent` running on the node `cubesat`, we can run the following command to call this request (optionally providing arguments `argument1` and `argument2`, which get redirected to the request function):
 
 ```bash
-$ agent cubesat my_agent my_request argument1 argument2
+$ agent cubesat my_agent add 3 9
 ```
 
 This will call the request function and print the string or number returned from the request.
@@ -384,22 +396,21 @@ using namespace std;
 using namespace cubesat;
 
 //! An agent request which returns whatever argument the user gives it
-double Request_Double(double arg);
+string Request_Double(vector<string> &arguments, int32_t &error);
 
-//! An agent request which returns whatever we put in. The "CapturedInput"
-//! type allows the user to put in any string they wish (including spaces)
-std::string Request_Repeat(CapturedInput input);
+//! An agent request which returns whatever we put in. 
+string Request_Repeat(vector<string> &arguments, int32_t &error);
 
 //! A device request attached to a temperature sensor. Returns
 //! the temperature plus a given number
-float Request_GetTemperature(TemperatureSensor *sensor, int x);
+string Request_GetTemperature(vector<string> &arguments, int32_t &error);
 
 
 
 //! Our SimpleAgent object
 SimpleAgent *agent;
 //! Our temperature sensor device
-TemperatureSensor *temp_sensor;
+devicestruc *temp_sensor;
 
 
 int main() {
@@ -409,23 +420,31 @@ int main() {
 	agent->SetLoopPeriod(1.5);
 	
 	// Add the Request_Repeat request using the name "repeat"
-	agent->AddRequest("repeat", Request_Repeat);
+	agent->add_request("repeat", Request_Repeat, "arg1", "Returns whatever is inputted");
 	
 	// Add the "Request_Double" request using aliases "double" and "twice"
-	agent->AddRequest({"double", "twice"}, Request_Double, "Doubles a number");
+	agent->add_request({"double", "twice"}, Request_Double, "arg1", "Doubles a number");
 	
 	
 	
 	// Add a temperature sensor device
-	temp_sensor = agent->NewDevice<TemperatureSensor>("temp_sensor");
+	int32_t error = 0; 
+	temp_sensor = agent->add_device("temp_sensor", DeviceType::TSEN, error);
+	if(error < 0) {
+		printf("Error adding device temp_sensor\n"); 
+	}
+
 	
 	// Set the utc and temperature properties to zero and post them
-	temp_sensor->Post(temp_sensor->utc = 0);
-	temp_sensor->Post(temp_sensor->temperature);
+	agent->append_soh_list("temp_sensor", {"utc","temp"}); 
+	agent->set_soh();
+	temp_sensor->utc = 0; 
+	temp_sensor->temp = 273.15;
+
 	
 	// Add the Request_GetTemperature request to the temperature sensor with
 	// aliases "gettemp" and "temp"
-	temp_sensor->AddRequest({"gettemp", "temp"}, Request_GetTemperature);
+	temp_sensor->add_request({"gettemp", "temp"}, Request_GetTemperature, "arg1 arg2", "Gets temperature reading from sensor");
 	
 	
 	
@@ -452,14 +471,31 @@ int main() {
 
 
 
-double Request_Double(double x) {
-	return x * 2;
+string Request_Double(vector<string> &args, int32_t &error) {
+    if(args.size() < 1){
+     	error = ErrorNumbers::COSMOS_GENERAL_ERROR_ARGS; 
+	return "usage arg1"; 
+     }
+     int arg1 = stoi(args[0]); 
+     int double = arg1 * 2;
+     return to_string(double); 
 }
-float Request_GetTemperature(TemperatureSensor *sensor, int x) {
-	return sensor->temperature + x;
+string Request_GetTemperature(vector<string> &args, int32_t &error) {
+    if(args.size() < 2){
+     	error = ErrorNumbers::COSMOS_GENERAL_ERROR_ARGS; 
+	return "usage arg1 arg2"; 
+     }
+     int arg2 = stoi(args[1]); 
+     int sum = arg1->temperature + arg2;
+     return to_string(sum); 
 }
-std::string Request_Repeat(CapturedInput input) {
-	return input.input;
+string Request_Repeat(vector<string> &args, int32_t &error) {
+    if(args.size() < 1){
+     	error = ErrorNumbers::COSMOS_GENERAL_ERROR_ARGS; 
+	return "usage arg1"; 
+     }
+     int arg1 = stoi(args[0]); 
+     return to_string(arg1); 
 }
 
 {% endhighlight %}
