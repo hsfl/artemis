@@ -1,0 +1,2 @@
+/usr/bin/ar qc libCosmosData.a  CMakeFiles/CosmosData.dir/datalib.cpp.o
+/usr/bin/ranlib libCosmosData.a

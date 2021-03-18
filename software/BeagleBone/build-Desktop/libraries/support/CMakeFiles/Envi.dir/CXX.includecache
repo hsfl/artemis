@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/vagrant/cosmos/source/core/libraries/support/envi.cpp
+cstring
+-
+cstdio
+-
+string
+-
+envi.h
+/home/vagrant/cosmos/source/core/libraries/support/envi.h
+
+/home/vagrant/cosmos/source/core/libraries/support/envi.h
+cstdio
+-
+cstdint
+-
+string
+-
+vector
+-
+

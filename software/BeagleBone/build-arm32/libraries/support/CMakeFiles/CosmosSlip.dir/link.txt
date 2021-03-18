@@ -1,0 +1,2 @@
+/usr/bin/ar qc libCosmosSlip.a  CMakeFiles/CosmosSlip.dir/sliplib.cpp.o
+/usr/bin/ranlib libCosmosSlip.a

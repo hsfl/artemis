@@ -295,11 +295,11 @@ int32_t InitPyCubed() {
     }
     string angular_velocity_alias = agent->create_device_value_alias("imu", "omega","angular_velocity", error);
     if(error < 0){
-        printf("Error creating alias: memory_use\n");
+        printf("Error creating alias: angular_velocity\n");
     }
     string acceleration_alias = agent->create_device_value_alias("imu", "alpha","acceleration", error);
     if(error < 0){
-        printf("Error creating alias: memory_use\n");
+        printf("Error creating alias: acceleration\n");
     }
 
     agent->append_soh_list("pycubed",{"utc","volt","amp","power","temp", magnetic_field_alias, angular_velocity_alias, acceleration_alias});

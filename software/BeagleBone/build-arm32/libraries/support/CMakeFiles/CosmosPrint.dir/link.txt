@@ -1,0 +1,2 @@
+/usr/bin/ar qc libCosmosPrint.a  CMakeFiles/CosmosPrint.dir/print_utils.cpp.o
+/usr/bin/ranlib libCosmosPrint.a

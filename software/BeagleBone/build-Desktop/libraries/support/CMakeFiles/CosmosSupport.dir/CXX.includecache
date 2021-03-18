@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/vagrant/cosmos/source/core/libraries/support/estimation_lib.cpp
+estimation_lib.h
+/home/vagrant/cosmos/source/core/libraries/support/estimation_lib.h
+
+/home/vagrant/cosmos/source/core/libraries/support/estimation_lib.h
+vector
+-
+iostream
+-
+

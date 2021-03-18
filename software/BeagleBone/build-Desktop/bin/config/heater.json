@@ -1,0 +1,13 @@
+{
+	"name": "heater",
+	"switch": "sw1",
+	"pulse_time": 5,
+	"sensors": [
+		{
+			"name": "temp_batt",
+			"source": "device_tsen_temp_004",
+			"enable_temp": 10,
+			"disable_temp": 20
+		}
+	]
+}

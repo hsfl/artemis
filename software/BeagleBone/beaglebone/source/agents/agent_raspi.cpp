@@ -146,7 +146,7 @@ int main(int argc, char** argv) {
 		
 	// Add requests
 //    agent->add_request("agent_data", Request_GetData, "", "Prints data collected from other agents");
-    agent->add_request("command", Request_SSH, "", "Runs a command on the Raspberry Pi (an ssh \n\t\tkeygen pair MUST be established before this \n\t\trequest can work)");
+    agent->add_request("command", Request_SSH, "command arg1 arg2 ...", "Runs a command on the Raspberry Pi (an ssh \n\t\tkeygen pair MUST be established before this \n\t\trequest can work)");
     agent->add_request("capture", Request_Picture, "", "Takes a picture with the Raspberry Pi camera (an ssh \n\t\tkeygen pair MUST be established before this \n\t\trequest can work)");
     agent->add_request("is_up", Request_Ping, "","Checks if the Raspberry Pi is up");
     agent->add_request("shutdown_raspi", Request_Shutdown, "", "Attempts to shut down the Raspberry Pi");

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libCosmosDeviceSerial.a  CMakeFiles/CosmosDeviceSerial.dir/serialclass.cpp.o
+/usr/bin/ranlib libCosmosDeviceSerial.a

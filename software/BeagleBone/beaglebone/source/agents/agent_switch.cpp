@@ -176,7 +176,7 @@ string Request_Switch_On(vector<string> &args, int32_t &error) {
     GPIO *gpio = gpios[switch_name];
     gpio->DigitalWrite(GPIOValue::High);
     switches[switch_name]->utc = Time::Now();
-    switches[switch_name]->enabled = false;
+    switches[switch_name]->enabled = true;
     switches[switch_name]->volt = 3.3;
 
     return "\"Success\"";

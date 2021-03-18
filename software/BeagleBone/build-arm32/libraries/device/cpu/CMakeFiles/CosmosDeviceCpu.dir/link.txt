@@ -1,0 +1,2 @@
+/usr/bin/ar qc libCosmosDeviceCpu.a  CMakeFiles/CosmosDeviceCpu.dir/devicecpu.cpp.o
+/usr/bin/ranlib libCosmosDeviceCpu.a
