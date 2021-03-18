@@ -1,2 +1,0 @@
-/usr/bin/ar qc libCosmosTime.a  CMakeFiles/CosmosTime.dir/timelib.cpp.o CMakeFiles/CosmosTime.dir/timeutils.cpp.o CMakeFiles/CosmosTime.dir/elapsedtime.cpp.o
-/usr/bin/ranlib libCosmosTime.a

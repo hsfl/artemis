@@ -1,2 +1,0 @@
-/usr/bin/ar qc libEnvi.a  CMakeFiles/Envi.dir/envi.cpp.o
-/usr/bin/ranlib libEnvi.a

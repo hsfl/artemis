@@ -1,2 +1,0 @@
-/usr/bin/ar qc libCosmosTransfer.a  CMakeFiles/CosmosTransfer.dir/transferlib.cpp.o
-/usr/bin/ranlib libCosmosTransfer.a

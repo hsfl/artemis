@@ -1,2 +1,0 @@
-/usr/bin/ar qc libCosmosNamespace.a  CMakeFiles/CosmosNamespace.dir/json11.cpp.o CMakeFiles/CosmosNamespace.dir/jsonlib.cpp.o
-/usr/bin/ranlib libCosmosNamespace.a

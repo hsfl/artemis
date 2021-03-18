@@ -1,2 +1,0 @@
-/usr/bin/ar qc libCosmosConvert.a  CMakeFiles/CosmosConvert.dir/convertlib.cpp.o CMakeFiles/CosmosConvert.dir/demlib.cpp.o CMakeFiles/CosmosConvert.dir/jpleph.cpp.o CMakeFiles/CosmosConvert.dir/geomag.cpp.o
-/usr/bin/ranlib libCosmosConvert.a

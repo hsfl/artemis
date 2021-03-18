@@ -1,2 +1,0 @@
-/usr/bin/ar qc libCosmosString.a  CMakeFiles/CosmosString.dir/stringlib.cpp.o CMakeFiles/CosmosString.dir/jsonobject.cpp.o CMakeFiles/CosmosString.dir/jsonvalue.cpp.o
-/usr/bin/ranlib libCosmosString.a

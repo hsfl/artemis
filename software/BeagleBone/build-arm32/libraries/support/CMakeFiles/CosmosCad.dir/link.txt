@@ -1,2 +1,0 @@
-/usr/bin/ar qc libCosmosCad.a  CMakeFiles/CosmosCad.dir/objlib.cpp.o
-/usr/bin/ranlib libCosmosCad.a

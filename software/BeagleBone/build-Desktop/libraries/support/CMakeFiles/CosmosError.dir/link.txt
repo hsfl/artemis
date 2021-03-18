@@ -1,2 +1,0 @@
-/usr/bin/ar qc libCosmosError.a  CMakeFiles/CosmosError.dir/cosmos-errno.cpp.o
-/usr/bin/ranlib libCosmosError.a

@@ -1,2 +1,0 @@
-/usr/bin/ar qc libCosmosJson.a  CMakeFiles/CosmosJson.dir/jsonclass.cpp.o
-/usr/bin/ranlib libCosmosJson.a

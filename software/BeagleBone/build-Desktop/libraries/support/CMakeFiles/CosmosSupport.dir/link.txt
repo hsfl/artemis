@@ -1,2 +1,0 @@
-/usr/bin/ar qc libCosmosSupport.a  CMakeFiles/CosmosSupport.dir/estimation_lib.cpp.o
-/usr/bin/ranlib libCosmosSupport.a
