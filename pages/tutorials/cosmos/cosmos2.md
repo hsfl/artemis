@@ -188,7 +188,7 @@ int i = 0;
 
 // Timestamp the device
 temp_sensor->utc = currentmjd();
-temp_sensor->temperature = i++;
+temp_sensor->temp = i++;
 ```
 
 Now, the sensor will keep track of the MJD time as the agent is running, and the temperature will just increase by 1 every loop period (`i++` = `i+1`).
@@ -462,7 +462,7 @@ int main() {
 		
 		// Timestamp the device
 		temp_sensor->utc = currentmjd();
-		temp_sensor->temperature = i++;
+		temp_sensor->temp = i++;
 	}
 	
 	delete agent;
