@@ -114,27 +114,9 @@ namespace artemis {
 		//===============================================================
 		//======================== MISCELLANEOUS ========================
 		//===============================================================
-        void append_soh_list(string prop){
-            soh_list.push_back(prop);
-        }
-        int32_t append_soh_list(string devicename, vector<string> props){
-            int32_t error = 0;
-            string soh_entry;
-            for(string p: props){
-                if(devicename == "node") {
-                    soh_entry = "node_" + p;
-                }
-                else {
-                    soh_entry = this->get_soh_name(devicename, p, error);
-                    if(error < 0){
-                        return error;
-                    }
-                }
+        void append_soh_list(string prop);
 
-                soh_list.push_back(soh_entry);
-            }
-            return 0;
-        }
+        int32_t append_soh_list(string devicename, vector<string> props);
 
         /**
          * @brief Creates an alias and adds it to the SOH list
@@ -142,12 +124,7 @@ namespace artemis {
          * @param alias_name unique name that will replace the default name in the SOH
          * @return error if there is an error creating the alias
          */
-        int32_t create_and_add_alias(string cosmos_name, string alias_name){
-            int32_t error = this->create_alias(cosmos_name, alias_name);
-            if(error < 0) return error;
-            soh_list.push_back(alias_name);
-
-        }
+        int32_t create_and_add_alias(string cosmos_name, string alias_name);
 
         int32_t set_soh(){
             return Agent::set_sohstring(soh_list);
