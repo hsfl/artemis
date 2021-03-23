@@ -124,7 +124,34 @@ namespace artemis {
          * @param alias_name unique name that will replace the default name in the SOH
          * @return error if there is an error creating the alias
          */
-        int32_t create_and_add_alias(string cosmos_name, string alias_name);
+        int32_t add_alias(string cosmos_name, string alias_name);
+
+        /**
+         * @brief Creates an alias for a device property and adds it to the SOH List
+         *  by default the SOH name of a device property will appear as device_type_prop_xxx
+         *      ex: device_tsen_temp_000 for a temperature sensor device type and property temp
+         * use this function to change the name that will appear with the corresponding device property value
+         * @param device_name
+         * @param prop_name name of device property
+         * @param alias custom name of device property to add to SOH list
+         * @return error if there is an error creating the alias
+         */
+        int32_t add_custom_device_prop_alias(string device_name, string prop_name, string alias);
+
+        /**
+         * @brief Creates an alias for a device property and adds it to the SOH List
+         *  by default the SOH name of a device property will appear as device_type_prop_xxx
+         *  creating an alias allows you to change the name of the property that appears in the SOH message
+         * this function will create a generic SOH name "devicename_propname" for each property provided
+         *      ex: (device_name = "tempsensor", prop_names = {"temp","utc", "power"}
+         *          device_tsen_temp_001 -> tempsensor_temp
+         *          device_tsen_utc_001 -> tempsensor_utc
+         *          device_tsen_power_001 -> tempsensor_power
+         *      * if you want to use a different name other than the default property name, use add_custom_device_prop_alias()
+         * @param prop_name list of names of device properties
+         * @return error if there is an error creating the alias
+         */
+        int32_t add_generic_device_prop_alias(string device_name, vector<std::string> prop_names);
 
         int32_t set_soh(){
             return Agent::set_sohstring(soh_list);

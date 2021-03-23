@@ -118,18 +118,23 @@ int main(int argc, char** argv) {
     raspi->cpu.boot_count = 0;
     raspi->cpu.uptime = 0;
 
-    string memory_alias = agent->create_device_value_alias("raspi", "gib","memory_usage", error);
+
+    error = agent->add_generic_device_prop_alias("raspi",{"utc","volt","amp","uptime","temp","uptime","boot_count"});
     if(error < 0){
-        printf("Error creating alias: memory_usage\n");
-    }
-    string maxmemory_alias = agent->create_device_value_alias("raspi", "maxgib","max_memory", error);
-    if(error < 0){
-        printf("Error creating alias: max_memory\n");
+        printf("Error creating SOH list (pycubed)[%s]\n", cosmos_error_string(error).c_str());
     }
 
-    agent->append_soh_list("raspi",{"utc","volt","amp","uptime","temp","uptime","boot_count", memory_alias, maxmemory_alias});
+    // create alias: device_cpu_gib_xxx -> raspi_memory_usage
+    error = agent->add_custom_device_prop_alias("raspi", "gib", "raspi_memory_usage");
     if(error < 0){
-        printf("Error creating SOH list (pycubed)\n");
+        printf("Error creating alias: raspi gib [%s]\n", cosmos_error_string(error).c_str());
+    }
+
+
+    // create alias: device_cpu_maxgib_xxx -> raspi_max_memory
+    error = agent->add_custom_device_prop_alias("raspi", "maxgib", "pycubed_max_memory");
+    if(error < 0){
+        printf("Error creating alias: raspi maxgib [%s]\n", cosmos_error_string(error).c_str());
     }
 
 	

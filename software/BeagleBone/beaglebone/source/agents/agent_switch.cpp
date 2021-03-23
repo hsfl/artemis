@@ -122,16 +122,10 @@ int main() {
 		switches[switch_name] = sw;
         gpios[switch_name] = gpio;
 		
-        error = agent->append_soh_list(switch_name, soh_props);
+        error = agent->add_generic_device_prop_alias(switch_name, soh_props);
         if(error < 0){
-            printf("Error creating SOH List\n");
+            printf("Error creating aliases %s [%s]\n", switch_name.c_str(), cosmos_error_string(error).c_str());
         }
-//		agent->GetLog().RegisterDevice(switch_name, sw)
-//				.RegisterProperty("utc", sw->utc)
-//				.RegisterProperty("enabled", sw->enabled)
-//				.RegisterProperty("voltage", sw->voltage)
-//				.RegisterProperty("current", sw->current)
-//				.RegisterProperty("power", sw->power);
 	}
 	
 	

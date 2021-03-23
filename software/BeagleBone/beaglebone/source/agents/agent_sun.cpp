@@ -126,15 +126,15 @@ int main() {
         sensor_data[sensor_name] = sensor;
         sensor_interface[sensor_name] = interface;
 
-        // Add the sun sensor to the soh
-        agent->append_soh_list(sensor_name, soh_props);
-        // TODO create alias from temp to lux
-        // add device_ssen_lux_000 to soh string
-        string lux_alias = agent->create_device_value_alias(sensor_name, "temp", "lux", error);
+        // Add the sun sensor properties to the soh
+        error = agent->add_generic_device_prop_alias(sensor_name, soh_props);
+        // create alias from device_ssen_temp_00x  to sensorname_lux
+
+        error = agent->add_custom_device_prop_alias(sensor_name, "temp", sensor_name+"_lux");
         if(error < 0){
-            printf("Error creating alias: lux\n");
+            printf("Error creating alias: pycubed gib [%s]\n", cosmos_error_string(error).c_str());
         }
-        agent->append_soh_list(lux_alias);
+
 
 	}
 	

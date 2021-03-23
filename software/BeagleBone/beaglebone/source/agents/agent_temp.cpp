@@ -122,18 +122,10 @@ int main() {
         sensor->enabled = false;
         sensor->temp = 0;
 
-        error = agent->append_soh_list(name, soh_props);
+        error = agent->add_generic_device_prop_alias(name, soh_props);
         if(error < 0){
-            printf("Error creating SOH List\n");
+            printf("Error creating aliases %s [%s]\n",name.c_str(), cosmos_error_string(error).c_str());
         }
-        string cosmos_name = agent->get_soh_name(name, "temp", error);
-        string temp_alias = "temp_"+name;
-        error = agent->create_alias(cosmos_name, temp_alias);
-        if(error < 0){
-            printf("Error creating alias temp_%s\n", name.c_str());
-        }
-        agent->append_soh_list(temp_alias);
-
 	}
 	
 	// Finish up

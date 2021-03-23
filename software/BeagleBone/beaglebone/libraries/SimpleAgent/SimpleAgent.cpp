@@ -59,12 +59,34 @@ int32_t SimpleAgent::append_soh_list(string devicename, vector<string> props){
     return 0;
 }
 
-int32_t SimpleAgent::create_and_add_alias(string cosmos_name, string alias_name){
+int32_t SimpleAgent::add_alias(string cosmos_name, string alias_name){
     int32_t error = this->create_alias(cosmos_name, alias_name);
     if(error < 0) return error;
-    soh_list.push_back(alias_name);
-
+    append_soh_list(alias_name);
+    return error;
 }
+
+int32_t SimpleAgent::add_custom_device_prop_alias(string device_name, string prop_name, string alias)
+{
+    int32_t error = 0;
+    error = this->create_device_value_alias(device_name, prop_name, alias);
+    if(error < 0) return error;
+    append_soh_list(alias);
+}
+
+int32_t SimpleAgent::add_generic_device_prop_alias(string device_name, vector<string> prop_names)
+{
+    int32_t error = 0;
+    for(string prop: prop_names){
+        error = this->add_custom_device_prop_alias(device_name, prop, device_name+"_"+prop);
+        if(error < 0){
+            printf("Error creating alias: %s_%s", device_name.c_str(), prop.c_str());
+            return error;
+        }
+    }
+    return error;
+}
+
 
 //===============================================================
 //======================== MISCELLANEOUS ========================

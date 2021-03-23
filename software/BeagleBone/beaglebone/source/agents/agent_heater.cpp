@@ -123,6 +123,9 @@ int main(int argc, char** argv) {
     int32_t error = 0;
     string devname_heater = heater_config["name"].GetString();
     devicestruc* heater = agent->add_device(devname_heater, DeviceType::HTR, error);
+    if(error < 0){
+        printf("Error adding device %s [%s]", devname_heater.c_str(), cosmos_error_string(error).c_str());
+    }
     heater->utc = Time::Now();
     heater->enabled = false;
 
@@ -143,10 +146,11 @@ int main(int argc, char** argv) {
 		// Store the dependency key
 		agent_temp_keys.push_back(dependency.source);
 	}
-    vector<string> soh_props = {"utc","enabled","volt","amp","power"};
-
 	
-    agent->append_soh_list(devname_heater, soh_props);
+    error = agent->add_generic_device_prop_alias(devname_heater, {"utc","enabled","volt","amp","power"});
+    if(error < 0) {
+        printf("Error creating aliases %s [%s]\n", devname_heater.c_str(), cosmos_error_string(error).c_str());
+    }
     agent->set_soh();
 	
 	// Make sure the heater is disabled
