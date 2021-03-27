@@ -108,10 +108,13 @@ int main() {
 		gpio->DigitalWrite(default_state ? GPIOValue::High : GPIOValue::Low);
 		
 		// Create the switch device
-        sw = agent->add_device(switch_name, DeviceType::SWCH, error);
-		
+        error = agent->add_device(switch_name, DeviceType::SWCH, &sw);
+        if(error < 0){
+            printf("Error adding device SWCH\n");
+            sw = nullptr;
+            continue;
+        }
 
-		
 		// Post some properties
         sw->utc = Time::Now();
         sw->volt = default_state ? 3.3 : 0.0;

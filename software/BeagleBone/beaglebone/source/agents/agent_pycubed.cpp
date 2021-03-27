@@ -44,10 +44,10 @@ devicestruc *radio;
 //! The battery device located on the battery board
 devicestruc *battery;
 
-string PowerUse = "powuse";
-string PowerGeneration = "powgen";
-string BatteryCapacity = "battcap";
-string BatteryCharge = "battlev";
+string PowerUse = "node_powuse";
+string PowerGeneration = "node_powgen";
+string BatteryCapacity = "node_battcap";
+string BatteryCharge = "node_battlev";
 
 //! A timer
 Timer connection_timer;
@@ -179,11 +179,11 @@ int main(int argc, char** argv) {
 	agent = new SimpleAgent(CUBESAT_AGENT_PYCUBED_NAME);
 	agent->set_activity_period(SLEEP_TIME);
 
-    agent->set_value(PowerUse, 0.);
-    agent->set_value(PowerGeneration, 0.);
-    agent->set_value(BatteryCapacity, 3.5f * 4);
-    agent->set_value(BatteryCharge, 0.);
-    agent->append_soh_list("node",{PowerUse, PowerGeneration, BatteryCapacity, BatteryCharge});
+    error = agent->set_value(PowerUse, 0.);
+    error = agent->set_value(PowerGeneration, 0.);
+    error = agent->set_value(BatteryCapacity, 3.5f * 4);
+    error = agent->set_value(BatteryCharge, 0.);
+    error = agent->append_soh_list({PowerUse, PowerGeneration, BatteryCapacity, BatteryCharge});
 
 	
     agent->add_request("is_up", Request_IsUp, "", "Checks if the PyCubed is reachable");
@@ -227,16 +227,19 @@ int main(int argc, char** argv) {
 
 
 int32_t InitPyCubed() {
-    int32_t error = 0;
+    int32_t status = 0;
 	// Create a new PyCubed device
 	handler = new PyCubed(uart, baud);
 	handler->SetShutdownCallback(Shutdown);
 	handler->SetCommandCallback(RunCommand);
 	
 	// Add the PyCubed CPU device
-    pycubed = agent->add_device("pycubed", DeviceType::CPU, error);
-    if(error < 0){
+
+    status = agent->add_device("pycubed", DeviceType::CPU, &pycubed);
+    if(status < 0){
         printf("Error adding device CPU\n");
+        pycubed = nullptr;
+        return status;
     }
     pycubed->utc = Time::Now();
     pycubed->cpu.gib = 0;
@@ -246,28 +249,31 @@ int32_t InitPyCubed() {
     pycubed->cpu.uptime = 0;
     pycubed->temp = 273.15;
 
-    error = agent->add_generic_device_prop_alias("pycubed",{"utc","volt","amp","uptime","temp"});
-    if(error < 0){
-        printf("Error creating aliases (pycubed) [%s]\n",  cosmos_error_string(error).c_str());
+    status = agent->add_generic_device_prop_alias("pycubed",{"utc","volt","amp","uptime","temp"});
+    if(status < 0){
+        printf("Error creating aliases (pycubed) [%s]\n",  cosmos_error_string(status).c_str());
     }
 
     // create alias: device_cpu_gib_xxx -> pycubed_memory_usage
-    error = agent->add_custom_device_prop_alias("pycubed", "gib", "pycubed_memory_usage");
-    if(error < 0){
-        printf("Error creating alias: pycubed gib [%s]\n", cosmos_error_string(error).c_str());
+    status = agent->add_custom_device_prop_alias("pycubed", "gib", "pycubed_memory_usage");
+    if(status < 0){
+        printf("Error creating alias: pycubed gib [%s]\n", cosmos_error_string(status).c_str());
     }
 
     // create alias: device_cpu_maxgib_xxx -> pycubed_max_memory
-    error = agent->add_custom_device_prop_alias("pycubed", "maxgib", "pycubed_max_memory");
-    if(error < 0){
-        printf("Error creating alias: pycubed maxgib [%s]\n", cosmos_error_string(error).c_str());
+    status = agent->add_custom_device_prop_alias("pycubed", "maxgib", "pycubed_max_memory");
+    if(status < 0){
+        printf("Error creating alias: pycubed maxgib [%s]\n", cosmos_error_string(status).c_str());
     }
 
 	// Add the battery pack
-    battery = agent->add_device("battery", DeviceType::BATT, error);
-    if(error < 0){
-        printf("Error adding device BATT\n");
+    status = agent->add_device("battery", DeviceType::BATT, &battery);
+    if(status < 0){
+        printf("status adding device BATT\n");
+        battery = nullptr;
+        return status;
     }
+
     battery->utc = Time::Now();
     battery->temp = 273.15;
     battery->batt.capacity = 3.5f * 4;
@@ -277,75 +283,78 @@ int32_t InitPyCubed() {
     battery->volt = 0;
     battery->amp = 0;
 
-    agent->add_request("battery_charge", RequestGetBatteryCharge, "","battery level");
+    status = agent->add_request("battery_charge", RequestGetBatteryCharge, "","battery level");
 	
-    error = agent->add_generic_device_prop_alias("battery",{"utc","capacity","efficiency","volt","amp","charge","percentage","temp"});
-    if(error < 0){
-        printf("Error creating aliases (battery) [%s]\n",  cosmos_error_string(error).c_str());
+    status = agent->add_generic_device_prop_alias("battery",{"utc","capacity","efficiency","volt","amp","charge","percentage","temp"});
+    if(status < 0){
+        printf("Error creating aliases (battery) [%s]\n",  cosmos_error_string(status).c_str());
     }
 	
 	// Add the IMU
-    imu = agent->add_device("imu", DeviceType::IMU, error);
-    if(error < 0){
-        printf("Error adding device IMU[%s]\n",  cosmos_error_string(error).c_str());
+    status = agent->add_device("imu", DeviceType::IMU, &imu);
+    if(status < 0){
+        printf("Error adding device IMU[%s]\n",  cosmos_error_string(status).c_str());
+        imu = nullptr;
+        return status;
     }
 
     imu->utc = Time::Now();
     imu->temp = 273.15;
 
-    error = agent->add_generic_device_prop_alias("imu",{"utc","volt","amp","power","temp"});
-    if(error < 0){
-        printf("Error creating aliases (imu)[%s]\n",  cosmos_error_string(error).c_str());;
+    status = agent->add_generic_device_prop_alias("imu",{"utc","volt","amp","power","temp"});
+    if(status < 0){
+        printf("Error creating aliases (imu)[%s]\n",  cosmos_error_string(status).c_str());;
     }
 
     // create alias: device_imu_mag_000 -> imu_magnetic_field
-    error = agent->add_custom_device_prop_alias("imu","mag", "imu_magnetic_field");
-    if(error < 0){
-        printf("Error creating alias for: imu_magnetic_field [%s]\n", cosmos_error_string(error).c_str());
+    status = agent->add_custom_device_prop_alias("imu","mag", "imu_magnetic_field");
+    if(status < 0){
+        printf("Error creating alias for: imu_magnetic_field [%s]\n", cosmos_error_string(status).c_str());
     }
 
     // create alias: device_imu_omega_000 -> imu_angular_velocity
-    error = agent->add_custom_device_prop_alias("imu","omega", "imu_angular_velocity");
-    if(error < 0){
-        printf("Error creating alias for: imu_angular_velocity [%s]\n", cosmos_error_string(error).c_str());
+    status = agent->add_custom_device_prop_alias("imu","omega", "imu_angular_velocity");
+    if(status < 0){
+        printf("Error creating alias for: imu_angular_velocity [%s]\n", cosmos_error_string(status).c_str());
     }
 
     // create alias: device_imu_alpha_000 -> imu_acceleration
-    error = agent->add_custom_device_prop_alias("imu","alpha", "imu_acceleration");
-    if(error < 0){
-        printf("Error creating alias for: imu_acceleration [%s]\n", cosmos_error_string(error).c_str());
+    status = agent->add_custom_device_prop_alias("imu","alpha", "imu_acceleration");
+    if(status < 0){
+        printf("Error creating alias for: imu_acceleration [%s]\n", cosmos_error_string(status).c_str());
     }
 
 	// Add the GPS
-    gps = agent->add_device("gps", DeviceType::GPS, error);
-    if(error < 0){
-        printf("Error adding device (GPS)[%s]\n", cosmos_error_string(error).c_str());
+    status = agent->add_device("gps", DeviceType::GPS, &gps);
+    if(status < 0){
+        printf("Error adding device (GPS)[%s]\n", cosmos_error_string(status).c_str());
+        gps = nullptr;
     }
     gps->utc = Time::Now();
-    error = agent->add_generic_device_prop_alias("gps", {"utc","volt","amp","power","temp"});
-    if(error < 0){
-        printf("Error creating SOH list (imu)[%s]\n", cosmos_error_string(error).c_str());
+    status = agent->add_generic_device_prop_alias("gps", {"utc","volt","amp","power","temp"});
+    if(status < 0){
+        printf("Error creating SOH list (imu)[%s]\n", cosmos_error_string(status).c_str());
     }
 
     // create alias: device_gps_sats_used_000 -> gps_satellites_used
-    error = agent->add_custom_device_prop_alias("gps","sats_used", "gps_satellites_used");
-    if(error < 0){
-        printf("Error creating alias for: gps_satellites_used [%s]\n", cosmos_error_string(error).c_str());
+    status = agent->add_custom_device_prop_alias("gps","sats_used", "gps_satellites_used");
+    if(status < 0){
+        printf("Error creating alias for: gps_satellites_used [%s]\n", cosmos_error_string(status).c_str());
     }
 
     // create alias: device_gps_geocv_000 -> gps_velocity
-    error = agent->add_custom_device_prop_alias("gps","geocv", "gps_velocity");
-    if(error < 0){
-        printf("Error creating alias for: gps_velocity [%s]\n", cosmos_error_string(error).c_str());
+    status = agent->add_custom_device_prop_alias("gps","geocv", "gps_velocity");
+    if(status < 0){
+        printf("Error creating alias for: gps_velocity [%s]\n", cosmos_error_string(status).c_str());
     }
 
     // create alias: device_gps_geods_000 -> gps_location
-    error = agent->add_custom_device_prop_alias("gps","geods", "gps_location");
-    if(error < 0){
-        printf("Error creating alias for: gps_velocity [%s]\n", cosmos_error_string(error).c_str());
+    status = agent->add_custom_device_prop_alias("gps","geods", "gps_location");
+    if(status < 0){
+        printf("Error creating alias for: gps_velocity [%s]\n", cosmos_error_string(status).c_str());
     }
 
-    return error;
+    return status;
 }
 
 bool ConnectPyCubed() {
@@ -519,44 +528,39 @@ string Request_Spoof(vector<string> &args, int32_t &error) {
 
 
 string Request_GetCPUData(int32_t &error) {
-    string pycubed_utc = agent->get_soh_name("pycubed", "utc", error);
-    string pycubed_volt = agent->get_soh_name("pycubed", "volt", error);
-    string pycubed_current = agent->get_soh_name("pycubed", "amp", error);
-    string pycubed_uptime = agent->get_soh_name("pycubed", "uptime", error);
-    string pycubed_temp = agent->get_soh_name("pycubed", "temp", error);
-    vector<string> names ={pycubed_utc, pycubed_volt, pycubed_current, "pycubed_memory_usage","pycubed_max_memory", pycubed_uptime ,pycubed_temp};
-    string jstring =  agent->get_values( names, error);
+
+    vector<string> names ={"pycubed_utc", "pycubed_volt", "pycubed_amp", "pycubed_memory_usage","pycubed_max_memory", "pycubed_uptime" ,"pycubed_temp"};
+    string jstring;
+    error =  agent->get_values(names, jstring);
     return jstring;
 }
 
 string Request_GetIMUData(int32_t &error) {
-    string imu_utc = agent->get_soh_name("imu", "utc", error);
-    string imu_temp = agent->get_soh_name("imu", "temp", error);
-
-    vector<string> names = {imu_utc,imu_temp,"imu_magnetic_field","imu_acceleration", "imu_angular_velocity"};
-    string jstring =  agent->get_values( names, error);
+    vector<string> names = {"imu_utc","imu_temp","imu_magnetic_field","imu_acceleration", "imu_angular_velocity"};
+    string jstring;
+    error =  agent->get_values(names, jstring);
 
     return jstring;
 }
 
 string Request_GetGPSData(int32_t &error) {
-    string gps_utc = agent->get_soh_name("gps", "utc", error);
-    vector<string> names = {gps_utc,"gps_location","gps_satellites_used"};
-    string jstring =  agent->get_values(names, error);
+    vector<string> names = {"gps_utc","gps_location","gps_satellites_used"};
+
+    string jstring;
+    error =  agent->get_values(names, jstring);
     return jstring;
 }
 
 string Request_GetPowerData(int32_t &error) {
     vector<string> props = {"utc","capacity","charge", "efficiency","percentage","volt","amp","temp"};
-    string jstring =  agent->get_device_values("battery", props, error);
+    string jstring;
+    error=  agent->get_device_values("battery", props, jstring);
     return jstring;
 }
 string Request_GetTemperatureData(int32_t &error) {
-    string pycubed_temp = agent->get_soh_name("pycubed","temp", error);
-    string pycubed_utc = agent->get_soh_name("pycubed","utc", error);
-    string battery_temp = agent->get_soh_name("battery","temp", error);
-    vector<string> props = {pycubed_utc, pycubed_temp, battery_temp};
-    string jstring =  agent->get_values(props, error);
+    vector<string> props = {"pycubed_utc", "pycubed_temp", "battery_temp"};
+    string jstring;
+    error =  agent->get_values(props, jstring);
     return jstring;
 }
 string Request_KillRadio(int32_t &error) {
@@ -584,7 +588,9 @@ string Request_KillRadio(int32_t &error) {
 
 string RequestGetBatteryCharge(int32_t &error){
 
-    return agent->get_device_values("battery",{"charge"}, error);
+    string json ;
+    error = agent->get_device_values("battery",{"charge"}, json);
+    return json;
 }
 
 

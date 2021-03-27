@@ -40,20 +40,22 @@ void SimpleAgent::append_soh_list(string prop){
     soh_list.push_back(prop);
 }
 
+int32_t SimpleAgent::append_soh_list(vector<string> names)
+{
+    for(string name: names){
+        soh_list.push_back(name);
+    }
+    return 0;
+}
+
 int32_t SimpleAgent::append_soh_list(string devicename, vector<string> props){
-    int32_t error = 0;
+    int32_t status = 0;
     string soh_entry;
     for(string p: props){
-        if(devicename == "node") {
-            soh_entry = "node_" + p;
+        status = this->device_property_name(devicename, p, soh_entry);
+        if(status < 0){
+            return status;
         }
-        else {
-            soh_entry = this->get_soh_name(devicename, p, error);
-            if(error < 0){
-                return error;
-            }
-        }
-
         soh_list.push_back(soh_entry);
     }
     return 0;
@@ -72,6 +74,7 @@ int32_t SimpleAgent::add_custom_device_prop_alias(string device_name, string pro
     error = this->create_device_value_alias(device_name, prop_name, alias);
     if(error < 0) return error;
     append_soh_list(alias);
+    return error;
 }
 
 int32_t SimpleAgent::add_generic_device_prop_alias(string device_name, vector<string> prop_names)

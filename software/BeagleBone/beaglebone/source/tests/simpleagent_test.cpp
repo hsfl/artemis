@@ -27,12 +27,13 @@ int main() {
 	my_sensor->Post(my_sensor->utc = Time::Now()); // Set and post the UTC timestamp property
     my_sensor->Post(my_sensor->temperature = 0); // Set and post the temperature property */
 
-    devicestruc *my_sensor = agent->add_device("my_sensor", DeviceType::TSEN, error);
+    devicestruc *my_sensor;
+    error = agent->add_device("my_sensor", DeviceType::TSEN, &my_sensor);
     if (error < 0){
         printf("Error adding temperature sensor\n");
     }
 
-    vector<string> soh_props = {"my_sensor", {"utc","temp"}};
+    vector<string> soh_props = {"utc","temp"};
     error = agent->append_soh_list("my_sensor", soh_props);
     if (error < 0){
         printf("Error creating SOH List/n");

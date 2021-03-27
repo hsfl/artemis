@@ -114,7 +114,11 @@ int main() {
 //						   sensor_obj["orientation"].GetArray()[2].GetInt());
 		
 		// Create a new sun sensor device
-        sensor = agent->add_device(sensor_name, DeviceType::SSEN, error);
+        error = agent->add_device(sensor_name, DeviceType::SSEN, &sensor);
+        if(error < 0){
+            printf("Error adding device SSEN\n");
+            sensor = nullptr;
+        }
         interface = new OPT3001(bus, address);
 		
 

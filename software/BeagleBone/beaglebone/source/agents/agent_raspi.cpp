@@ -94,47 +94,51 @@ int main(int argc, char** argv) {
 	agent = new SimpleAgent(CUBESAT_AGENT_RASPI_NAME);
     agent->set_activity_period(SLEEP_TIME);
 	
-    int32_t error = 0;
+    int32_t status = 0;
 	// Add the camera device
-    camera = agent->add_device("camera", DeviceType::CAM, error);
-    if(error < 0){
+    status = agent->add_device("camera", DeviceType::CAM, &camera);
+    if(status < 0){
         printf("Error adding device CAM\n");
+        camera = nullptr;
     }
-    camera->enabled = false;
-    camera->cam.pwidth = 1280;
-    camera->cam.pheight = 700;
+    else {
+        camera->enabled = false;
+        camera->cam.pwidth = 1280;
+        camera->cam.pheight = 700;
+    }
 
-	
 	// Add the Raspberry Pi
-    raspi = agent->add_device("raspi", DeviceType::CPU, error);
-    if(error < 0){
+    status = agent->add_device("raspi", DeviceType::CPU, &raspi);
+    if(status < 0){
         printf("Error adding device CPU\n");
+        raspi = nullptr;
     }
-    raspi->utc = Time::Now();
-    raspi->temp = 273.15;
-    raspi->cpu.load = 0;
-    raspi->cpu.gib = 0;
-    raspi->cpu.maxgib = 0.5;
-    raspi->cpu.boot_count = 0;
-    raspi->cpu.uptime = 0;
+    else {
+        raspi->utc = Time::Now();
+        raspi->temp = 273.15;
+        raspi->cpu.load = 0;
+        raspi->cpu.gib = 0;
+        raspi->cpu.maxgib = 0.5;
+        raspi->cpu.boot_count = 0;
+        raspi->cpu.uptime = 0;
+    }
 
-
-    error = agent->add_generic_device_prop_alias("raspi",{"utc","volt","amp","uptime","temp","uptime","boot_count"});
-    if(error < 0){
-        printf("Error creating SOH list (pycubed)[%s]\n", cosmos_error_string(error).c_str());
+    status = agent->add_generic_device_prop_alias("raspi",{"utc","volt","amp","uptime","temp","uptime","boot_count"});
+    if(status < 0){
+        printf("Error creating SOH list (pycubed)[%s]\n", cosmos_error_string(status).c_str());
     }
 
     // create alias: device_cpu_gib_xxx -> raspi_memory_usage
-    error = agent->add_custom_device_prop_alias("raspi", "gib", "raspi_memory_usage");
-    if(error < 0){
-        printf("Error creating alias: raspi gib [%s]\n", cosmos_error_string(error).c_str());
+    status = agent->add_custom_device_prop_alias("raspi", "gib", "raspi_memory_usage");
+    if(status < 0){
+        printf("Error creating alias: raspi gib [%s]\n", cosmos_error_string(status).c_str());
     }
 
 
     // create alias: device_cpu_maxgib_xxx -> raspi_max_memory
-    error = agent->add_custom_device_prop_alias("raspi", "maxgib", "pycubed_max_memory");
-    if(error < 0){
-        printf("Error creating alias: raspi maxgib [%s]\n", cosmos_error_string(error).c_str());
+    status = agent->add_custom_device_prop_alias("raspi", "maxgib", "pycubed_max_memory");
+    if(status < 0){
+        printf("Error creating alias: raspi maxgib [%s]\n", cosmos_error_string(status).c_str());
     }
 
 	

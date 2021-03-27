@@ -54,24 +54,24 @@ int32_t SetHeaterState(bool enabled);
 /**
  * @brief Enables the heater
  */
-string Request_Enable(int32_t &error);
+string Request_Enable(int32_t &status);
 
 /**
  * @brief Disables the heater
  */
-string Request_Disable(int32_t &error);
+string Request_Disable(int32_t &status);
 
 /**
  * @brief Gets the state of the heater
  * @return "on" if it's on, "off" if it's off
  */
-string Request_GetHeaterState(int32_t &error);
+string Request_GetHeaterState(int32_t &status);
 
 /**
  * @brief Returns the heater configuration JSON
  * @return The configuration JSON string
  */
-string Request_Config(int32_t &error);
+string Request_Config(int32_t &status);
 
 // |----------------------------------------------|
 // |                   Variables                  |
@@ -120,14 +120,19 @@ int main(int argc, char** argv) {
 	heater_switch = heater_config["switch"].GetString();
 	
 	// Add the heater device
-    int32_t error = 0;
+    int32_t status = 0;
     string devname_heater = heater_config["name"].GetString();
-    devicestruc* heater = agent->add_device(devname_heater, DeviceType::HTR, error);
-    if(error < 0){
-        printf("Error adding device %s [%s]", devname_heater.c_str(), cosmos_error_string(error).c_str());
+    devicestruc* heater;
+    status = agent->add_device(devname_heater, DeviceType::HTR, &heater);
+    if(status < 0){
+        printf("Error adding device %s [%s]", devname_heater.c_str(), cosmos_error_string(status).c_str());
+        heater = nullptr;
     }
-    heater->utc = Time::Now();
-    heater->enabled = false;
+    else {
+        heater->utc = Time::Now();
+        heater->enabled = false;
+    }
+
 
 	// Load all temperature dependencies
 	for (auto &sensor_obj : heater_config["sensors"].GetArray()) {
@@ -147,9 +152,9 @@ int main(int argc, char** argv) {
 		agent_temp_keys.push_back(dependency.source);
 	}
 	
-    error = agent->add_generic_device_prop_alias(devname_heater, {"utc","enabled","volt","amp","power"});
-    if(error < 0) {
-        printf("Error creating aliases %s [%s]\n", devname_heater.c_str(), cosmos_error_string(error).c_str());
+    status = agent->add_generic_device_prop_alias(devname_heater, {"utc","enabled","volt","amp","power"});
+    if(status < 0) {
+        printf("Error creating aliases %s [%s]\n", devname_heater.c_str(), cosmos_error_string(status).c_str());
     }
     agent->set_soh();
 	
@@ -161,7 +166,7 @@ int main(int argc, char** argv) {
 	while ( agent->StartLoop() ) {
 		
 		// Update sensor readings
-        if ( (error = GetTemperatures()) < 0 )
+        if ( (status = GetTemperatures()) < 0 )
 			continue;
 		
 		
@@ -185,11 +190,11 @@ int main(int argc, char** argv) {
 		
 		// If any temperatures are too low, enable the heater
 		if ( any_enable && !heater->enabled ) {
-            error = SetHeaterState(true);
+            status = SetHeaterState(true);
 		}
 		// If all temperatures are above the disable temperature, disable the heater
 		else if ( all_disable && heater->enabled ) {
-            error = SetHeaterState(false);
+            status = SetHeaterState(false);
 		}
 		
 		heater->utc = Time::Now();
@@ -207,13 +212,14 @@ int32_t GetTemperatures() {
     }
     cout << "Sending request to agent_temp: getvalue" << endl;
     // Send a request to enable or disable the heater
-    int32_t error = 0;
-    auto values = agent->send_request_getvalue(agent_temp, agent_temp_keys, error);
+    int32_t status = 0;
+    Json::Object values;
+    status = agent->send_request_getvalue(agent_temp, agent_temp_keys, values);
 	
 	// Check if the values were not retrieved
     if ( values.empty()  ) {
-        printf("Failed to get temperatures from agent_temp [%s]\n", cosmos_error_string(error).c_str());
-        return error;
+        printf("Failed to get temperatures from agent_temp [%s]\n", cosmos_error_string(status).c_str());
+        return status;
 	}
 	
 	// Store the temperatures
@@ -238,12 +244,12 @@ int32_t SetHeaterState(bool enabled) {
     string response;
     cout << "Sending request to agent_switch: " << request << endl;
     // Send a request to enable or disable the heater
-    int32_t error = agent->send_request(agent_switch, request, response);
+    int32_t status = agent->send_request(agent_switch, request, response);
 
 	// Check if an error occurred
-    if ( error < 0 ) {
+    if ( status < 0 ) {
 		printf("Failed to send enable/disable request to agent_switch\n");
-        return error;
+        return status;
 	}
 	
 	// Set the heater properties
@@ -255,24 +261,24 @@ int32_t SetHeaterState(bool enabled) {
 }
 
 
-string Request_Enable(int32_t &error) {
-    error = SetHeaterState(true);
-    if(error >=0 ){
+string Request_Enable(int32_t &status) {
+    status = SetHeaterState(true);
+    if(status >=0 ){
         return "Success";
     }
     return "Fail";
 }
-string Request_Disable(int32_t &error) {
-    error = SetHeaterState(false);
-    if(error >= 0){
+string Request_Disable(int32_t &status) {
+    status = SetHeaterState(false);
+    if(status >= 0){
         return "Success";
     }
     return "Fail";
 }
-string Request_GetHeaterState(int32_t &error) {
+string Request_GetHeaterState(int32_t &status) {
 	return heater->enabled ? "\"on\"" : "\"off\"";
 }
-string Request_Config(int32_t &error) {
+string Request_Config(int32_t &status) {
 	string config;
 	GetConfigString("heater", config);
 	return config;

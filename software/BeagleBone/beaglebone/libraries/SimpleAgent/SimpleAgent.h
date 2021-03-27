@@ -116,6 +116,7 @@ namespace artemis {
 		//===============================================================
         void append_soh_list(string prop);
 
+        int32_t append_soh_list(vector<string> names);
         int32_t append_soh_list(string devicename, vector<string> props);
 
         /**

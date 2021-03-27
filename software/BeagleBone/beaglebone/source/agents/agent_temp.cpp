@@ -101,7 +101,12 @@ int main() {
 		type = sensor_obj["type"].GetString();
 		
 		// Create a new temperature sensor device
-        sensor = agent->add_device(name, DeviceType::TSEN, error);
+        error = agent->add_device(name, DeviceType::TSEN, &sensor);
+        if(error < 0){
+            printf("Error adding device TSEN\n");
+            sensor = nullptr;
+            continue;
+        }
         sensor_data[name] = sensor;
 		
 		
@@ -226,11 +231,12 @@ void UpdateSensor(const std::string &name) {
         if ( agent_pycubed.exists ) {
 			
             string source_id = sensor_source[name];
-            int32_t error = 0;
-            auto values = agent->send_request_getvalue(agent_pycubed, {source_id}, error);
+            int32_t status = 0;
+            Json::Object values;
+            status = agent->send_request_getvalue(agent_pycubed, {source_id}, values);
 			
 			// Check if the request failed
-			if ( values.empty() )
+            if ( values.empty()  || status < 0)
 				return;
 			
             sensor->temp = values[source_id].nvalue;
