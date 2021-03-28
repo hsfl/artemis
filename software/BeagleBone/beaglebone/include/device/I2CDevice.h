@@ -4,6 +4,7 @@
 
 #include <stdint.h>
 #include <string>
+#include "support/cosmos-errno.h"
 
 
 namespace artemis {
@@ -32,7 +33,7 @@ namespace artemis {
 		 * @brief Attempts to open the device
 		 * @return 0 if successful
 		 */
-		virtual bool Open();
+        virtual int32_t Open();
 		/**
 		 * @brief Closes the device, if still open.
 		 */
@@ -53,16 +54,16 @@ namespace artemis {
 		 * Write a single value to the I2C device. Used to set up the device to read from a
 		 * particular address.
 		 * @param value the value to write
-		 * @return True on success
+         * @return > 0 on success
 		 */
-		virtual bool Write(uint8_t value);
+        virtual int32_t Write(uint8_t value);
 		/**
 		 * Write a single byte value to a single register.
 		 * @param registerAddress The register address
 		 * @param value The value to be written to the register
 		 * @return True on success
 		 */
-		virtual bool WriteRegister(uint8_t register_addr, uint16_t value);
+        virtual int32_t WriteRegister(uint8_t register_addr, uint16_t value);
 		/**
 		 * Method to read a number of registers from a single device. This is much more efficient than
 		 * reading the registers individually. The from address is the starting address to read from, which
@@ -71,13 +72,13 @@ namespace artemis {
 		 * @param fromAddress the starting address to read from
 		 * @return a pointer of type unsigned char* that points to the first element in the block of registers
 		 */
-		virtual int ReadRegisters(uint8_t *out, uint8_t first_addr, uint8_t len);
+        virtual int32_t ReadRegisters(uint8_t *out, uint8_t first_addr, uint8_t len);
 		/**
 		 * Read a single register value from the address on the device.
 		 * @param registerAddress the address to read from
 		 * @return the byte value at the register address, or -1 on failure
 		 */
-		virtual int ReadRegister(uint8_t register_addr);
+        virtual int32_t ReadRegister(uint8_t register_addr, int16_t &out);
 		
 		
 	private:

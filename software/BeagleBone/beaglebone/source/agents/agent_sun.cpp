@@ -34,7 +34,7 @@ bool ConnectSensor(int index);
 //! Wraps up communication with the sensor devices
 void DestroySensors();
 //! Grabs the latest readings from a sensor device
-void UpdateSensor(const std::string &name);
+int32_t UpdateSensor(const std::string &name);
 //! Enables/disables power to sensors via agent_switch
 void SetSensorPower(bool enabled);
 
@@ -149,7 +149,10 @@ int main() {
 		
 		// Update the sensors
         for (auto pair : sensor_data) {
-			UpdateSensor(pair.first);
+            error = UpdateSensor(pair.first);
+            if(error < 0){
+                printf("Error updating sensor: [%s]\n", cosmos_error_string(error).c_str());
+            }
 		}
 		
 	}
@@ -167,22 +170,22 @@ int main() {
 }
 
 
-void UpdateSensor(const std::string &name) {
+int32_t UpdateSensor(const std::string &name) {
     devicestruc *sensor = sensor_data[name];
     OPT3001 *opt3001 = sensor_interface[name];
 	
 	sensor->utc = Time::Now();
-	
+    int32_t status;
 	// Make sure the sensor is open
 	if ( !opt3001->IsOpen() ) {
 		printf("Opening sensor '%s' on I2C-%d at address 0x%02x... ",
 			   name.c_str(), opt3001->GetBusAddr(), opt3001->GetDeviceAddr());
-		
-        if ( !opt3001->Open() ) {
+        status = opt3001->Open() ;
+        if ( status < 0 ) {
 			opt3001->Close();
 			sensor->enabled = false;
 			printf(" failed.\n");
-			return;
+            return status;
 		}
 		else {
 			sensor->enabled = true;
@@ -192,7 +195,10 @@ void UpdateSensor(const std::string &name) {
 	
 	
 	// 1. Read from the sensor
-	opt3001->ReadState();
+    status = opt3001->ReadState();
+    if(status < 0){
+        printf("Error reading state [%s]\n", cosmos_error_string(status).c_str());
+    }
 	OPT3001::Configuration config = opt3001->GetConfiguration();
 	
 	
@@ -213,10 +219,14 @@ void UpdateSensor(const std::string &name) {
 		
 		// Write "single-shot" mode to the configuration register
 		config.ModeOfConversionOperation = 1;
-		opt3001->SetConfiguration(config);
+        status = opt3001->SetConfiguration(config);
+        if(status < 0){
+            printf("Error waking up sensor '%s'[%s]\n", name.c_str(), cosmos_error_string(status).c_str());
+        }
 		
 		printf("Waking up sensor '%s'\n", name.c_str());
 	}
+    return status;
 }
 
 // |----------------------------------------------|

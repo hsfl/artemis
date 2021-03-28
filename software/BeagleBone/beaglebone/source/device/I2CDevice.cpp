@@ -45,26 +45,26 @@ std::string I2CDevice::GetDevicePath() const {
  * Open a connection to an I2C device
  * @return -1 on failure to open to the bus or device, 0 on success.
  */
-bool I2CDevice::Open() {
+int32_t I2CDevice::Open() {
 	if ( IsOpen() )
-		return false;
+        return 0;
 	
 	// Open the device
 	file = open(GetDevicePath().c_str(), O_RDWR);
 	
 	// Check if an error occurred
 	if ( file < 0 ) {
-		perror("Failed to open I2C bus");
+        //perror("Failed to open I2C bus");
 		file = -1;
-		return false;
+        return -errno;
 	}
 	
 	// Set up the device
 	if ( ioctl(file, I2C_SLAVE, device) != 0 ) {
-		perror("Failed to connect to I2C device");
+        //perror("Failed to connect to I2C device");
 		close(file);
 		file = -1;
-		return false;
+        return -errno;
 	}
 	
 	// Try writing to the device to see if it is actually available
@@ -76,10 +76,10 @@ bool I2CDevice::Open() {
 	if ( write(file, buffer, 3) != 3 ) {
 		close(file);
 		file = -1;
-		return -1;
+        return -errno;
 	}
 	
-	return true;
+    return 0;
 }
 
 void I2CDevice::Close(){
@@ -90,9 +90,11 @@ void I2CDevice::Close(){
 }
 
 
-bool I2CDevice::WriteRegister(uint8_t registerAddress, uint16_t value){
-	if ( !IsOpen() )
-		return false;
+int32_t I2CDevice::WriteRegister(uint8_t registerAddress, uint16_t value){
+    if ( !IsOpen() ){
+        return ErrorNumbers::COSMOS_GENERAL_ERROR_NOTSTARTED;
+    }
+
 	
 	// Set up the data buffer
 	unsigned char buffer[3];
@@ -101,32 +103,33 @@ bool I2CDevice::WriteRegister(uint8_t registerAddress, uint16_t value){
 	buffer[2] = value & 0x00FF;
 	
 	// Write to the device
-	if ( write(file, buffer, 3) != 3 ) {
-		perror("Failed write to the I2C device");
-		return false;
+    int32_t status = write(file, buffer, 3);
+    if (  status < 0 ) {
+        return -errno;
 	}
 	
 	return true;
 }
 
 
-bool I2CDevice::Write(uint8_t value){
-	if ( !IsOpen() )
-		return false;
+int32_t I2CDevice::Write(uint8_t value){
+    if ( !IsOpen() ) {
+        return ErrorNumbers::COSMOS_GENERAL_ERROR_NOTSTARTED;
+    }
 	
 	unsigned char buffer[1] = {value};
 	
 	// Write to the device
-	if ( write(file, buffer, 1) != 1 ) {
-		perror("Failed write to the I2C device");
-		return false;
+    int32_t status = write(file, buffer, 1);
+    if (  status < 0 ) {
+        return -errno;
 	}
 	
-	return true;
+    return status;
 }
 
 
-int I2CDevice::ReadRegister(uint8_t registerAddress) {
+int32_t I2CDevice::ReadRegister(uint8_t registerAddress, int16_t &out) {
 	if ( !IsOpen() )
 		return -1;
 	
@@ -135,27 +138,31 @@ int I2CDevice::ReadRegister(uint8_t registerAddress) {
 	
 	// Read from the register
 	uint8_t buffer[2];
-	if ( read(this->file, buffer, 2) != 2 ) {
-		perror("Failed to read from I2C device");
-		return -1;
+    int32_t status =  read(this->file, buffer, 2);
+    if(status < 0){
+        return status;
+    }
+    if ( status != 2 ) {
+        return ErrorNumbers::COSMOS_GENERAL_ERROR_BAD_SIZE;
 	}
 	
-	return buffer[0] | (buffer[1] << 8);
+    out = buffer[0] | (buffer[1] << 8);
+    return status;
 }
 
 
-int I2CDevice::ReadRegisters(uint8_t *out, uint8_t first_addr, uint8_t len) {
+int32_t I2CDevice::ReadRegisters(uint8_t *out, uint8_t first_addr, uint8_t len) {
 	if ( !IsOpen() )
-		return -1;
+        return ErrorNumbers::COSMOS_GENERAL_ERROR_NOTSTARTED;
 	
 	// Write the first address
 	this->Write(first_addr);
 	
 	
-	int bytes_read;
+    int32_t bytes_read;
 	if ( (bytes_read = read(this->file, out, len)) != (int)len ) {
 		perror("Failed to read in full buffer from I2C device");
-		return 0;
+        return ErrorNumbers::COSMOS_GENERAL_ERROR_BAD_SIZE;
 	}
 	
 	return bytes_read;
