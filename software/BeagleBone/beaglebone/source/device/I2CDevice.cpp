@@ -54,14 +54,12 @@ int32_t I2CDevice::Open() {
 	
 	// Check if an error occurred
 	if ( file < 0 ) {
-        //perror("Failed to open I2C bus");
 		file = -1;
         return -errno;
 	}
 	
 	// Set up the device
 	if ( ioctl(file, I2C_SLAVE, device) != 0 ) {
-        //perror("Failed to connect to I2C device");
 		close(file);
 		file = -1;
         return -errno;
@@ -161,7 +159,6 @@ int32_t I2CDevice::ReadRegisters(uint8_t *out, uint8_t first_addr, uint8_t len) 
 	
     int32_t bytes_read;
 	if ( (bytes_read = read(this->file, out, len)) != (int)len ) {
-		perror("Failed to read in full buffer from I2C device");
         return ErrorNumbers::COSMOS_GENERAL_ERROR_BAD_SIZE;
 	}
 	
