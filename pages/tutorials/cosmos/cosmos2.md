@@ -57,18 +57,18 @@ using namespace std;
 using namespace cubesat;
 
 //! An agent request which returns whatever argument the user gives it
-double Request_Double(double arg);
+string Request_Double(double arg);
 
 //! An agent request which returns whatever we put in. The "CapturedInput"
 //! type allows the user to put in any string they wish (including spaces)
-std::string Request_Repeat(CapturedInput input);
+string Request_Repeat(CapturedInput input);
 
 //! A device request attached to a temperature sensor. Returns
 //! the temperature plus a given number
-float Request_GetTemperature(TemperatureSensor *sensor, int x);
+string Request_GetTemperature(TemperatureSensor *sensor, int x);
 ```
 
-The first two lines you see help the agent to be compatible with COSMOS. The line starting with `double` (and the two following it) is a function, which when called will perform the action in the comment. This will make sense when we test it out.
+The first two lines you see help the agent to be compatible with COSMOS. The following lines are functions, which when called will perform the action in the comment. This will make sense when we test it out.
 
 Next, you'll need to create a new `SimpleAgent` object under the corresponding comment.
 
@@ -315,17 +315,9 @@ This will display all available requests in a nicely formatted table, along with
 {% include note.html content="There are several requests used by COSMOS and SimpleAgent which are added by default.
 Any requests that you add will be listed at the _bottom_ of this table." %}
 
-Type in the `agent cubesat my_agent` to see the available requests, including the ones we've added. To use the `gettemp` request, type the following command:
+Type in the `agent cubesat my_agent` to see the available requests, including the ones we've added. 
 
-```bash
-$ agent cubesat my_agent temp_sensor:gettemp 0
-```
-
-The `temp_sensor:gettemp` part is the syntax for a device request. If you remember how the function was defined, it asked for both the sensor name and an `int x`, and it adds this `x` to the temperature. The output will be the current temperature plus `x` (0 in this case). You can type in any integer, but remember to subtract it to get the actual value. 
-
-Call that request a few more times, and you'll get different values as time passes.
-
-Now you can try our other requests. Type in the following:
+Try out our requests. Type in the following:
 
 ```bash
 $ agent cubesat my_agent double 3.14
@@ -333,53 +325,6 @@ $ agent cubesat my_agent double 3.14
 
 The output will be 2 times the number you enter, so try a few more numbers to see what `double` can do. Try to figure out how to use the `repeat` request on your own (hint: a string is any set of characters and spaces). 
 
-### Device Requests
-
-You can also add requests to specific devices! For example, let's say we previously created a heater device named `heater`, and we want to add a request to it that either enables or disables the heater. The code for the request
-might look like this:
-
-```cpp
-void DRequest_EnableHeater(Heater *some_heater, bool enabled) {
-    if ( enabled ) {
-        // Enable the heater here...
-    }
-    else {
-        // Disable the heater here...
-    }
-}
-```
-
-Notice that device requests _must_ have the first argument as a pointer to the device they are acting on. This helps
-makes your code flexible, especially if you are adding the same device request to many different devices.
-
-To actually add the device request to the `heater` device, we can call the `heater` device's `AddRequest` function
-inside of the main function:
-
-```cpp
-
-int main() {
-
-    // ...
-
-    // Create the heater device
-    Heater *heater = agent->NewDevice<Heater>("my_heater");
-
-    // Add our device request to the heater using the name "set_state"
-    heater->AddRequest("set_state", DRequest_EnableHeater, "Sets the state of the heater");
-
-    // ...
-}
-```
-
-
-Now if we wanted to call this device request from a terminal (once the program is running), we could issue
-the following command to enable the heater:
-
-```bash
-agent cubesat my_agent my_heater:set_state true
-```
-
-Notice that the format for calling a device request is `device_name:request_name <arguments>`.
 
 ## Putting it all together
 
@@ -425,7 +370,9 @@ int main() {
 	// Add the "Request_Double" request using aliases "double" and "twice"
 	agent->add_request({"double", "twice"}, Request_Double, "arg1", "Doubles a number");
 	
-	
+	// Add the Request_GetTemperature request with aliases "gettemp" and "temp"
+	agent->add_request({"gettemp", "temp"}, Request_GetTemperature, "arg1 arg2", "Gets temperature reading from sensor");
+
 	
 	// Add a temperature sensor device
 	int32_t error = 0; 
@@ -441,11 +388,6 @@ int main() {
 	temp_sensor->utc = 0; 
 	temp_sensor->temp = 273.15;
 
-	
-	// Add the Request_GetTemperature request to the temperature sensor with
-	// aliases "gettemp" and "temp"
-	temp_sensor->add_request({"gettemp", "temp"}, Request_GetTemperature, "arg1 arg2", "Gets temperature reading from sensor");
-	
 	
 	
 	// Let the agent know all the devices have been set up
