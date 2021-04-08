@@ -156,7 +156,14 @@ int main(int argc, char** argv) {
     if(status < 0) {
         printf("Error creating aliases %s [%s]\n", devname_heater.c_str(), cosmos_error_string(status).c_str());
     }
+
     agent->set_soh();
+
+    status = agent->save_node();
+    if(status < 0){
+        printf("Error saving node [%s]", cosmos_error_string(status).c_str());
+    }
+
 	
 	// Make sure the heater is disabled
 	SetHeaterState(false);

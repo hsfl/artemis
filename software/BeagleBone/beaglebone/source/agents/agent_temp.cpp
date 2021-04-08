@@ -135,6 +135,11 @@ int main() {
 	
 	// Finish up
     agent->set_soh();
+    error = agent->save_node();
+    if(error < 0){
+        printf("Error saving node [%s]", cosmos_error_string(error).c_str());
+    }
+
 	
 	// Start executing the agent
 	while ( agent->StartLoop() ) {

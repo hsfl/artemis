@@ -101,22 +101,27 @@ namespace artemis {
 		//! Disallow copy construction for safety
 		SimpleAgent(const SimpleAgent&) = delete;
 		
-		virtual ~SimpleAgent() {
-			
-//			// Delete devices
-//			for (auto device_pair : devices)
-//				delete device_pair.second;
-			
-//			devices.clear();
-		}
+        virtual ~SimpleAgent(){}
 		
 		
 		//===============================================================
 		//======================== MISCELLANEOUS ========================
 		//===============================================================
+
         void append_soh_list(string prop);
 
+        /**
+         * @brief append_soh_list
+         * @param names to add to SOH
+         * @return
+         */
         int32_t append_soh_list(vector<string> names);
+        /**
+         * @brief append_soh_list - add device properties to SOH
+         * @param devicename
+         * @param props
+         * @return status, negative on error
+         */
         int32_t append_soh_list(string devicename, vector<string> props);
 
         /**
@@ -154,9 +159,17 @@ namespace artemis {
          */
         int32_t add_generic_device_prop_alias(string device_name, vector<std::string> prop_names);
 
-        int32_t set_soh(){
-            return Agent::set_sohstring(soh_list);
-        }
+        /**
+         * @brief set_soh - finalize the agent SOH
+         * @return status, negative on error
+         */
+        int32_t set_soh();
+        /**
+         * @brief save_node
+         * saving all changes to node
+         * @return status, negative on error
+         */
+        int32_t save_node();
 		
 		/**
 		 * @brief Returns the original (more complex) version of this agent

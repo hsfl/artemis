@@ -23,13 +23,7 @@ SimpleAgent::SimpleAgent(const std::string &name, std::string node,
 		if ( crash_if_not_open )
 			exit(1);
 	}
-//	else {
-//        this->add_request("print", _Request_DebugPrint,"", "Prints all added devices and requests");
-//	}
-	
-	// Reset the telemetry log
-//	telem_log.Purge();
-	
+
 	
 	// Set some initial loop properties
 	this->loop_started = false;
@@ -88,6 +82,15 @@ int32_t SimpleAgent::add_generic_device_prop_alias(string device_name, vector<st
         }
     }
     return error;
+}
+
+int32_t SimpleAgent::set_soh(){
+    return Agent::set_sohstring(soh_list);
+}
+
+int32_t SimpleAgent::save_node()
+{
+    return json_dump_node(this->cinfo);
 }
 
 

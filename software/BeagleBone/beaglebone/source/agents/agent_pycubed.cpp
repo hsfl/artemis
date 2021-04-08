@@ -34,15 +34,15 @@ Document config;
 
 
 //! The CPU device representing the PyCubed
-devicestruc *pycubed;
+static devicestruc *pycubed;
 //! The IMU device located on the PyCubed
-devicestruc *imu;
+static devicestruc *imu;
 //! The GPS device located on the PyCubed
-devicestruc *gps;
+static devicestruc *gps;
 //! The radio device located on the PyCubed
-devicestruc *radio;
+static devicestruc *radio;
 //! The battery device located on the battery board
-devicestruc *battery;
+static devicestruc *battery;
 
 string PowerUse = "node_powuse";
 string PowerGeneration = "node_powgen";
@@ -201,9 +201,15 @@ int main(int argc, char** argv) {
     if(error < 0){
         exit(error);
     }
+
 	
 	// Finish adding properties
     agent->set_soh();
+
+    error = agent->save_node();
+    if(error < 0){
+        printf("Error saving node [%s]", cosmos_error_string(error).c_str());
+    }
 	
 	// Run the main loop for this agent
 	while ( agent->StartLoop() ) {
@@ -249,7 +255,7 @@ int32_t InitPyCubed() {
     pycubed->cpu.uptime = 0;
     pycubed->temp = 273.15;
 
-    status = agent->add_generic_device_prop_alias("pycubed",{"utc","volt","amp","uptime","temp"});
+    status = agent->add_generic_device_prop_alias("pycubed",{"utc","uptime","temp"});
     if(status < 0){
         printf("Error creating aliases (pycubed) [%s]\n",  cosmos_error_string(status).c_str());
     }
@@ -285,7 +291,7 @@ int32_t InitPyCubed() {
 
     status = agent->add_request("battery_charge", RequestGetBatteryCharge, "","battery level");
 	
-    status = agent->add_generic_device_prop_alias("battery",{"utc","capacity","efficiency","volt","amp","charge","percentage","temp"});
+    status = agent->add_generic_device_prop_alias("battery",{"utc","cap","eff","volt","amp","charge","percentage","temp"});
     if(status < 0){
         printf("Error creating aliases (battery) [%s]\n",  cosmos_error_string(status).c_str());
     }
@@ -329,6 +335,7 @@ int32_t InitPyCubed() {
     if(status < 0){
         printf("Error adding device (GPS)[%s]\n", cosmos_error_string(status).c_str());
         gps = nullptr;
+        return status;
     }
     gps->utc = Time::Now();
     status = agent->add_generic_device_prop_alias("gps", {"utc","volt","amp","power","temp"});
@@ -552,9 +559,9 @@ string Request_GetGPSData(int32_t &error) {
 }
 
 string Request_GetPowerData(int32_t &error) {
-    vector<string> props = {"utc","capacity","charge", "efficiency","percentage","volt","amp","temp"};
+    vector<string> names = {"battery_utc","battery_cap","battery_charge", "battery_eff","battery_percentage","battery_volt","battery_amp","battery_temp"};
     string jstring;
-    error=  agent->get_device_values("battery", props, jstring);
+    error=  agent->get_values(names, jstring);
     return jstring;
 }
 string Request_GetTemperatureData(int32_t &error) {
