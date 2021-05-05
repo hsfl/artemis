@@ -133,13 +133,15 @@ Open up your virtual machine containing COSMOS software. Log in and open up Qt C
 >
 > 2. The BeagleBone must be accessed _inside_ the machine you are using to cross-compile while you are going through the tutorial, or you won't be able to add the device (use SSH from a terminal)
 >
-> 3. If the steps under __Add COSMOS to Path__ don't work, start by rebooting the BeagleBone with a `$ sudo shutdown -h now`, and then type `$ agent`. If that doesn't work, try tip 4
+> 3. If running the `rsync` command results in errors, you can try a couple of different things. First make sure the ip address of the BeagleBone is correct, then try manually creating the cosmos folder in the BeagleBone by running `mkdir cosmos`, finally double check that the folders you are sending and receiving from are correct.
 >
-> 4. Try `$ ./agent`. If this works, you will need to use `./` at the beginning of each agent you run. If that doesn't work, try tip 5
+> 4. If the steps under __Add COSMOS to Path__ don't work, start by rebooting the BeagleBone with a `$ sudo shutdown -h now`, and then type `$ agent`. If that doesn't work, try tip 4
 >
-> 5. Look for a folder named `bin`. It should be the location you chose in the `rsync` command, and an `ls` will show all the necessary agent (green text in Ubuntu). Try `$ ./agent` again. If it still does not work, the executable files may not have been correctly transferred
+> 5. Try `$ ./agent`. If this works, you will need to use `./` at the beginning of each agent you run. If that doesn't work, try tip 5
 >
-> 6. Follow the same steps for the Artemis software project. It is recommended to have COSMOS core agents and Artemis agents loaded on your BeagleBone.
+> 6. Look for a folder named `bin`. It should be the location you chose in the `rsync` command, and an `ls` will show all the necessary agent (green text in Ubuntu). Try `$ ./agent` again. If it still does not work, the executable files may not have been correctly transferred
+>
+> 7. Follow the same steps for the Artemis software project. It is recommended to have COSMOS core agents and Artemis agents loaded on your BeagleBone.
 
 ## Preparing BBIO Pins for Serial Communication
 
