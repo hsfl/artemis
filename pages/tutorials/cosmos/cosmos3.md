@@ -38,6 +38,12 @@ You can copy the build folder to the BeagleBone by running the following termina
 rsync -auv ~/cosmos/source/projects/my_project/build-beaglebone debian@beaglebone.local:/home/debian
 ```
 
+> **_Note:_** The `~/cosmos/source/projects/my_project/build-beaglebone` folder is what you are copying to the BeagleBone and the `/home/debian` folder is where you are putting it on the BeagleBone. 
+> When copying any executables, you should follow this format of 
+> ```bash
+> rsync -auv FOLDER_COPYING debian@beaglebone.local:FOLDER_RECEIVING
+> ```
+
 Enter the password (default is `temppwd`), and wait a minute while the files copy over. From Cloud9 on the BeagleBone you should see the build folder appear in the home directory (`/home/debian`):
 
 {% include image.html file="/resources/tutorials/cosmos/part3/cloud9.png" %}
