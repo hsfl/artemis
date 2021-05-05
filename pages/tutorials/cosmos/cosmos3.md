@@ -39,7 +39,7 @@ rsync -auv ~/cosmos/source/projects/my_project/build-beaglebone debian@beaglebon
 ```
 
 > **_Note:_** The `~/cosmos/source/projects/my_project/build-beaglebone` folder is what you are copying to the BeagleBone and the `/home/debian` folder is where you are putting it on the BeagleBone. 
-> When copying any executables, you should follow this format of 
+> When copying any executables, you should follow this format:
 > ```bash
 > rsync -auv FOLDER_COPYING debian@beaglebone.local:FOLDER_RECEIVING
 > ```
