@@ -99,70 +99,105 @@ class CubeSat:
         
         # Get a JSON string from agent_raspi holding agent SOH info
         log_file.message('CubeSat', 'Fetching data from agent_raspi')
-        data_str = self.agent_raspi.request('agent_data')
-        
-        # Convert the JSON string into a dictionary
-        data_json = {}
+        data_str_pycubed = self.agent_pycubed.request('soh')
+        data_str_sun = self.agent_sun.request('list')
+        data_str_switch = self.agent_switch.request('list')
+        data_str_temp = self.agent_temp.request('list')
+
+        # Convert the JSON string into a dictionary        
+        data_json_pycubed = []
         try:
-            data_json = _byteify(json.loads(data_str))
+            data_json_pycubed = _byteify(json.loads(data_str_pycubed))
         except ValueError as e:
-            print('Could not parse JSON from agent_raspi')
-            log_file.error('CubeSat', 'Failed to parse data from agent_raspi')
+            print('Could not parse JSON from agent_pycubed')
+            log_file.error('CubeSat', 'Failed to parse data from agent_pycubed')
             return False
         
+        data_json_sun = {}
+        try:
+            data_json_sun = _byteify(json.loads(data_str_sun))
+        except ValueError as e:
+            print('Could not parse JSON from agent_sun')
+            log_file.error('CubeSat', 'Failed to parse data from agent_sun')
+            return False
+        
+        data_json_switch = []
+        try:
+            data_json_switch = _byteify(json.loads(data_str_switch))
+        except ValueError as e:
+            print('Could not parse JSON from agent_switch')
+            log_file.error('CubeSat', 'Failed to parse data from agent_switch')
+            return False
+
+        data_json_temp = []
+        try:
+            data_json_temp = _byteify(json.loads(data_str_temp))
+        except ValueError as e:
+            print('Could not parse JSON from agent_temp')
+            log_file.error('CubeSat', 'Failed to parse data from agent_temp')
+            return False
+
         # Check if the request was completed successfully
-        if not ('status' in data_json) or data_json['status'] != 'OK':
-            log_file.error('CubeSat', 'Data from agent_raspi is invalid or corrupted')
+        if not ('status' in data_json_pycubed) or data_json_pycubed['status'] != 'OK':
+            print('Data from agent_pycubed is invalid or corrupted')
+            log_file.error('CubeSat', 'Data from agent_pycubed is invalid or corrupted')
             return False
-        
+        if not ('status' in data_json_sun) or data_json_sun['status'] != 'OK':
+            print('Data from agent_sun is invalid or corrupted')
+            log_file.error('CubeSat', 'Data from agent_sun is invalid or corrupted')
+            return False
+        if not ('status' in data_json_switch) or data_json_switch['status'] != 'OK':
+            print('Data from agent_switch is invalid or corrupted')
+            log_file.error('CubeSat', 'Data from agent_switch is invalid or corrupted')
+            return False
+        if not ('status' in data_json_temp) or data_json_temp['status'] != 'OK':
+            print('Data from agent_temp is invalid or corrupted')
+            log_file.error('CubeSat', 'Data from agent_temp is invalid or corrupted')
+            return False
+
+
         # Update agent states
         log_file.message('CubeSat', 'Updating agent_temp')
-        self.agent_temp.active = data_json['output']['agent_temp']['active']
-
-        log_file.message('CubeSat', 'Updating agent_heater')
-        self.agent_heater.active = data_json['output']['agent_heater']['active']
+        self.agent_temp.active = data_json_temp['output']['agent_temp']['active']
 
         log_file.message('CubeSat', 'Updating agent_pycubed')
-        self.agent_pycubed.active = data_json['output']['agent_pycubed']['active']
+        self.agent_pycubed.active = data_json_pycubed['output']['agent_pycubed']['active']
 
-        log_file.message('CubeSat', 'Updating agent_raspi')
-        self.agent_raspi.active = data_json['output']['agent_raspi']['active']
-
-        log_file.message('CubeSat', 'Updating agent_sunsensor')
-        self.agent_sunsensor.active = data_json['output']['agent_sunsensor']['active']
+        log_file.message('CubeSat', 'Updating agent_sun')
+        self.agent_sun.active = data_json_sun['output']['agent_sun']['active']
 
         log_file.message('CubeSat', 'Updating agent_switch')
-        self.agent_switch.active = data_json['output']['agent_switch']['active']
+        self.agent_switch.active = data_json_switch['output']['agent_switch']['active']
         
         # Update IMU
         log_file.message('CubeSat', 'Updating IMU values')
-        self.imu.load_json(data_json)
+        self.imu.load_json(data_json_pycubed)
         
         # Update GPS
         log_file.message('CubeSat', 'Updating GPS values')
-        self.gps.load_json(data_json)
+        self.gps.load_json(data_json_pycubed)
         
     
         # Update temperature sensors
         log_file.message('CubeSat', 'Updating temperature sensor values')
-        self.tempsensor.eps.load_json(data_json)
-        self.tempsensor.obc.load_json(data_json)
-        self.tempsensor.payload.load_json(data_json)
-        self.tempsensor.battery.load_json(data_json)
-        self.tempsensor.pycubed.load_json(data_json)
+        self.tempsensor.eps.load_json(data_json_temp)
+        self.tempsensor.obc.load_json(data_json_temp)
+        self.tempsensor.payload.load_json(data_json_temp)
+        self.tempsensor.battery.load_json(data_json_temp)
+        self.tempsensor.pycubed.load_json(data_json_temp)
     
         # Update sun sensors
         log_file.message('CubeSat', 'Updating sun sensor values')
-        self.sunsensor.plusx.load_json(data_json)
-        self.sunsensor.minusx.load_json(data_json)
-        self.sunsensor.plusy.load_json(data_json)
-        self.sunsensor.minusy.load_json(data_json)
-        self.sunsensor.plusz.load_json(data_json)
-        self.sunsensor.minusz.load_json(data_json)
+        self.sunsensor.plusx.load_json(data_json_sun)
+        self.sunsensor.minusx.load_json(data_json_sun)
+        self.sunsensor.plusy.load_json(data_json_sun)
+        self.sunsensor.minusy.load_json(data_json_sun)
+        self.sunsensor.plusz.load_json(data_json_sun)
+        self.sunsensor.minusz.load_json(data_json_sun)
     
         # Update heater
         log_file.message('CubeSat', 'Updating heater values')
-        self.heater.load_json(data_json)
+        self.heater.load_json(data_json_switch)
 
         log_file.message('CubeSat', 'Finished updating CubeSat')
 

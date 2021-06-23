@@ -16,34 +16,60 @@ OPT3001::~OPT3001() {
 	
 }
 
-void OPT3001::ReadState() {
+int32_t OPT3001::ReadState() {
 	if ( !IsOpen() )
-		return;
+        return ErrorNumbers::COSMOS_GENERAL_ERROR_NOTSTARTED;
 	
-	
+    int32_t status;
+    int16_t temp;
 	// Read result register
-	result.raw_data = ReadRegister((uint8_t)Register::Result);
+    status = ReadRegister((uint8_t)Register::Result, temp);
+    if(status < 0){
+        return status;
+    }
+    result.raw_data = temp;
 	
 	// Read configuration register
-	config.raw_data = ReadRegister((uint8_t)Register::Config);
+    status = ReadRegister((uint8_t)Register::Config, temp);
+    if(status < 0){
+        return status;
+    }
+    config.raw_data = temp;
 	
 	// Read low limit register
-	low_limit.raw_data = ReadRegister((uint8_t)Register::LowLimit);
+    status = ReadRegister((uint8_t)Register::LowLimit, temp);
+    if(status < 0){
+        return status;
+    }
+    low_limit.raw_data = temp;
 	
 	// Read high limit register
-	high_limit.raw_data = ReadRegister((uint8_t)Register::HighLimit);
+    status = ReadRegister((uint8_t)Register::HighLimit, temp);
+    if(status < 0){
+        return status;
+    }
+    high_limit.raw_data = temp;
 	
 	// Read manufacturer ID register
-	manufacturer_id = ReadRegister((uint8_t)Register::Manufacturer);
+    status = ReadRegister((uint8_t)Register::Manufacturer, temp);
+    if(status < 0){
+        return status;
+    }
+    manufacturer_id = temp;
 	
 	// Read device ID register
-	device_id = ReadRegister((uint8_t)Register::DeviceID);
+    status = ReadRegister((uint8_t)Register::DeviceID, temp);
+    if(status < 0){
+        return status;
+    }
+    device_id = temp;
+    return status;
 	
 }
 
-bool OPT3001::SetConfiguration(Configuration config) {
+int32_t OPT3001::SetConfiguration(Configuration config) {
 	if ( !IsOpen() )
-		return false;
+        return ErrorNumbers::COSMOS_GENERAL_ERROR_NOTSTARTED;
 	
 	// Should we do 'this->config = config'? Maybe, but maybe the state of the device
 	// since the last call to ReadState() should be kept instead

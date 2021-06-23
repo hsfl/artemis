@@ -91,13 +91,14 @@ namespace artemis {
 		/**
 		 * @brief Updates information by reading device registers.
 		 */
-		void ReadState();
+        int32_t ReadState();
 		
 		/**
 		 * @brief Writes the configuration data
 		 * @param config The configuration to use
+         * @return > 0 on success < 0 on error
 		 */
-		bool SetConfiguration(Configuration config);
+        int32_t SetConfiguration(Configuration config);
 		
 		/**
 		 * @brief Returns configuration details for this device.

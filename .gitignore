@@ -1,3 +1,7 @@
 software/BeagleBone/beaglebone/build*
 software/GroundStation/build*
 *.txt.user
+
+software/BeagleBone/beaglebone/source/tests/telemlog_test\.cpp\.EY6676
+
+software/BeagleBone/beaglebone/source/simulation/propagator\.cpp\.autosave

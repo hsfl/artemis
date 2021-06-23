@@ -16,12 +16,13 @@ using namespace artemis;
 SimpleAgent *agent;
 
 PyCubed *pycubed;
+PyCubed *handler = nullptr;
 bool shutdown_received = false;
 
 void Shutdown();
 
 // Request to send a message to the PyCubed
-bool SendMessage(CapturedInput input);
+string SendMessage(vector<string> &args, int32_t &error);
 
 
 int main(int argc, char ** argv) {
@@ -42,9 +43,9 @@ int main(int argc, char ** argv) {
 	
 	// Set up the agent
 	agent = new SimpleAgent("pycubed");
-	agent->SetLoopPeriod(0.5);
-	agent->AddRequest("send", SendMessage, "Send a message to the PyCubed", "Usage: send <message type> <arg1> <arg2...>");
-	agent->Finalize();
+	agent->set_activity_period(0.5);
+    agent->add_request("send", SendMessage, "<message type> <arg1> <arg2...>", "Send a message to the PyCubed");
+    agent->set_soh();
 	
 	// Connect to the PyCubed
 	pycubed = new PyCubed(uart_device, baud_rate);
@@ -187,7 +188,10 @@ int main(int argc, char ** argv) {
 	
 	
 	printf("Test complete. Exiting now.\n");
-	delete pycubed;
+    handler->Close();
+
+    delete pycubed;
+    delete handler;
 	delete agent;
 	
 	
@@ -206,17 +210,21 @@ void Shutdown() {
 	COSMOS_SLEEP(2);
 }
 
-bool SendMessage(CapturedInput input) {
-	std::vector<std::string> arguments;
-	istringstream iss(input.input);
-	string arg;
-	
-	while ( getline(iss, arg, ' ') )
-		arguments.push_back(arg);
-	
-	string message_type = arguments[0];
-	arguments.erase(arguments.begin());
-	
-	return pycubed->SendMessage(message_type, arguments);
+string SendMessage(vector<string> &args, int32_t &error) {
+
+    // Make sure the PyCubed is connected first
+    if ( !handler->IsOpen() )
+        return "false";
+
+    // Parse the string into a vector of arguments
+    if(args.size() == 0) {
+        error = ErrorNumbers::COSMOS_GENERAL_ERROR_EMPTY;
+        return "incorrect usage";
+    }
+    string message_type = args[0];
+    args.erase(args.begin());
+
+    // Send the message
+    return handler->SendMessage(message_type, args) ? "true" : "false";
 }
 

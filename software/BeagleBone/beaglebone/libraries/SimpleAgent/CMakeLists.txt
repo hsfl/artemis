@@ -2,22 +2,23 @@
 
 
 set(SIMPLEAGENT_SRC
-    Device.cpp
+#    Device.cpp
     SimpleAgent.cpp
-	RemoteAgent.cpp
-	Telemetry.cpp)
+#	RemoteAgent.cpp
+#	Telemetry.cpp
+        )
 
 set(SIMPLEAGENT_HEADERS
-    AgentRequest.h
-    Device.h
-    DeviceDetail.h
-    DeviceRequest.h
+#    AgentRequest.h
+#    Device.h
+#    DeviceDetail.h
+#    DeviceRequest.h
     Exceptions.h
-    RemoteAgent.h
-    RequestHelper.h
+#    RemoteAgent.h
+#    RequestHelper.h
     SimpleAgent.h
     StringTools.h
-	Telemetry.h
+#	Telemetry.h
     TimeTools.h
     Types.h
     )
