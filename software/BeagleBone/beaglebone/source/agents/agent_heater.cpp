@@ -81,7 +81,7 @@ string Request_Config(int32_t &status);
 SimpleAgent *agent;
 
 //! The heater device
-devicestruc *heater;
+htrstruc *heater;
 
 //! The switch which controls the heater
 string heater_switch;
@@ -122,15 +122,16 @@ int main(int argc, char** argv) {
 	// Add the heater device
     int32_t status = 0;
     string devname_heater = heater_config["name"].GetString();
-    devicestruc* heater;
-    status = agent->add_device(devname_heater, DeviceType::HTR, &heater);
+    devicestruc* device_ptr;
+    status = agent->add_device(devname_heater, DeviceType::HTR, &device_ptr);
     if(status < 0){
         printf("Error adding device %s [%s]", devname_heater.c_str(), cosmos_error_string(status).c_str());
         heater = nullptr;
     }
     else {
+        heater = static_cast<htrstruc*>(device_ptr);
         heater->utc = Time::Now();
-        heater->enabled = false;
+        heater->state = false;
     }
 
 
@@ -152,7 +153,7 @@ int main(int argc, char** argv) {
 		agent_temp_keys.push_back(dependency.source);
 	}
 	
-    status = agent->add_generic_device_prop_alias(devname_heater, {"utc","enabled","volt","amp","power"});
+    status = agent->add_generic_device_prop_alias(devname_heater, {"utc","state","volt","amp","power"});
     if(status < 0) {
         printf("Error creating aliases %s [%s]\n", devname_heater.c_str(), cosmos_error_string(status).c_str());
     }
@@ -196,11 +197,11 @@ int main(int argc, char** argv) {
 		}
 		
 		// If any temperatures are too low, enable the heater
-		if ( any_enable && !heater->enabled ) {
+        if ( any_enable && !heater->state ) {
             status = SetHeaterState(true);
 		}
 		// If all temperatures are above the disable temperature, disable the heater
-		else if ( all_disable && heater->enabled ) {
+        else if ( all_disable && heater->state ) {
             status = SetHeaterState(false);
 		}
 		
@@ -261,7 +262,7 @@ int32_t SetHeaterState(bool enabled) {
 	
 	// Set the heater properties
 	heater->utc = Time::Now();
-	heater->enabled = enabled;
+    heater->state = enabled;
 	
 	// Indicate success
     return 0;
@@ -283,7 +284,7 @@ string Request_Disable(int32_t &status) {
     return "Fail";
 }
 string Request_GetHeaterState(int32_t &status) {
-	return heater->enabled ? "\"on\"" : "\"off\"";
+    return heater->state ? "\"on\"" : "\"off\"";
 }
 string Request_Config(int32_t &status) {
 	string config;

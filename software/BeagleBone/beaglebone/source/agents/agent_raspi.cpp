@@ -17,9 +17,9 @@ using namespace artemis;
 //! The agent object which allows for communication with COSMOS
 SimpleAgent *agent;
 //! The device representing the Raspberry Pi
-devicestruc *raspi;
+cpustruc *raspi;
 //! The device representing the camera
-devicestruc *camera;
+camstruc *camera;
 //! A few custom devices for holding info from other agents
 devicestruc *pycubed, *tempsensors, *sunsensors, *switches, *heater;
 //! The shutdown flag
@@ -96,31 +96,34 @@ int main(int argc, char** argv) {
 	
     int32_t status = 0;
 	// Add the camera device
-    status = agent->add_device("camera", DeviceType::CAM, &camera);
+    devicestruc* device_ptr;
+    status = agent->add_device("camera", DeviceType::CAM, &device_ptr);
     if(status < 0){
         printf("Error adding device CAM\n");
         camera = nullptr;
     }
     else {
+        camera = static_cast<camstruc*>(device_ptr);
         camera->enabled = false;
-        camera->cam.pwidth = 1280;
-        camera->cam.pheight = 700;
+        camera->pwidth = 1280;
+        camera->pheight = 700;
     }
 
 	// Add the Raspberry Pi
-    status = agent->add_device("raspi", DeviceType::CPU, &raspi);
+    status = agent->add_device("raspi", DeviceType::CPU, &device_ptr);
     if(status < 0){
         printf("Error adding device CPU\n");
         raspi = nullptr;
     }
     else {
+        raspi = static_cast<cpustruc*>(device_ptr);
         raspi->utc = Time::Now();
         raspi->temp = 273.15;
-        raspi->cpu.load = 0;
-        raspi->cpu.gib = 0;
-        raspi->cpu.maxgib = 0.5;
-        raspi->cpu.boot_count = 0;
-        raspi->cpu.uptime = 0;
+        raspi->load = 0;
+        raspi->gib = 0;
+        raspi->maxgib = 0.5;
+        raspi->boot_count = 0;
+        raspi->uptime = 0;
     }
 
     status = agent->add_generic_device_prop_alias("raspi",{"utc","volt","amp","uptime","temp","uptime","boot_count"});
@@ -207,7 +210,7 @@ void ConnectRaspi() {
 			}
 			
             connected = true;
-            raspi->cpu.uptime = (int)up_time_timer.Seconds();
+            raspi->uptime = (int)up_time_timer.Seconds();
 			
 			return;
 		}
@@ -216,7 +219,7 @@ void ConnectRaspi() {
 	}
 	
     connected = false;
-    raspi->cpu.uptime = 0;
+    raspi->uptime = 0;
 	
 	printf("Failed to connect to Raspberry Pi. Will attempt on next cycle.\n");
 }
@@ -572,8 +575,8 @@ string Request_SetImageSize(vector<string> &args, int32_t &error) {
         return "";
     }
 
-    camera->cam.pheight = stoi(args[0]);
-    camera->cam.pwidth = stoi(args[1]);
+    camera->pheight = stoi(args[0]);
+    camera->pwidth = stoi(args[1]);
     return "";
 	
 }

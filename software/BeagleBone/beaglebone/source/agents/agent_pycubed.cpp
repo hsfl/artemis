@@ -34,15 +34,15 @@ Document config;
 
 
 //! The CPU device representing the PyCubed
-static devicestruc *pycubed;
+static cpustruc *pycubed;
 //! The IMU device located on the PyCubed
-static devicestruc *imu;
+static imustruc *imu;
 //! The GPS device located on the PyCubed
-static devicestruc *gps;
+static gpsstruc *gps;
 //! The radio device located on the PyCubed
-static devicestruc *radio;
+static rxrstruc *radio;
 //! The battery device located on the battery board
-static devicestruc *battery;
+static battstruc *battery;
 
 string PowerUse = "node_powuse";
 string PowerGeneration = "node_powgen";
@@ -241,19 +241,25 @@ int32_t InitPyCubed() {
 	
 	// Add the PyCubed CPU device
 
-    status = agent->add_device("pycubed", DeviceType::CPU, &pycubed);
+    devicestruc *device_ptr;
+    status = agent->add_device("pycubed", DeviceType::CPU, &device_ptr);
     if(status < 0){
         printf("Error adding device CPU\n");
         pycubed = nullptr;
         return status;
     }
-    pycubed->utc = Time::Now();
-    pycubed->cpu.gib = 0;
-    pycubed->cpu.maxgib = 0.0037252903; // MR25H40MDF RAM
-    pycubed->volt = 0;
-    pycubed->amp = 0;
-    pycubed->cpu.uptime = 0;
-    pycubed->temp = 273.15;
+    else {
+        pycubed = static_cast<cpustruc*>(device_ptr);
+
+        pycubed->utc = Time::Now();
+        pycubed->gib = 0;
+        pycubed->maxgib = 0.0037252903; // MR25H40MDF RAM
+        pycubed->volt = 0;
+        pycubed->amp = 0;
+        pycubed->uptime = 0;
+        pycubed->temp = 273.15;
+    }
+
 
     status = agent->add_generic_device_prop_alias("pycubed",{"utc","uptime","temp"});
     if(status < 0){
@@ -273,21 +279,25 @@ int32_t InitPyCubed() {
     }
 
 	// Add the battery pack
-    status = agent->add_device("battery", DeviceType::BATT, &battery);
+    status = agent->add_device("battery", DeviceType::BATT, &device_ptr);
     if(status < 0){
         printf("status adding device BATT\n");
         battery = nullptr;
         return status;
+    } else {
+        battery = static_cast<battstruc*>(device_ptr);
+        battery->utc = Time::Now();
+        battery->temp = 273.15;
+        battery->capacity = 3.5f * 4;
+        battery->charge = 3.5f * 4;
+        battery->efficiency = 0.85f;
+        battery->percentage = 100;
+        battery->volt = 0;
+        battery->amp = 0;
     }
 
-    battery->utc = Time::Now();
-    battery->temp = 273.15;
-    battery->batt.capacity = 3.5f * 4;
-    battery->batt.charge = 3.5f * 4;
-    battery->batt.efficiency = 0.85f;
-    battery->batt.percentage = 100;
-    battery->volt = 0;
-    battery->amp = 0;
+
+
 
     status = agent->add_request("battery_charge", RequestGetBatteryCharge, "","battery level");
 	
@@ -297,15 +307,19 @@ int32_t InitPyCubed() {
     }
 	
 	// Add the IMU
-    status = agent->add_device("imu", DeviceType::IMU, &imu);
+    status = agent->add_device("imu", DeviceType::IMU, &device_ptr);
     if(status < 0){
         printf("Error adding device IMU[%s]\n",  cosmos_error_string(status).c_str());
         imu = nullptr;
         return status;
     }
+    else {
+        imu = static_cast<imustruc*>(device_ptr);
+        imu->utc = Time::Now();
+        imu->temp = 273.15;
+    }
 
-    imu->utc = Time::Now();
-    imu->temp = 273.15;
+
 
     status = agent->add_generic_device_prop_alias("imu",{"utc","volt","amp","power","temp"});
     if(status < 0){
@@ -331,12 +345,13 @@ int32_t InitPyCubed() {
     }
 
 	// Add the GPS
-    status = agent->add_device("gps", DeviceType::GPS, &gps);
+    status = agent->add_device("gps", DeviceType::GPS, &device_ptr);
     if(status < 0){
         printf("Error adding device (GPS)[%s]\n", cosmos_error_string(status).c_str());
         gps = nullptr;
         return status;
     }
+    gps = static_cast<gpsstruc*>(device_ptr);
     gps->utc = Time::Now();
     status = agent->add_generic_device_prop_alias("gps", {"utc","volt","amp","power","temp"});
     if(status < 0){
@@ -398,7 +413,7 @@ void UpdatePyCubed() {
 		
 		// Set the PyCubed connection status
 		pycubed->enabled = false;
-        pycubed->cpu.uptime = 0;
+        pycubed->uptime = 0;
 		
 		// Update timestamps
 		pycubed->utc = Time::Now();
@@ -430,7 +445,7 @@ void UpdatePyCubed() {
     pycubed->volt = power_info.sys_voltage;
     pycubed->amp = power_info.sys_current;
     pycubed->temp = temp_info.cpu_temp;
-    pycubed->cpu.uptime = (int)connection_timer.Seconds();
+    pycubed->uptime = (int)connection_timer.Seconds();
 	
 	// Store battery info
 	battery->utc = Time::Now();
@@ -441,17 +456,17 @@ void UpdatePyCubed() {
 	// Store IMU info
 	imu->utc = Time::Now();
     imu->temp = temp_info.cpu_temp;
-    imu->imu.mag = imu_info.magnetometer;
-    imu->imu.alpha = imu_info.acceleration;
-    imu->imu.omega = imu_info.gyroscope;
+    imu->mag = imu_info.magnetometer;
+    imu->alpha = imu_info.acceleration;
+    imu->omega = imu_info.gyroscope;
 	
 	// Store GPS info
 	gps->utc = Time::Now();
-    gps->gps.geods.lat = gps_info.latitude;
-    gps->gps.geods.lon = gps_info.longitude;
-    gps->gps.geods.h = gps_info.altitude;
-    gps->gps.geocv.col[0] = gps_info.speed;
-    gps->gps.sats_used = gps_info.sats_used;
+    gps->geods.lat = gps_info.latitude;
+    gps->geods.lon = gps_info.longitude;
+    gps->geods.h = gps_info.altitude;
+    gps->geocv.col[0] = gps_info.speed;
+    gps->sats_used = gps_info.sats_used;
 	
 	// Store node info
     agent->set_value(PowerUse, power_info.batt_current * power_info.batt_voltage);
